@@ -1,0 +1,348 @@
+---
+title: "Beta Diversity"
+execute:
+  echo: false
+  message: false
+  warning: false
+bibliography: references.bib
+---
+
+# Beta Diversity
+
+```{r, include=FALSE}
+
+source("src/common_code.R", local = knitr::knit_global())
+```
+
+```{r}
+physeq.prev <- readRDS('results/phyloseq.prevfiltered.RDS')
+```
+
+Beta diversity tells us how much diversity pairwise samples share with one another. Beta diversity metrics assign a value to that shared diversity. Bray-Curtis is a common non-phylogenetic metric used to compare sample composition based on presence and abundance of ASVs. Weighted Unifrac is a common phylogenetic metric that also compares phylogenetic distance of the shared diversity between two samples. If you have a preferred metric other than these, I can add them in.
+
+To plot these measurements we have to choose an appropriate ordination method. PCA is NOT recommended for microbial data, since it is not linear, unless it is Hellinger-transformed. PCoA and NMDS are recommended for unconstrained ordination (axes are not constrained by sample metadata), while the former is used in most circumstances. CA is recommended for constrained ordination, however rare data could have an unduly large influence on CA. See [@qian2020guide] for more details. For these reasons, I'll stick with PCoA unless requested otherwise.
+
+
+
+## Normalization
+
+Transform data to relative proportions (no prior added). While not as sophisticated as other normalization methods it is currently the best method for normalizing library sizes while still maintaining community structure patterns. See [@mcknight2019methods] for more information.
+
+```{r }
+#All samples
+physeq.prop <- transform_sample_counts(physeq.prev, function(x) x/sum(x) )
+sample_data(physeq.prop)$SampleSums <- sample_sums(physeq.prev)
+```
+
+<!-- ## CLR normalization, McMurdie -->
+
+<!-- Transform data using CLR (from McMurdie (Meth Mol Bio 2018) supplemental package).   -->
+
+```{r }
+# # copy instance and replace raw counts with CLR-normalized counts
+# physeq.clr <- phyloseq_CLR(physeq.prev)
+# # otu_table(physeq.clr) <- otu_table(as(x, "matrix"), taxa_are_rows = FALSE)
+# physeq.clr
+# 
+# mucosa.clr <- phyloseq_CLR(mucosa.prev)
+# digesta.clr <- phyloseq_CLR(digesta.prev)
+```
+
+<!-- ## CLR normalization, mixOmics -->
+
+<!-- CLR from `mixOmics`. -->
+
+```{r }
+# # get counts
+# tmp <- as(otu_table(mucosa.prev),"matrix")
+# 
+# tmp <- tmp
+# 
+# # transpose if needed
+# if(!taxa_are_rows(mucosa.prev)) { tmp <- t(tmp)}
+# 
+# x <- logratio.transfo(tmp, logratio = 'CLR', offset = 1)
+# 
+# # copy instance and replace raw counts with CLR-normalized counts
+# mucosa.clr2 <- mucosa.prev
+# otu_table(mucosa.clr2) <- otu_table(as(x, "matrix"), taxa_are_rows = TRUE)
+# mucosa.clr2
+```
+
+Set the active normalization type (proportion for now)
+
+```{r}
+physeq.active <- physeq.prop
+```
+
+## PCoA plots (Bray Curtis metric)
+
+### SampleType x instrument
+
+I ran Permutational multivariate analysis of variance (PERMANOVA) [@doi:https://doi.org/10.1002/9781118445112.stat07841] which is a non-parametric multivariate statistical permutation test between groups (SampleType x instrument). This method is deemed appropriate for beta diversity comparison for microbiome data. The analysis shows that the compared groups (G_Juno, G_X9, Neonic_Juno, Neonic_X9, Standard_Juno, Standard_X9) are statistically different at a p-value of < 0.05. In the PCoA plot below, color depicts "SampleType" and shape  shows the "Instrument". The two standard samples are laying on top of each other.
+
+```{r }
+
+# Only subset to mares
+#physeq.active2 <- subset_samples(physeq.active, SampleType != "Standard")
+
+set.seed(12345)
+# Calculate CCA ordination 
+finalPhyseq.ord <- ordinate(physeq.active, 
+                            formula = ~group,
+                            "PCoA", "bray")
+#finalPhyseq.ord <- ordinate(physeq.active2, 
+                            #formula = ~Trt + Condition(Animal_ID),
+ #                           "NMDS", "bray")
+
+#plot_scree(finalPhyseq.ord, title = "Scree plot showing CCA Eigenvalues")
+
+
+# Calculate PERMANOVA
+finalPhyseq.prop.dist.bc0 <- phyloseq::distance(physeq.active, method = "bray")
+finalPhyseq.meta0 <- as(sample_data(physeq.active), "data.frame")
+p0 <- adonis2(finalPhyseq.prop.dist.bc0 ~ group,
+       data = finalPhyseq.meta0)
+p0
+#beta <- betadisper(finalPhyseq.prop.dist.bc0, finalPhyseq.meta0$Trt)
+#permutest(beta)
+
+pval = p0$`Pr(>F)`[1]
+
+```
+
+```{r }
+set.seed(1234)
+
+p1 = plot_ordination(physeq.active,
+                     finalPhyseq.ord,
+                     type="samples",
+                     color="SampleType",
+                     shape = "Instrument",
+                     title="Samples") + geom_point(size = 2.5)+
+   scale_color_manual(values = dittoSeq::dittoColors()[1:24]) +
+  stat_ellipse()
+  #facet_wrap(~group, ncol = 4)
+p2 = p1 + ggtitle("PCoA, Bray Curtis distance for SampleType x Instrument", 
+             subtitle = paste("pval=",round(p0$`Pr(>F)`[1], digits = 3)))
+ggsave("results/Bray_PCoA_SampleType_Instrument.jpeg")
+
+# p1$data$group <-factor(p1$data$group,
+#                        levels = c("C_0h","C_6h" ,"C_24h","C_d8",
+#                                   "DS_0h", "DS_6h","DS_24h","DS_d8",
+#                                   "HS_0h","HS_6h","HS_24h","HS_d8",
+#                                   "DSP_0h", "DSP_6h","DSP_24h","DSP_d8",
+#                                   "HSP_0h","HSP_6h","HSP_24h","HSP_d8"))
+ggplotly(p1) %>%
+  layout(title = list(text = paste0("PCoA, Bray Curtis distance",
+                                    '<br>',
+                                    '<sup>',
+                                     paste("pval=",round(p0$`Pr(>F)`[1], digits = 3)))))
+
+```
+
+
+<!-- #### Include sequence counts -->
+
+<!-- Check to see if number of sequences per sample (input) affects diversity. -->
+
+<!-- <!-- Removing the extreme high input sample first, so that the pattern is more clear. --> -->
+
+<!-- ```{r } -->
+<!-- #physeq.test <- prune_samples(sample_data(physeq.active)$input < 40000, physeq.active) -->
+
+<!-- physeq.test <- physeq.active -->
+<!-- p1 <- plot_ordination(physeq.test, -->
+<!--                      finalPhyseq.ord, -->
+<!--                      type="samples", -->
+<!--                      color="input", -->
+<!--                      label="Label", -->
+<!--                      title="Samples") + geom_point(size = 2.5) + -->
+<!--   ggtitle("PCoA, Bray Curtis distance")  -->
+<!-- ggplotly(p1) -->
+<!-- ``` -->
+
+
+
+### SampleType x instrument x replicate
+
+To also view variations between replicates of the same instrument, I ran PERMANOVA between groups and reps (SampleType x instrument x replicate). The analysis shows that the compared groups `r levels(sample_data(physeq.active)$Label)` are statistically different at a p-value of < 0.05. PCoA plot for this is shown below and pairwise comparisons between all the above groups are saved under *results/bray_pw_permanova_all.csv*.
+
+```{r }
+
+# Only subset to mares
+#physeq.active2 <- subset_samples(physeq.active, SampleType != "Standard")
+
+
+set.seed(12345)
+# Calculate CCA ordination 
+finalPhyseq.ord <- ordinate(physeq.active, 
+                            formula = ~Label,
+                            #+ Condition(Replicate),
+                            "PCoA", "bray")
+#finalPhyseq.ord <- ordinate(physeq.active2, 
+                            #formula = ~Trt + Condition(Animal_ID),
+ #                           "NMDS", "bray")
+
+#plot_scree(finalPhyseq.ord, title = "Scree plot showing CCA Eigenvalues")
+
+
+# Calculate PERMANOVA
+finalPhyseq.prop.dist.bc0 <- phyloseq::distance(physeq.active, method = "bray")
+finalPhyseq.meta0 <- as(sample_data(physeq.active), "data.frame")
+p0 <- adonis2(finalPhyseq.prop.dist.bc0 ~ Label,
+       data = finalPhyseq.meta0
+       #, strata = finalPhyseq.meta0$Replicate
+       )
+p0
+#beta <- betadisper(finalPhyseq.prop.dist.bc0, finalPhyseq.meta0$Trt)
+#permutest(beta)
+
+pval = p0$`Pr(>F)`[1]
+
+```
+
+```{r }
+set.seed(1234)
+
+p1 = plot_ordination(physeq.active,
+                     finalPhyseq.ord,
+                     type="samples",
+                     color="Label",
+                     #shape = "Day",
+                     title="Samples") + geom_point(size = 2.5)+
+   scale_color_manual(values = dittoSeq::dittoColors()[1:24]) 
+  #facet_wrap(~group, ncol = 4)
+p2 = p1 + ggtitle("PCoA, Bray Curtis distance for SampleType x Instrument x Replicate", 
+             subtitle = paste("pval=",round(p0$`Pr(>F)`[1], digits = 3)))
+ggsave("results/Bray_PCoA_SampleType_Instrument_reps.jpeg")
+
+# p1$data$group <-factor(p1$data$group,
+#                        levels = c("C_0h","C_6h" ,"C_24h","C_d8",
+#                                   "DS_0h", "DS_6h","DS_24h","DS_d8",
+#                                   "HS_0h","HS_6h","HS_24h","HS_d8",
+#                                   "DSP_0h", "DSP_6h","DSP_24h","DSP_d8",
+#                                   "HSP_0h","HSP_6h","HSP_24h","HSP_d8"))
+ggplotly(p1) %>%
+  layout(title = list(text = paste0("PCoA, Bray Curtis distance",
+                                    '<br>',
+                                    '<sup>',
+                                     paste("pval=",round(p0$`Pr(>F)`[1], digits = 3)))))
+```
+
+
+```{r }
+# Save pairwise comparisons
+set.seed(12345)
+
+bray_pw_all <- pairwise.adonis(finalPhyseq.prop.dist.bc0, factors = finalPhyseq.meta0$Label, perm = 999, p.adjust.m='fdr')
+
+write.csv(bray_pw_all[order(bray_pw_all$p.adjusted),] , "results/bray_pw_permanova_all.csv", row.names = F)
+
+```
+
+### Compare within SampleTypes
+
+#### Neonic only
+
+```{r }
+# Only subset to mares
+physeq.active2 <- subset_samples(physeq.active, SampleType != "Standard")
+physeq.active2 <- subset_samples(physeq.active2, SampleType != "G")
+
+set.seed(12345)
+# Calculate CCA ordination 
+finalPhyseq.ord <- ordinate(physeq.active2, 
+                            formula = ~replicate,
+                            #+ Condition(Replicate),
+                            "PCoA", "bray")
+#finalPhyseq.ord <- ordinate(physeq.active2, 
+                            #formula = ~Trt + Condition(Animal_ID),
+ #                           "NMDS", "bray")
+
+#plot_scree(finalPhyseq.ord, title = "Scree plot showing CCA Eigenvalues")
+
+
+# Calculate PERMANOVA
+finalPhyseq.prop.dist.bc0 <- phyloseq::distance(physeq.active2, method = "bray")
+finalPhyseq.meta0 <- as(sample_data(physeq.active2), "data.frame")
+
+p0 <- adonis2(finalPhyseq.prop.dist.bc0 ~ Instrument + Replicate,
+       data = finalPhyseq.meta0
+       #, strata = finalPhyseq.meta0$Replicate
+       )
+p0
+#beta <- betadisper(finalPhyseq.prop.dist.bc0, finalPhyseq.meta0$Trt)
+#permutest(beta)
+
+```
+
+#### G only
+
+```{r }
+# Only subset to mares
+physeq.active2 <- subset_samples(physeq.active, SampleType != "Standard")
+physeq.active2 <- subset_samples(physeq.active2, SampleType != "Neonic")
+
+set.seed(12345)
+# Calculate CCA ordination 
+finalPhyseq.ord <- ordinate(physeq.active2, 
+                            formula = ~replicate,
+                            #+ Condition(Replicate),
+                            "PCoA", "bray")
+#finalPhyseq.ord <- ordinate(physeq.active2, 
+                            #formula = ~Trt + Condition(Animal_ID),
+ #                           "NMDS", "bray")
+
+#plot_scree(finalPhyseq.ord, title = "Scree plot showing CCA Eigenvalues")
+
+
+# Calculate PERMANOVA
+finalPhyseq.prop.dist.bc0 <- phyloseq::distance(physeq.active2, method = "bray")
+finalPhyseq.meta0 <- as(sample_data(physeq.active2), "data.frame")
+
+p0 <- adonis2(finalPhyseq.prop.dist.bc0 ~ Instrument + Replicate,
+       data = finalPhyseq.meta0
+       #, strata = finalPhyseq.meta0$Replicate
+       )
+p0
+#beta <- betadisper(finalPhyseq.prop.dist.bc0, finalPhyseq.meta0$Trt)
+#permutest(beta)
+
+```
+
+#### Standard only
+
+```{r }
+# Only subset to mares
+physeq.active2 <- subset_samples(physeq.active, SampleType != "G")
+physeq.active2 <- subset_samples(physeq.active2, SampleType != "Neonic")
+
+set.seed(12345)
+# Calculate CCA ordination 
+finalPhyseq.ord <- ordinate(physeq.active2, 
+                            formula = ~replicate,
+                            #+ Condition(Replicate),
+                            "PCoA", "bray")
+#finalPhyseq.ord <- ordinate(physeq.active2, 
+                            #formula = ~Trt + Condition(Animal_ID),
+ #                           "NMDS", "bray")
+
+#plot_scree(finalPhyseq.ord, title = "Scree plot showing CCA Eigenvalues")
+
+
+# Calculate PERMANOVA
+finalPhyseq.prop.dist.bc0 <- phyloseq::distance(physeq.active2, method = "bray")
+finalPhyseq.meta0 <- as(sample_data(physeq.active2), "data.frame")
+
+p0 <- adonis2(finalPhyseq.prop.dist.bc0 ~ Instrument + Replicate,
+       data = finalPhyseq.meta0
+       #, strata = finalPhyseq.meta0$Replicate
+       )
+p0
+#beta <- betadisper(finalPhyseq.prop.dist.bc0, finalPhyseq.meta0$Trt)
+#permutest(beta)
+
+```
+
+There is not significant difference between the instruments and replicates

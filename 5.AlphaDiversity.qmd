@@ -1,0 +1,123 @@
+---
+title: "Alpha diversity"
+execute:
+  echo: false
+  message: false
+  warning: false
+---
+
+```{r, include=FALSE}
+# Load functions in "common_code.R"
+# at some point this should be moved into bookdown
+source("src/common_code.R", local = knitr::knit_global())
+```
+
+```{r}
+physeq.filtered <- readRDS('results/physeq.filtered.RDS')
+```
+
+Check alpha diversity stats. Note we haven't performed any additional filtering or agglomeration at this stage; this is largely due to recommendations to prevent loss of rare ASVs or singletons in the data, which can dramatically affect alpha diversity measures. Specifically (from the `plot_richness` function used here):
+
+> You must use untrimmed, non-normalized count data for meaningful results, as many of these estimates are highly dependent on the number of singletons. You can always trim the data later on if needed, just not before using this function.
+
+## Normality and calculate alpha diversity
+
+We'll calculate some initial alpha diversity metrics.
+
+```{r echo=FALSE, message=FALSE}
+# all six measures: Observed, Chao1, ACE, Shannon, Simpson, Inv. Simpson, Fisher
+
+erDF <- estimate_richness(physeq.filtered, 
+                          measures = c('Observed', 'Chao1', 'Shannon', 'Simpson', 'InvSimpson'))
+# just run this one time
+erDF <- rownames_to_column(erDF, "SampleID")
+
+# add Faith's PD, this is a simple wrapper to format everything correctly
+pd <- estimate_pd(physeq.filtered)
+
+# we don't need SR, it's the same as observed
+erDF$PD <- pd$PD
+
+measures <- colnames(erDF)
+
+```
+
+We'll check the overall measures for alpha diversity across different groups. The descriptions below are largely from the [QIIME2 forum](https://forum.qiime2.org/t/alpha-and-beta-diversity-explanations-and-commands/2282) with some additional notes.
+
+-   **Observed** - Number of features (ASVs in this case). From the `phyloseq` package, function `estimate_richness`.
+-   **Chao1** - Estimates number of rare taxa missed from undersampling, with an associated confidence interval. Compare to observed taxa, the difference will be those expected to be missing. From the `phyloseq` package, function `estimate_richness`.
+-   **ACE** - Abundance-based Coverage Estimator. Estimates species richness using a correction factor. From the `phyloseq` package, function `estimate_richness`.
+-   **Shannon** - Calculates richness and diversity using a natural logarithm, accounts for both abundance and evenness of the taxa present. From the `vegan` package, function `diversity`.
+-   **Simpson** - Measures the relative abundance of the different species making up the sample richness. From the `vegan` package, function `diversity`.
+-   **Inverse Simpson** - Measures the relative abundance of the different species making up the sample richness. From the `vegan` package, function `diversity`.
+-   **Fisher** - Relationship between the number of species and the abundance of each species. From the `vegan` package, function `diversity`.
+-   **Faith's PD** - Sum of the total phylogenetic branch length for one or multiple samples. From the `picante` package, function `pd`.
+
+## Check for normal distribution
+
+Do these look like a normal distribution? If p is less than 0.05, then it is not normally distributed and non-parametric tests should be used (such as the Wilcoxen-rank sum test).
+
+```{r }
+par(mfrow = c(2, 3))
+
+plots <- lapply(c('Chao1', 'Shannon', 'Simpson', 'InvSimpson', 'Observed', 'PD'),
+       function(x) {
+         shap <- shapiro.test(erDF[,x])
+         hist(erDF[,x], xlab = "Measure", main=paste0(x, "\nShapiro pvalue=", label_number(accuracy = 0.0001)(shap$p.value)), breaks=15)
+         })
+```
+
+All measurements are skewed (except for Shannon which is pretty close). We will use non-parametric tests for all in the visualizations below.
+
+## Alpha diversity general plots
+
+
+### SampleType x Instrument x Replicate
+
+Look at significance of metrics across treatments:
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=11, fig.height=7}
+
+# When there is more than two variables, ggpubr prints the pvalues on the plot but since the package is not mainatined anymore now with two variables, it won't work so in the next section, I am calculating p valus manually and adding to the plots.
+#physeq.filtered <- subset_samples(physeq.filtered, Sex == "Female")
+#erDF <- erDF[erDF$SampleID %in% rownames(sample_data(physeq.filtered)),]
+
+my_comparisons <- list( c("Standard_Juno_1","Standard_X9_1"),
+                          c("Standard_Juno_2", "Standard_X9_2"),
+                        c("G_Juno_1","G_X9_1"),
+                          c("G_Juno_2","G_X9_2"),
+                                    c("Neonic_Juno_1","Neonic_X9_1"),
+                        c("Neonic_Juno_2", "Neonic_X9_2")
+                        )
+                
+
+# Observed & Simpson
+p2 <- plot_richness_estimates(physeq = physeq.filtered, 
+                             erDF = erDF[,c(2,3,5,6,8)],
+                             "Label", 
+                             color = "Label",
+                             #title="Alpha diversity of Treatment (Wilcoxon rank-sum test)"
+                             )+
+     theme(plot.title = element_text(face="bold", size=16),
+           axis.text.x = element_text(face="plain", size=10, angle= 90, vjust=0.4, hjust=1),
+           axis.title = element_text(face="plain", size=14,),
+           #axis.text.x = element_text(face="plain", size=11, vjust=1, hjust=1),
+           strip.text = element_text(size = 10, margin = margin()))+
+  ggtitle("Alpha Diversity of Treatment Groups", subtitle = "Wilcoxon rank-sum test")+
+   scale_color_manual(values = dittoSeq::dittoColors()[1:12])
+
+p2$data$Label <- factor(p2$data$Label,levels = c("Standard_Juno_1","Standard_X9_1",
+                          "Standard_Juno_2", "Standard_X9_2",
+                        "G_Juno_1","G_X9_1",
+                          "G_Juno_2","G_X9_2",
+                                    "Neonic_Juno_1","Neonic_X9_1",
+                        "Neonic_Juno_2", "Neonic_X9_2"))
+
+p2 + geom_boxplot(aes(x=Label,
+                     y=value,
+                     color=NULL), alpha=0.1) +
+    stat_compare_means(comparisons = my_comparisons,  
+                       method = "wilcox.test", label = "p.format")+
+  ylab("Diversity value")
+```
+
