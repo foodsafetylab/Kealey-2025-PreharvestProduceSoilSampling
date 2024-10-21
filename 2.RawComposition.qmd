@@ -54,9 +54,7 @@ physeq.plot <- physeq1
 #tax.ordered <- names(sort(taxa_sums(physeq), TRUE)[1:20])
 #physeq.plot <- subset_taxa(physeq.prop, taxa_names(physeq) %in% tax.ordered)
 
-physeq.plot <- physeq.plot %>% tax_fix(unknowns = c("Unclassified"))
-physeq.plot <- physeq.plot %>% tax_fix(unknowns = c("Unknown Family"))
-physeq.plot <- physeq.plot %>% tax_fix(unknowns = c("aestuarii", "agariperforans", "agri", "bauzanensis", "daechungensis", "daejeonensis", "denitrificans", "flava", "flavum", "fluminis", "gellanilyticus", "ginsengisoli", "harenae", "humi", "koreensis", "kribbensis", "lutea", "luteus", "massiliensis", "mesophilum", "multivorans", "oryzae", "panaciterrae", "parva", "populi", "rhizosphaerae", "rigui", "sediminis", "soli", "solisilvae", "taiwanensis", "terrae", "terrigena", "thiooxidans", "vulgaris"))
+physeq.plot <- physeq.plot %>% tax_fix(unknowns = c("aerolata", "alkalitolerans", "ginsenosidimutans", "niabensis", "radiotolerans", "turicensis","Unclassified","Unknown Family","agariperforans", "agri", "ginsengisoli", "humi", "koreensis", "kribbensis", "luteus", "massiliensis", "populi", "soli", "terrae"))
 
 
 ```
@@ -71,15 +69,15 @@ plots <- lapply(ranks, function (x) {
   p <- comp_barplot(physeq.plot, x, n_taxa = 20, 
                     #label = "Group",
                     #group_by = "Group",
-                   sample_order = c("Control_Juno_1","Control_Juno_2",
-                                    
-                                    "Control_X9_1",
-                                    "Standard_Juno_1","Standard_Juno_2",
-                                    "Standard_X9_1","Standard_X9_2",
-                                    "G_Juno_1","G_Juno_2",
-                                    "G_X9_1","G_X9_2",
-                                    "Neonic_Juno_1","Neonic_Juno_2",
-                                    "Neonic_X9_1","Neonic_X9_2")
+                   # sample_order = c("Control_Juno_1","Control_Juno_2",
+                   #                  
+                   #                  "Control_X9_1",
+                   #                  "Standard_Juno_1","Standard_Juno_2",
+                   #                  "Standard_X9_1","Standard_X9_2",
+                   #                  "G_Juno_1","G_Juno_2",
+                   #                  "G_X9_1","G_X9_2",
+                   #                  "Neonic_Juno_1","Neonic_Juno_2",
+                   #                  "Neonic_X9_1","Neonic_X9_2")
                   
                     #facet_by = "DonorID"
                     )

@@ -60,7 +60,7 @@ This removed `r nrow(sample_data(physeq)) - nrow(sample_data(physeq.filtered))` 
 
 ```{r}
 diff1<-setdiff(physeq@sam_data$SampleID, physeq.filtered@sam_data$SampleID)
-data.frame((physeq@sam_data)[diff1,2:6]) %>% kable()%>% kable_styling()
+#data.frame((physeq@sam_data)[diff1,2:6]) %>% kable()%>% kable_styling()
 ```
 
 ## Zero-count taxa
@@ -105,11 +105,14 @@ How many Domain/Kingdom levels are there?
 ```{r }
 data.frame(table(tax_table(physeq.filtered)[,'Domain'])) %>% setNames(c("Domain", "Count")) %>%
   kable() %>% kable_styling()
+
+df = data.frame(table(tax_table(physeq.filtered)[,'Domain'])) %>% setNames(c("Domain", "Count"))
+df.archaea = df[df$Domain == "Archaea",]
 ```
 
 ### Remove non-bacterial taxa
 
-We have 116 Archaea. Let's remove that.
+We have `r df.archaea$Count` Archaea. Let's remove that.
 
 ```{r }
 physeq.filtered <- subset_taxa(physeq.filtered, Domain != "Archaea")
@@ -195,9 +198,11 @@ Any hits for chloroplast? These are found under the `Class` rank.
 
 ```{r }
 table(tax_table(physeq.filtered)[,'Order'])['Chloroplast']
-```
 
-52 chloroplast sequence was found.
+df.chloroplast = data.frame(table(tax_table(physeq.filtered)[,'Order'])['Chloroplast']) %>% setNames(c("Count"))
+``` 
+
+`r df.chloroplast$Count` chloroplast sequence was found.
 
 ```{r}
 chloros <- subset_taxa(physeq.filtered, Order == 'Chloroplast')
@@ -208,9 +213,11 @@ Any mitochondrial sequences?
 
 ```{r }
 table(tax_table(physeq.filtered)[,'Family'])['Mitochondria']
+
+df.mitochondria = data.frame(table(tax_table(physeq.filtered)[,'Family'])['Mitochondria']) %>% setNames(c("Count"))
 ```
 
-433 mitochondrial sequences were found.
+`r df.mitochondria` mitochondrial sequences were found.
 
 ```{r }
 mitos <- subset_taxa(physeq.filtered, Family == 'Mitochondria')
