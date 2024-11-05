@@ -2,7 +2,7 @@ project:
   type: book
 
 book:
-    title: 'Stasiewicx 16S Microbiome Comparison July 2024'
+    title: 'Stasiewicx 16S Microbiome Study Oct 2024'
     author:
         - Negin Valizadegan
         - Collectively written by HPCBio
@@ -16,10 +16,13 @@ book:
         - 2.RawComposition.qmd
         - 3.Filtering.qmd
         - 4.AlphaRarefaction.qmd
-        # - 5.AlphaDiversity.qmd
-        # - 6.PrevalenceFiltering.qmd
-        # - 7.PrevFilteredAgglomComposition.qmd
-        # - 8.BetaDiversity.qmd
+        - 5.AlphaDiversity.qmd
+        - 6.PrevalenceFiltering.qmd
+        - 7.1.PrevFilteredAgglomComposition.qmd
+        - 7.2.PrevFilteredAgglomComposition.qmd
+        - 7.3.PrevFilteredAgglomComposition.qmd
+        - 8.BetaDiversity.qmd
+        - 9.TaxaPlots.qmd
         - References.qmd
         - SessionInfo.qmd
 

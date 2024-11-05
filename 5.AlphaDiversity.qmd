@@ -16,9 +16,10 @@ source("src/common_code.R", local = knitr::knit_global())
 physeq.filtered <- readRDS('results/physeq.filtered.RDS')
 ```
 
-Check alpha diversity stats. Note we haven't performed any additional filtering or agglomeration at this stage; this is largely due to recommendations to prevent loss of rare ASVs or singletons in the data, which can dramatically affect alpha diversity measures. Specifically (from the `plot_richness` function used here):
+Here, we check for alpha diversity stats. Note we haven't performed any additional filtering or agglomeration at this stage; this is largely due to recommendations to prevent loss of rare ASVs or singletons in the data, which can dramatically affect alpha diversity measures. Specifically (from the `plot_richness` function used here):
 
-> You must use untrimmed, non-normalized count data for meaningful results, as many of these estimates are highly dependent on the number of singletons. You can always trim the data later on if needed, just not before using this function.
+> You must use untrimmed, non-normalized count data for meaningful results, as many of these estimates are highly dependent on the number of singletons. You can always trim the data later on if needed, just not before estimating alpha diversity.
+
 
 ## Normality and calculate alpha diversity
 
@@ -30,7 +31,7 @@ We'll calculate some initial alpha diversity metrics.
 erDF <- estimate_richness(physeq.filtered, 
                           measures = c('Observed', 'Chao1', 'Shannon', 'Simpson', 'InvSimpson'))
 # just run this one time
-erDF <- rownames_to_column(erDF, "SampleID")
+erDF <- rownames_to_column(erDF, "Sample_ID")
 
 # add Faith's PD, this is a simple wrapper to format everything correctly
 pd <- estimate_pd(physeq.filtered)
@@ -53,9 +54,10 @@ We'll check the overall measures for alpha diversity across different groups. Th
 -   **Fisher** - Relationship between the number of species and the abundance of each species. From the `vegan` package, function `diversity`.
 -   **Faith's PD** - Sum of the total phylogenetic branch length for one or multiple samples. From the `picante` package, function `pd`.
 
+
 ## Check for normal distribution
 
-Do these look like a normal distribution? If p is less than 0.05, then it is not normally distributed and non-parametric tests should be used (such as the Wilcoxen-rank sum test).
+Do these look like a normal distribution? If p.value is less than alpha = 0.05, then it is not normally distributed and non-parametric tests should be used (such as the Wilcoxen-rank sum test).
 
 ```{r }
 par(mfrow = c(2, 3))
@@ -67,14 +69,46 @@ plots <- lapply(c('Chao1', 'Shannon', 'Simpson', 'InvSimpson', 'Observed', 'PD')
          })
 ```
 
-All measurements are skewed (except for Shannon which is pretty close). We will use non-parametric tests for all in the visualizations below.
+## Check for homoscedasticity (equality of variances)
+
+For testing whether we can use parametric tests, we also need to test for another assumption which is that variances between groups should be equal. Here, I am testing for the equality of variances between our groups (Sample_Type x Wetting_Agent) using the Koenker's test (which is more robust to skewness of data according to [@lyon1996comparison] in the *lmtest* package in R. If the p-value is greater than the alpha (here we use 0.05), we fail to reject the null hypothesis and assume homoscedasticity. If the p-value is <= 0.05, we reject the null hypothesis and assume heteroscedasticity.
+
+```{r }
+# Load the metadata
+tmp <- read.csv("data/metadata_Edited.csv")
+merged = merge(erDF,tmp, by="Sample_ID")
+
+merged$Location <- as.factor(merged$Location)
+merged$Sample_Type <- as.factor(merged$Sample_Type)
+merged$Wetting_Agent <- as.factor(merged$Wetting_Agent)
+merged$Commodity_Type <- as.factor(merged$Commodity_Type)
+merged$group <- as.factor(merged$group)
+merged$Label <- as.factor(merged$Label)
+
+merged2 <- reshape(merged, idvar = "Sample_ID", timevar =  "Wetting_Agent", direction = "wide")
+```
+
+
+```{r }
+par(mfrow = c(2, 3))
+
+plots <- lapply(c('Chao1', 'Shannon', 'Simpson', 'InvSimpson', 'Observed', 'PD'),
+       function(x) {
+         reg <- lm(merged[,x]~merged[,"group"] )
+         bp_test <- bptest(reg, studentize = TRUE) # this defaults to  Koenker's test which is more robust, for Breusch and Pagan's test, switch studentize to FALSE
+         #shap <- leveneTest(erDF[,x] ~ erDF[,1])
+         plot(reg,1,main=paste0(x, ": pvalue=", label_number(accuracy = 0.0001)(bp_test$p.value)))
+         })
+```
+
+None of the metrics meet all the criteria for using parametric tests, so we will use non-parametric tests (Kuskal-Wallis and Wilcoxon rank sum test) for all.
+
 
 ## Alpha diversity general plots
 
+### Sample_Type x Wetting_Agent
 
-### SampleType x Instrument x Replicate
-
-Look at significance of metrics across treatments:
+Look at significance of metrics across treatments at p < 0.05 (or your alpha value of interest):
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=11, fig.height=7}
 
@@ -82,20 +116,23 @@ Look at significance of metrics across treatments:
 #physeq.filtered <- subset_samples(physeq.filtered, Sex == "Female")
 #erDF <- erDF[erDF$SampleID %in% rownames(sample_data(physeq.filtered)),]
 
-my_comparisons <- list( c("Standard_Juno_1","Standard_X9_1"),
-                          c("Standard_Juno_2", "Standard_X9_2"),
-                        c("G_Juno_1","G_X9_1"),
-                          c("G_Juno_2","G_X9_2"),
-                                    c("Neonic_Juno_1","Neonic_X9_1"),
-                        c("Neonic_Juno_2", "Neonic_X9_2")
-                        )
-                
+my_comparisons <- list( c( "Drags_PBS","Drags_BPW"),
+                          c("Drags_PBS","Booties_PBS"),
+                        c("Drags_PBS","Booties_BPW"),
+                          c("Drags_PBS","Grabs_N/A"),
+                        c( "Drags_BPW","Booties_PBS"),
+                        c("Drags_BPW","Booties_BPW"),
+                          c("Drags_BPW","Grabs_N/A"),
+                         c( "Booties_PBS","Booties_BPW"),
+                        c("Booties_PBS","Grabs_N/A"),
+                          c("Booties_BPW","Grabs_N/A")
+)
 
 # Observed & Simpson
 p2 <- plot_richness_estimates(physeq = physeq.filtered, 
                              erDF = erDF[,c(2,3,5,6,8)],
-                             "Label", 
-                             color = "Label",
+                             "group", 
+                             color = "group",
                              #title="Alpha diversity of Treatment (Wilcoxon rank-sum test)"
                              )+
      theme(plot.title = element_text(face="bold", size=16),
@@ -106,18 +143,386 @@ p2 <- plot_richness_estimates(physeq = physeq.filtered,
   ggtitle("Alpha Diversity of Treatment Groups", subtitle = "Wilcoxon rank-sum test")+
    scale_color_manual(values = dittoSeq::dittoColors()[1:12])
 
-p2$data$Label <- factor(p2$data$Label,levels = c("Standard_Juno_1","Standard_X9_1",
-                          "Standard_Juno_2", "Standard_X9_2",
-                        "G_Juno_1","G_X9_1",
-                          "G_Juno_2","G_X9_2",
-                                    "Neonic_Juno_1","Neonic_X9_1",
-                        "Neonic_Juno_2", "Neonic_X9_2"))
+p2$data$group <- factor(p2$data$group,levels = c(
+                  "Drags_PBS",
+                   "Drags_BPW",
+                   "Booties_PBS",
+                   "Booties_BPW", 
+                   "Grabs_N/A"))
+
+p2 + geom_boxplot(aes(x=group,
+                     y=value,
+                     color=NULL), alpha=0.1) +
+    stat_compare_means(comparisons = my_comparisons,  
+                       method = "wilcox.test", label = "p.format")+
+  ylab("Alpha Diversity")
+
+```
+
+
+### SampleType
+
+Look at significance of metrics across treatments at p < 0.05 (or your alpha value of interest):
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=11, fig.height=7}
+
+# When there is more than two variables, ggpubr prints the pvalues on the plot but since the package is not mainatined anymore now with two variables, it won't work so in the next section, I am calculating p valus manually and adding to the plots.
+#physeq.filtered <- subset_samples(physeq.filtered, Sex == "Female")
+#erDF <- erDF[erDF$SampleID %in% rownames(sample_data(physeq.filtered)),]
+
+my_comparisons <- list( c( "Drags","Booties"),
+                          c("Drags","Grabs"),
+                        c("Booties", "Grabs")
+)
+
+# Observed & Simpson
+p2 <- plot_richness_estimates(physeq = physeq.filtered, 
+                             erDF = erDF[,c(2,3,5,6,8)],
+                             "Sample_Type", 
+                             color = "Sample_Type",
+                             #title="Alpha diversity of Treatment (Wilcoxon rank-sum test)"
+                             )+
+     theme(plot.title = element_text(face="bold", size=16),
+           axis.text.x = element_text(face="plain", size=10, angle= 90, vjust=0.4, hjust=1),
+           axis.title = element_text(face="plain", size=14,),
+           #axis.text.x = element_text(face="plain", size=11, vjust=1, hjust=1),
+           strip.text = element_text(size = 10, margin = margin()))+
+  ggtitle("Alpha Diversity of Treatment Groups", subtitle = "Wilcoxon rank-sum test")+
+   scale_color_manual(values = dittoSeq::dittoColors()[1:12])
+
+p2$data$Label <- factor(p2$data$Sample_Type,levels = c("Drags","Booties","Grabs"))
 
 p2 + geom_boxplot(aes(x=Label,
                      y=value,
                      color=NULL), alpha=0.1) +
     stat_compare_means(comparisons = my_comparisons,  
                        method = "wilcox.test", label = "p.format")+
-  ylab("Diversity value")
+  ylab("Alpha Diversity")
 ```
 
+
+### Wetting_Agent (N/A group removed)
+
+Look at significance of metrics across the wetting agents at p < 0.05 (or your alpha value of interest):
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=11, fig.height=7}
+
+# When there is more than two variables, ggpubr prints the pvalues on the plot but since the package is not mainatined anymore now with two variables, it won't work so in the next section, I am calculating p valus manually and adding to the plots.
+physeq.filtered <- subset_samples(physeq.filtered, Wetting_Agent != "N/A")
+erDF <- erDF[erDF$Sample_ID %in% rownames(sample_data(physeq.filtered)),]
+
+# my_comparisons <- list( c( "PBS","BPW"),
+#                           c("PBS","N/A"),
+#                         c("BPW", "N/A")
+# )
+
+# Observed & Simpson
+p2 <- plot_richness_estimates(physeq = physeq.filtered, 
+                             erDF = erDF[,c(2,3,5,6,8)],
+                             "Wetting_Agent", 
+                             color = "Wetting_Agent",
+                             #title="Alpha diversity of Treatment (Wilcoxon rank-sum test)"
+                             )+
+     theme(plot.title = element_text(face="bold", size=16),
+           axis.text.x = element_text(face="plain", size=10, angle= 90, vjust=0.4, hjust=1),
+           axis.title = element_text(face="plain", size=14,),
+           #axis.text.x = element_text(face="plain", size=11, vjust=1, hjust=1),
+           strip.text = element_text(size = 10, margin = margin()))+
+  ggtitle("Alpha Diversity of Treatment Groups", subtitle = "Kruskall-Wallis test")+
+   scale_color_manual(values = dittoSeq::dittoColors()[1:12])
+
+p2$data$Label <- factor(p2$data$Wetting_Agent,levels = c("PBS", "BPW"))
+#p2$data$Label <- factor(p2$data$Wetting_Agent,levels = c("PBS", "BPW","N/A"))
+
+p2 + geom_boxplot(aes(x=Label,
+                     y=value,
+                     color=NULL), alpha=0.1) +
+  stat_compare_means()+
+    # stat_compare_means(comparisons = my_comparisons,  
+    #                    method = "wilcox.test", label = "p.format")+
+  ylab("Alpha Diversity")
+```
+
+### Commodity_Type
+
+Look at significance of metrics (Kruskal-Wallis Non-parametric test) across the commodity types at p < 0.05 (or your alpha value of interest):
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=11, fig.height=7}
+
+# When there is more than two variables, ggpubr prints the pvalues on the plot but since the package is not mainatined anymore now with two variables, it won't work so in the next section, I am calculating p valus manually and adding to the plots.
+
+# my_comparisons <- list(c("Beets","Leefy Greens"),
+#                        c("Beets","Peppers"),
+#                        c("Beets","Apples"),
+#                        c("Beets","Melons"),
+#                        c("Leefy Greens","Peppers"),
+#                        c("Leefy Greens","Apples"),
+#                        c("Leefy Greens","Melons"),
+# )
+
+# Observed & Simpson
+p2 <- plot_richness_estimates(physeq = physeq.filtered, 
+                             erDF = erDF[,c(2,3,5,6,8)],
+                             "Commodity_Type", 
+                             color = "Commodity_Type",
+                             #title="Alpha diversity of Treatment (Wilcoxon rank-sum test)"
+                             )+
+     theme(plot.title = element_text(face="bold", size=16),
+           axis.text.x = element_text(face="plain", size=10, angle= 90, vjust=0.4, hjust=1),
+           axis.title = element_text(face="plain", size=14,),
+           #axis.text.x = element_text(face="plain", size=11, vjust=1, hjust=1),
+           strip.text = element_text(size = 10, margin = margin()))+
+  ggtitle("Alpha Diversity of Treatment Groups", subtitle = "Kruskall-Wallis test")+
+   scale_color_manual(values = dittoSeq::dittoColors()[1:12])
+
+# p2$data$Label <- factor(p2$data$Wetting_Agent,levels = c("PBS", "BPW"))
+# #p2$data$Label <- factor(p2$data$Wetting_Agent,levels = c("PBS", "BPW","N/A"))
+
+p2 + geom_boxplot(aes(x=Commodity_Type,
+                     y=value,
+                     color=NULL), alpha=0.1) +
+  stat_compare_means(label = "p.format")+
+    #stat_compare_means(comparisons = my_comparisons,  
+     #                   method = "wilcox.test", label = "p.format")+
+  ylab("Alpha Diversity")
+```
+
+## Mixed models 
+
+Now I will run a mixed model to test significance of our variables while considering for variations by location. I use the lme() function in R to run a Linear Mixed-Effects Model for **Sample_Type x Wetting_Agent** group by considering Location as a random factor in the model. For non-normal metrics of alpha diversity, I also separately used glm() function with Location as a random factor in the model with poisson distribution.
+
+### Shannon diversity
+
+### Linear regression
+
+
+- The **Sample_Type x Wetting_Agent** group is significant at p < 0.05.
+
+
+```{r, warning=FALSE}
+shan.lm <-lme(fixed=Shannon~group, data=merged, random= ~1|Location)
+
+#shan.lm <-lme(fixed=Shannon~Sample_Type*Wetting_Agent, data=merged, random= ~1|Location)
+# Gives me error below:
+#Error in MEEM(object, conLin, control$niterEM) : 
+#Singularity in backsolve at level 0, block 1
+
+# X <- model.matrix(~Sample_Type*Wetting_Agent, data=merged)
+# caret::findLinearCombos(X)
+
+#Anova(lme(fixed=Shannon~group, data=merged, random= ~1|Location), type = "III")
+Anova(shan.lm,type = "III")
+#summary(shan) #model output, gives correlations between factors and maximum likelihood results
+
+```
+
+
+- Now let's use a post-hoc test (Tukey) to compare pairwise for factors with more than two levels.
+
+
+```{r, warning=FALSE}
+
+#shan <-lme(fixed=Shannon~group, data=merged, random= ~1|Location)
+summary(glht(shan.lm,linfct=mcp(group="Tukey"))) #pairwise contrasts for testing differences between factors with >2 levels
+```
+
+
+
+### Generalized Linear regression with poisson distribution
+
+```{r, warning=FALSE}
+shan.glm <- glmer(Shannon~group + (1|Location), family=poisson, data=merged)
+Anova(shan.glm, type = "III")
+```
+
+- Now let's use a post-hoc test (Tukey) to compare pairwise for factors with more than two levels.
+
+
+```{r, warning=FALSE}
+
+#shan <-lme(fixed=Shannon~group, data=merged, random= ~1|Location)
+summary(glht(shan.glm,linfct=mcp(group="Tukey"))) #pairwise contrasts for testing differences between factors with >2 levels
+```
+
+### Observed ASVs
+
+### Linear regression
+
+- The **Sample_Type x Wetting_Agent** group is significant at p < 0.05.
+
+
+```{r, warning=FALSE}
+obs.lm <-lme(fixed=Observed~group, data=merged, random= ~1|Location)
+Anova(obs.lm, type = "III")
+#summary(shan) #model output, gives correlations between factors and maximum likelihood results
+```
+
+
+- Now let's use a post-hoc test (Tukey) to compare pairwise for factors with more than two levels.
+
+
+```{r, warning=FALSE}
+summary(glht(obs.lm,linfct=mcp(group="Tukey"))) #pairwise contrasts for testing differences between factors with >2 levels
+```
+
+
+### Generalized Linear regression with poisson distribution
+
+```{r, warning=FALSE}
+obs.glm <- glmer(Observed~group + (1|Location), family=poisson, data=merged)
+Anova(obs.glm, type = "III")
+```
+
+- Now let's use a post-hoc test (Tukey) to compare pairwise for factors with more than two levels.
+
+```{r, warning=FALSE}
+
+#shan <-lme(fixed=Shannon~group, data=merged, random= ~1|Location)
+summary(glht(obs.glm,linfct=mcp(group="Tukey"))) #pairwise contrasts for testing differences between factors with >2 levels
+```
+
+### Chao1
+
+### Linear regression
+
+```{r, warning=FALSE}
+chao.lm <-lme(fixed=Chao1~group, data=merged, random= ~1|Location)
+
+Anova(chao.lm, type = "III")
+#summary(shan) #model output, gives correlations between factors and maximum likelihood results
+```
+
+group is not significant at p < 0.05.
+
+
+- Now let's use a post-hoc test (Tukey) to compare pairwise for factors with more than two levels.
+
+```{r, warning=FALSE}
+
+summary(glht(chao.lm,linfct=mcp(group="Tukey"))) #pairwise contrasts for testing differences between factors with >2
+```
+
+### Generalized Linear regression with poisson distribution
+
+```{r, warning=FALSE}
+obs.glm <- glmer(Chao1~group + (1|Location), family=poisson, data=merged)
+Anova(obs.glm, type = "III")
+```
+
+
+- Now let's use a post-hoc test (Tukey) to compare pairwise for factors with more than two levels.
+
+```{r, warning=FALSE}
+
+summary(glht(obs.glm,linfct=mcp(group="Tukey"))) #pairwise contrasts for testing differences between factors with >2
+```
+
+
+### Simpson
+
+### Linear regression
+
+- Sample_Type and Wetting_Agent group is significant at p < 0.05.
+
+```{r, warning=FALSE}
+simpson.lm <-lme(fixed=Simpson~group, data=merged, random= ~1|Location)
+
+Anova(simpson.lm, type = "III")
+#summary(shan) #model output, gives correlations between factors and maximum likelihood results
+```
+
+- Now let's use a post-hoc test (Tukey) to compare pairwise for factors with more than two levels.
+
+
+```{r, warning=FALSE}
+
+summary(glht(simpson.lm,linfct=mcp(group="Tukey"))) #pairwise contrasts for testing differences between factors with >2 levels
+```
+
+
+### Generalized Linear regression with poisson distribution
+
+```{r, warning=FALSE}
+simpson.glm <- glmer(Simpson~group + (1|Location), family=poisson, data=merged)
+Anova(simpson.glm, type = "III")
+```
+
+- Now let's use a post-hoc test (Tukey) to compare pairwise for factors with more than two levels.
+
+
+```{r, warning=FALSE}
+
+summary(glht(simpson.glm,linfct=mcp(group="Tukey"))) #pairwise contrasts for testing differences between factors with >2 levels
+```
+
+
+### Faith's PD
+
+### Linear regression
+
+- Sample_Type and Wetting_Agent group is significant at p < 0.05.
+
+```{r, warning=FALSE}
+pd.lm <-lme(fixed=PD~group, data=merged, random= ~1|Location)
+
+Anova(pd.lm, type = "III")
+#summary(shan) #model output, gives correlations between factors and maximum likelihood results
+```
+
+
+- Now let's use a post-hoc test (Tukey) to compare pairwise for factors with more than two levels.
+
+
+```{r, warning=FALSE}
+
+summary(glht(pd.lm,linfct=mcp(group="Tukey"))) #pairwise contrasts for testing differences between factors with >2 levels
+```
+
+
+### Generalized Linear regression with poisson distribution
+
+```{r, warning=FALSE}
+pd.glm <- glmer(Simpson~group + (1|Location), family=poisson, data=merged)
+Anova(pd.glm, type = "III")
+```
+
+- Now let's use a post-hoc test (Tukey) to compare pairwise for factors with more than two levels.
+
+
+```{r, warning=FALSE}
+
+summary(glht(pd.glm,linfct=mcp(group="Tukey"))) #pairwise contrasts for testing differences between factors with >2 levels
+```
+
+
+## Scatterplots
+
+Example scatterplot of BPW vs PBS for Chao1. Since sample size is different for each, I had to subset BPW to 58 (out of 59) to equal to the PBS group. Otherwise, R gives error for the scatterplot. It is not easy to draw the regression line for both. If you have a code you used in R, it would be great if you could share but still think for microbiome alpha diversity, better to look at the boxplots above.
+
+```{r}
+
+### scatterplot
+
+#### Observed ASVs
+# 
+# ggplot(merged, aes(x = Observed, y = Chao1)) +
+#   geom_point()
+# 
+# +
+#   geom_labelsmooth(aes(label = 'My Label'), fill = "white",
+#                 method = "lm", formula = y ~ x,
+#                 size = 6, linewidth = 2, boxlinewidth = 0.6) +
+#   theme_bw() + guides(color = 'none') # remove legend
+
+plot(merged[merged$Wetting_Agent=="BPW",]$Chao1[1:58], merged[merged$Wetting_Agent=="PBS",]$Chao1,
+     main='Chao1', 
+     xlab='PBS', ylab='BPW')
+# plot a regression line 
+# abline(lm(merged[merged$Wetting_Agent=="BPW",]$Chao1[1:58] ~ merged[merged$Wetting_Agent=="PBS",]$Chao1, data = merged), col = "blue")
+
+
+# ggplot(merged, aes(x=Wetting_Agent, y=Chao1)) + geom_point() +
+#             geom_smooth(method="lm", se=FALSE)
+
+
+```

@@ -41,6 +41,20 @@ library(Hmisc)
 library(DESeq2)
 library(decontam)
 library(ComplexHeatmap)
+library(randomcoloR)
+
+library(microbiome)
+
+library(data.table)
+
+library(lme4)
+
+library(geomtextpath)
+
+library(lmtest) # for testing homoskedasticity
+
+library(microbiomeutilities)
+#devtools::install_github("microsud/microbiomeutilities")
 
 # this seems to have issues with caching and phyloseq
 # library(ggtree) 

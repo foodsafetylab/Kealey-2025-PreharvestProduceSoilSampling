@@ -17,7 +17,7 @@ physeq.filtered <- readRDS('results/physeq.filtered.RDS')
 # metadata<-readRDS("results/metadata.RDS")
 ```
 
-For beta diversity we perform initial prevalence filtering and agglomeration (either tip or taxonomic rank-based). Tip-based is recommended for PacBio or other long-read technologies, while taxonomic rank-based is recommended for standard short-read Illumina sequencing.
+For beta diversity, we perform initial prevalence filtering and agglomeration (either tip or taxonomic rank-based). Tip-based is recommended for PacBio or other long-read technologies, while taxonomic rank-based is recommended for standard short-read Illumina sequencing.
 
 ## Additional Filtering
 
@@ -45,7 +45,7 @@ What about `sample_sums`? What is the range in total counts per sample?
 range(sample_sums(physeq.filtered))
 ```
 
-We have some at the low end, with `r sum(sample_sums(physeq.filtered) <= 5000)` sample(s) less than 5k counts.
+We have some at the low end, with `r sum(sample_sums(physeq.filtered) <= 5000)` sample(s) less than 5k counts. We seem to have higher number of reads for Booties and Grabs than Drags.
 
 ```{r PrevalenceFiltering-11 }
 
@@ -55,14 +55,54 @@ df <- data.frame(
                    ),
     Group = factor(sample_data(physeq.filtered)$group, ordered = TRUE))
 
+df$Group <- factor(df$Group, levels = c("Drags_PBS", "Drags_BPW", "Booties_PBS","Booties_BPW","Grabs_N/A"))
+
 p <- ggplot(data = df, aes(y = SampleSums, x = Names, fill = Group))+
-   scale_fill_manual(values = dittoSeq::dittoColors()[1:100])+ 
-  geom_bar(stat = 'identity') + 
-  theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 6)) 
+   scale_fill_manual(values = dittoSeq::dittoColors()[1:100]) +
+  ylab("Total read count per sample")+
+  xlab("Groups")+geom_bar(stat = 'identity') + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 6))
+  
+p$data$Group <- factor(p$data$Group,levels = c("Drags_PBS", "Drags_BPW", "Booties_PBS","Booties_BPW","Grabs_N/A"))
+
+p$data$Names <- factor(p$data$Names,levels = c(
+  "Drags_PBS_Beets",
+  "Drags_PBS_Leafy Greens",
+  "Drags_PBS_Peppers",
+  "Drags_PBS_Apples",
+  "Drags_PBS_Melons",
+  
+  "Drags_BPW_Beets",
+  "Drags_BPW_Leafy Greens",
+  "Drags_BPW_Peppers",
+  "Drags_BPW_Apples",
+  "Drags_BPW_Melons",
+  
+  "Booties_PBS_Beets",
+  "Booties_PBS_Leafy Greens",
+  "Booties_PBS_Peppers",
+  "Booties_PBS_Apples",
+  "Booties_PBS_Melons",
+  
+  "Booties_BPW_Beets",
+  "Booties_BPW_Leafy Greens",
+  "Booties_BPW_Peppers",
+  "Booties_BPW_Apples",
+  "Booties_BPW_Melons",
+  
+  "Grabs_N/A_Beets",
+  "Grabs_N/A_Leafy Greens",
+  "Grabs_N/A_Peppers",
+  "Grabs_N/A_Apples",
+  "Grabs_N/A_Melons"))
+
+
 ggplotly(p)
 ```
 
 How do the ASV counts correlate with the read counts? (is higher number of reads correlated with higher number of ASVs?)
+
+These do not correlate only slightly with the read counts.
 
 ```{r PrevalenceFiltering-12, echo=FALSE, message=FALSE}
 myData <- data.frame(
@@ -78,7 +118,7 @@ p <- ggplot(data = myData, aes(x = Reads, y = OTUSums)) +
 ggplotly(p)
 ```
 
-These correlate fine with the read counts.
+
 
 <!-- We will skip tip agglomeration in favor of taxa agglomeration. But first let's do prevalence filtering. -->
 
@@ -301,9 +341,13 @@ physeq0
 
 ```{r PrevalenceFiltering-27 }
 table(tax_table(physeq0)[,"Phylum"], exclude = NULL)
+
+df = data.frame(table(tax_table(physeq0)[,"Phylum"])) %>% setNames(c("Domain", "Count"))
+df.low = df[df$Count < 5 ,]
+
 ```
 
-There are 5 taxa with low features (1-4 OTUs). No NA's present, so don't need to filter NAs. Now, let's get an idea of prevalence, or how many samples each ASV is present in. We can make this more or less strict as needed, but for now we're only including ASVs that are present in at least 1 sample.
+There are `r nrow(df.low)` taxa with low features (1-4 OTUs). No NA's present, so don't need to filter NAs. Now, let's get an idea of prevalence, or how many samples each ASV is present in. We can make this more or less strict as needed, but for now we're only including ASVs that are present in at least 1 sample.
 
 ```{r PrevalenceFiltering-29 }
 # What is this doing?  It calculates a vector with the count being the # samples with a count > 0.
@@ -338,20 +382,21 @@ knitr::kable(tmp)
 
 ```{r PrevalenceFiltering-31}
 #subset <- subset_samples(physeq.filtered, Specimen !="NegativeControl")
-#df2 <- sample_data(physeq.filtered) %>% data.frame() %>% dplyr::count(group)
-df2 <- sample_data(physeq.filtered) %>% data.frame() %>% dplyr::count(SampleType)
-prevThreshold <- min(df2$n)
+df2 <- sample_data(physeq.filtered) %>% data.frame() %>% dplyr::count(group)
+#df2 <- sample_data(physeq.filtered) %>% data.frame() %>% dplyr::count(Sample_Type)
 
-#pthresh <- 0.02
+#prevThreshold <- min(df2$n)
+prevThreshold <- 10
+#pthresh <- 0.05
 
 pthresh <- prevThreshold / nsamples(physeq.filtered) 
 
-#prevThreshold <- pthresh * nsamples(physeq.filtered)
+#(prevThreshold <- pthresh * nsamples(physeq.filtered))
 ```
 
 <br>
 
-Most prevalent are `r tmp$Phylum[1]`, `r tmp$Phylum[2]`, `r tmp$Phylum[3]` and `r tmp$Phylum[4]`. We can plot these out to get more resolution. Let's graph the prevalence threshold using `r round(pthresh, digits=2)`. This is around `r round(pthresh * nsamples(physeq0))` samples. We can modify this setting, but we'll leave as is for now. The following plot shows the fraction of samples vs the total abundance for that, which helps give some idea on what to retain.
+The top four most prevalent are `r tmp$Phylum[1]`, `r tmp$Phylum[2]`, `r tmp$Phylum[3]` and `r tmp$Phylum[4]`. We can plot these out to get more resolution. Let's graph the prevalence threshold using `r round(pthresh, digits=2)`. This is around `r round(pthresh * nsamples(physeq0))` samples. We can modify this setting, but we'll leave as is for now. The following plot shows the fraction of samples vs the total abundance for that, which helps give some idea on what to retain.
 
 ```{r PrevalenceFiltering-32}
 ggplot(prevdf,
@@ -383,7 +428,7 @@ df <- data.frame(
     Reads_Retained = sample_sums(physeq.prev) / sample_sums(physeq.filtered),
     Names = factor(sample_data(physeq.prev)$Label, ordered = TRUE, levels = unique(sample_data(physeq.prev)$Label)),
     Group = factor(sample_data(physeq.prev)$group, ordered = TRUE),
-    SampleID = factor(sample_data(physeq.prev)$SampleID, ordered = TRUE)
+    SampleID = factor(sample_data(physeq.prev)$Sample_ID, ordered = TRUE)
 )
 
 #df$Group <- factor(df$Group,levels = c("Ctrl_D0","Ctrl_D19","Ctrl_D1016",
@@ -418,6 +463,14 @@ df <- df %>%
 #df %>% mutate(name=factor(SampleID, levels=SampleID))
 
 p <- ggplot(data = df, aes(x = SampleID, y = Reads_Retained, fill = Group))
+
+p$data$Group <- factor(p$data$Group,levels = c(
+                  "Drags_PBS",
+                   "Drags_BPW",
+                   "Booties_PBS",
+                   "Booties_BPW", 
+                   "Grabs_N/A"))
+
 p + geom_bar(stat = "identity") + theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   scale_y_continuous(labels = scales::percent) +
    scale_x_discrete(limits = levels(df$SampleID))
@@ -480,8 +533,14 @@ Are there rows in there with 'NA'?
 apply(tax_table(physeq.prev), 2, function(x) sum(is.na(x)))
 ```
 
-A steep increase in unassigned ranks from Family to Genus. Let's use Family level for taxa agglomeration in `tax_glom()` package in phyloseq.
 
+Let's save the filtered file for later use.
+
+```{r PrevalenceFiltering}
+saveRDS(physeq.prev, file = "results/phyloseq.prevfiltered.notglommed.RDS")
+```
+
+A steep increase in unassigned ranks from Family to Genus. Let's use Family level for taxa agglomeration in `tax_glom()` package in phyloseq.
 
 
 ```{r}
@@ -489,7 +548,7 @@ A steep increase in unassigned ranks from Family to Genus. Let's use Family leve
 
 ```
 
-<!-- Yes, though not nearly as many as the overall # of taxa. This suggests maybe using the phylogenetic tree and `tip_glom`. We have been seeing this work with better fidelity with more recent data sets, particularly from PacBio sequences, but it does require a little checking on the phylogenetic branch lengths to determine the best cutoff.  The code below is based on work Lindsay Clark and Jenny have done in the group.  -->
+<!-- Yes, though not nearly as many as the overall # of taxa. This suggests maybe using the phylogenetic tree and `tip_glom`. We have been seeing this work with better fidelity with more recent data sets, particularly from PacBio sequences, but it does require a little checking on the phylogenetic branch lengths to determine the best cutoff. The code below is based on work Lindsay Clark and Jenny have done in the group.  -->
 
 <!-- ## Tree glom  -->
 

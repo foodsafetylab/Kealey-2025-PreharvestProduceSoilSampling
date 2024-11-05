@@ -29,7 +29,7 @@ These steps remove or subset the original data by:
 5.  Remove contaminants from cross-contamination (requires controls)
 6.  Prune out low-count taxa
 
-We save this file for alpha rarefaction, alpha diversity, and prevalence filtering/agglomeration
+We save this file for alpha rarefaction, alpha diversity, and prevalence filtering/agglomeration.
 
 ## Subset of data
 
@@ -56,10 +56,11 @@ physeq.filtered <- prune_samples(sample_sums(physeq.filtered) > 1000, physeq.fil
 physeq.filtered
 ```
 
-This removed `r nrow(sample_data(physeq)) - nrow(sample_data(physeq.filtered))` samples, now has `r nrow(sample_data(physeq.filtered))` samples. Samples removed in this step are shown below:
+This removed `r nrow(sample_data(physeq)) - nrow(sample_data(physeq.filtered))` samples, and resulting data (phyloseq object) has `r nrow(sample_data(physeq.filtered))` samples. Samples removed in this step are shown below:
 
 ```{r}
 diff1<-setdiff(physeq@sam_data$SampleID, physeq.filtered@sam_data$SampleID)
+diff1
 #data.frame((physeq@sam_data)[diff1,2:6]) %>% kable()%>% kable_styling()
 ```
 
@@ -73,17 +74,17 @@ If we remove samples, there may be some taxa that are no longer present in the s
 physeq.filtered <- subset_taxa(physeq.filtered, taxa_sums(physeq.filtered) > 0)
 ```
 
--   After removing these taxa (if any), we have `r ncol(otu_table(physeq.filtered))` taxa
+-   After removing taxa with zero counts (if any), we have `r ncol(otu_table(physeq.filtered))` taxa left.
 
 ## Removing artifacts
 
-We need to remove ASVs that are likely artefactual, for example from host or from other sources. We should get rid of:
+We need to remove ASVs that are likely artifacts, that could be sourced from host DNA or other sources. We should get rid of:
 
 -   Unranked/unassigned <!-- -   Eukarya (kingdom): not for this dataset -->
 
 ### Unranked/unassigned
 
-The RDP classifier and other classifiers will sometimes misclassify sequences that have very little sequence similarity to 16S based on the way it works; these tend to classify poorly by rank (NA or 'Unclassified' up to and sometimes including Domain/Kingdom).
+The RDP classifier and other classifiers will sometimes misclassify sequences that have very little sequence similarity to 16S. These tend to classify poorly by rank (NA or 'Unclassified' up to and sometimes including Domain/Kingdom).
 
 What proportion of the ASVs are unassigned at each rank?
 
@@ -98,7 +99,7 @@ ranks %>% kable %>%
   kable_styling()
 ```
 
-Quite a bit is unassigned at the Species level `r ranks[7,]` but this is normal. Genus and Family levels have less than `r max(ranks[5:6,])` unassigned. Phylum, Class and Order levels have less than `r max(ranks[1:3,])` unassigned.
+Quite a bit is unassigned at the Species level `r ranks[7,]` but this is common to see as amplicon data usually cannot finely classify at the lower levels (compared to shotgun or long read data for example that can capture more variation). Genus and Family levels have less than `r max(ranks[5:6,])` unassigned. Phylum, Class and Order levels have less than `r max(ranks[1:3,])` unassigned. Other reasons for high percentages of unclassified at the lower taxonomic level are sample specific diversity and novelty, what is available in the database and whether exact matches can be found using DADA2 (requires exact match which is harder to find with amplicon data).
 
 How many Domain/Kingdom levels are there?
 
@@ -108,11 +109,12 @@ data.frame(table(tax_table(physeq.filtered)[,'Domain'])) %>% setNames(c("Domain"
 
 df = data.frame(table(tax_table(physeq.filtered)[,'Domain'])) %>% setNames(c("Domain", "Count"))
 df.archaea = df[df$Domain == "Archaea",]
+df.unclassified = df[df$Domain == "Unclassified",]
 ```
 
 ### Remove non-bacterial taxa
 
-We have `r df.archaea$Count` Archaea. Let's remove that.
+We have `r df.archaea$Count` Archaea. Let's remove them.
 
 ```{r }
 physeq.filtered <- subset_taxa(physeq.filtered, Domain != "Archaea")
@@ -126,7 +128,7 @@ data.frame(table(domain == "Archaea")) %>% setNames(c("Archaea", "Count")) %>%
 
 ### Unclassified taxa at the phylum
 
-There are a few that are unclassified across almost all ranks; anything not classified at least to a phylum level are uninformative. We should go ahead and remove these.
+There are `r df.unclassified$Count` that are unclassified across almost all ranks; anything not classified at least to a phylum level are uninformative. We should go ahead and remove these.
 
 How many Phylum are unassigned? (TRUE means these are unassigned)
 
@@ -138,7 +140,7 @@ data.frame(table(phy == "Unclassified")) %>% setNames(c("Unclassified", "Count")
 ```
 
 -   `r sum(phy$Phylum=="Unclassified")` unassigned Phylum. Export the unassigned sequences to a file.
-    -   *results/unasn-sequences/unassigned-phylum-level.fna*
+-   *results/unasn-sequences/unassigned-phylum-level.fna*
 -   Subset those sequences that have assignments at least at the Phylum level.
 -   Remove any sample that has 0 counts after the subset taxa
 
@@ -160,7 +162,7 @@ physeq.filtered
 
 ### Eukaryotic sequences
 
-After removing the unclassified phyla, the Eukaryotic reads are also removed as a result.
+After removing the unclassified phyla, we check for Eukaryotic reads but none are there.
 
 ```{r }
 table(tax_table(physeq.filtered)[,'Domain'])['Eukaryota']
@@ -192,9 +194,9 @@ table(tax_table(physeq.filtered)[,'Domain'])['Eukaryota']
 
 ### Organelle 16S (mitochondria, chloroplast)
 
-Next we check for organelle 16S. These could arise in chloroplast or mitochondria. They are classified under different rank criteria in Silva, so we need to check for them separately.
+Next we check for organelle 16S (i.e., chloroplast or mitochondria). They are classified under different rank criteria in Silva (Chloroplast is under the Order rank and Mitochondria under Family), so we need to check for them separately.
 
-Any hits for chloroplast? These are found under the `Class` rank.
+Any hits for chloroplast?
 
 ```{r }
 table(tax_table(physeq.filtered)[,'Order'])['Chloroplast']
@@ -239,7 +241,8 @@ physeq.filtered <- subset_taxa(physeq.filtered, is.na(Order) | Order != 'Chlorop
 #physeq.filtered
 ```
 
-## Remove taxa with 0 counts
+
+## Remove taxa or samples with 0 counts
 
 Do we need to filter out any taxa with 0 counts? Let's check how many have taxonomic sums equal to 0
 
@@ -351,15 +354,14 @@ Let's look at the filtered data. We have `r ntaxa(physeq.filtered)` taxa and `r 
 physeq.filtered
 ```
 
-Here are the sample variables for analysis:
+Below are the sample variables for analysis. Note these include data from read tracking.
 
 ```{r }
 sample_variables(physeq.filtered)
 ```
 
-Note these include data from read tracking.
 
-Here is a simple summary of the phylogenetic tree (this is midpoint-rooted in the workflow) with the top 50 most abundant ASVs.
+Here is a simple summary of the phylogenetic tree (this is midpoint-rooted in the workflow) with the top 50 most abundant ASVs at the family level. Same patterns here observed here similar to the raw composition plot as more similarities are observed between the wetting agent within the sampling methods.
 
 ```{r }
 # get the top 50 taxa based on overall taxa sums
@@ -367,6 +369,8 @@ myTaxa1 <- names(sort(taxa_sums(physeq.filtered), decreasing = TRUE))[1:50]
 
 # generate a tmp instance with only those taxa
 ex0 = prune_taxa(myTaxa1, physeq.filtered)
+
+sample_data(ex0)$group <- factor(sample_data(ex0)$group, levels = c("Drags_PBS","Drags_BPW","Booties_PBS","Booties_BPW","Grabs_N/A"))
 
 # plot with only those, labeling as needed
 plot_tree(ex0, label.tips = 'Family',

@@ -25,19 +25,14 @@ options(stringsAsFactors = FALSE)
 
 ## Project Description
 
-Researchers in this project performed a preliminary study to evaluate which wetting agent (PBS or BPW) is best for quantifying APC, total coliforms, and generic E.coli in commercial produce fields. They are also investigating on whether the drag and boot swabs (photo attached Figure0) collect more indicator organisms in the soil in comparison to soil grabs, where they take small scoops of soil with a disinfected shovel. So far, no biologically meaningful differences (<1 log CFU/g) differences was observed in total coliforms or aerobic plate counts between the two different wetting agents. 
+Researchers in this project performed a preliminary study to evaluate which wetting agent (PBS or BPW) is best for quantifying APC, total coliforms, and generic E.coli in commercial produce fields. They are also investigating on whether the drag and boot swabs (photo attached Figure0) collect more indicator organisms in the soil in comparison to soil grabs, where they take small scoops of soil with a disinfected shovel. So far, no biologically meaningful differences (<1 log CFU/g) was observed in total coliforms or aerobic plate counts between the two different wetting agents. 
 
 ![Figure0. Investigating whether the drag and boot swabs collect more indicator organisms in the soil in comparison to soil grabs](drags_and_boots.jpg){width=100%}
 
-In this data analysis, a microbial community analysis is performed to see if there are any additional differences between the sampling sites and methods. V3V4 region of 16S ribosomal gene was amplified and sequenced using the Fluigim platform. There is a total of 144 samples. The factors are described below:
+In this data analysis, a microbial community analysis is performed to see if there are any additional differences between the sampling sites and methods. V3V4 region of 16S ribosomal gene was amplified and sequenced using the Fluidigm platform. There is a total of 144 samples. The factors are described below:
 
-**Commodity_Type:**
+The two most important factors of interest are **Sample_Type** and **Wetting_Agent**.
 
--   Beets
--   Leafy Greens
--   Peppers
--   Apples
--   Melons
 
 **Sample_Type:**
 
@@ -49,6 +44,17 @@ In this data analysis, a microbial community analysis is performed to see if the
 
 -   PBS
 -   BPW
+
+**Commodity_Type:**
+
+-   Beets
+-   Leafy Greens
+-   Peppers
+-   Apples
+-   Melons
+
+
+**Confounding factor**
 
 **Location**
 
@@ -127,9 +133,11 @@ tmp$Wetting_Agent <- factor(tmp$Wetting_Agent, levels = unique(tmp$Wetting_Agent
 
 tmp$Sample_ID <- as.character(tmp$Sample_ID)
 
+tmp <- tmp[order(tmp$Wetting_Agent, tmp$Sample_Type, tmp$Commodity_Type), ]
+
 # Create a group -----
 
-tmp$group <- paste(tmp$Sample_Type,tmp$Commodity_Type, sep = "_")
+tmp$group <- paste(tmp$Sample_Type,tmp$Wetting_Agent, sep = "_")
 
 tmp$group <- factor(tmp$group, levels = unique(tmp$group))
 
@@ -137,15 +145,9 @@ tmp$group <- factor(tmp$group, levels = unique(tmp$group))
 
 # Create Label -----
 
-tmp$Label <- paste(tmp$group, tmp$Wetting_Agent, sep = "_")
+tmp$Label <- paste(tmp$group, tmp$Commodity_Type, sep = "_")
 
 tmp$Label <- factor(tmp$Label, levels = unique(tmp$Label))
-
-# Create Label2 -----
-
-tmp$Label2 <- paste(tmp$Label, tmp$Location, sep = "_")
-
-tmp$Label2 <- factor(tmp$Label2, levels = unique(tmp$Label2))
 
 
 #ncol(tmp)
@@ -154,9 +156,9 @@ tmp$Label2 <- factor(tmp$Label2, levels = unique(tmp$Label2))
 
 # Move column positions -----
 
-#write.csv(tmp, "../data/metadata_edited.csv", row.names = F)
+write.csv(tmp, "data/metadata_edited.csv", row.names = F)
 
-knitr::kable(head(tmp, n = 15), show_col_types = FALSE)
+knitr::kable(head(tmp, n = 15), show_col_types = FALSE, row.names = F)
 
 ```
 
@@ -164,7 +166,7 @@ knitr::kable(head(tmp, n = 15), show_col_types = FALSE)
 
 We also read in QC to check the quality of data. DADA2 [@callahan2016dada2] implements a novel algorithm that models the errors introduced during amplicon sequencing, and uses that error model to infer the true sample composition. Excerpt from [here](https://bioconductor.org/packages/devel/bioc/vignettes/dada2/inst/doc/dada2-intro.html).
 
-Samples with `input:` \< 1000, `seqtab.merged.nochim` \< 1000 or `PctKept` \< 40 are highlighted in the table below
+<!-- Samples with `input:` \< 1000, `seqtab.merged.nochim` \< 1000 or `PctKept` \< 40 are highlighted in the table below -->
 
 ```{r} 
 track <- read_delim("data/Plain/QC/all.readtracking.merged.txt",show_col_types = FALSE)
@@ -179,7 +181,7 @@ track$PctKept <- round(track$seqtab.merged.nochim/track$input*100,2)
 
 ```{r proces results}
 
-knitr::kable(track[c(1:20),c(10,9,2:8,11)])  %>%
+knitr::kable(track[c(1:20),c(10,9,3:8,11)])  %>%
 
   kable_styling()
 
@@ -198,6 +200,14 @@ knitr::kable(track[c(1:20),c(10,9,2:8,11)])  %>%
 #### Samples that have < 1000 final reads
 
 ```{r proces results2}
+
+df <- track[,-2]
+
+```
+
+There are no samples with < 1000 final reads. In fact, the lowest number of reads in any sample is `r min(df$seqtab.merged.nochim)`.
+
+```{r proces}
 
 df <- track[,-2]
 
@@ -220,9 +230,9 @@ Now, we plot the QC results from DADA2 read fate at each step in stacked barplot
 
 ReadFate <- dplyr::select(track, input:seqtab.merged.nochim)
 
-ReadFate$Label <- factor(track$Sample_ID, levels = track$Sample_ID)
+ReadFate$Label <- factor(track$Sequencing_ID, levels = track$Sequencing_ID)
 
-rownames(ReadFate) <- track$SampleID # adjust rownames
+rownames(ReadFate) <- track$Sequencing_ID # adjust rownames
 
 # Convert to long format
 
@@ -244,7 +254,7 @@ df$Fate <- factor(df$Fate, levels = unique(df$Fate),
 
 # x11(width = 12)
 
-ggplot(df, aes(x = Label, y = pct, fill = forcats::fct_rev(Fate))) +
+p <- ggplot(df, aes(x = Label, y = pct, fill = forcats::fct_rev(Fate))) +
 
   geom_bar(position="fill", stat="identity") +
 
@@ -272,13 +282,15 @@ ggplot(df, aes(x = Label, y = pct, fill = forcats::fct_rev(Fate))) +
 
   scale_y_continuous(labels = scales::percent)
 
+ggplotly(p)
+
 #ggsave("results/DADA2_StackedPct_bySample.jpeg")
 
 ###### CREATE READ NUMBER PLOT  ######
 
 # # Numbers of reads
 
-ggplot(df, aes(x = Label, y = pct / 1e6, fill = forcats::fct_rev(Fate))) +
+p <- ggplot(df, aes(x = Label, y = pct / 1e6, fill = forcats::fct_rev(Fate))) +
 
   geom_bar(position="stack", stat="identity") +
 
@@ -304,6 +316,7 @@ theme(axis.text.x = element_text(angle = 45, hjust = 1, face = "bold", size = 10
 
   scale_fill_manual("Fate",values = dittoSeq::dittoColors()[1:6]  )
 
+ggplotly(p)
 #ggsave("results/DADA2_StackedNum_bySample.jpeg")
 
 ```

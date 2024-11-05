@@ -1,0 +1,85 @@
+---
+title: "Taxa Plots"
+execute:
+  echo: false
+  message: false
+  warning: false
+---
+
+```{r, include=FALSE}
+# Load functions in "common_code.R"
+# at some point this should be moved into bookdown
+source("src/common_code.R", local = knitr::knit_global())
+```
+
+```{r}
+physeq.prev <- readRDS('results/phyloseq.prevfiltered.notglommed.RDS')
+```
+
+
+## Taxa plots for Coliforms
+
+Based on my search, coliform bacteria belong to Enterobacteriaceae family and include species of the following genera: Citrobacter, Enterobacter, Escherichia, Hafnia, Klebsiella, Serratia, and Yersinia, so I filtered the data to only include these genera and then created violin plots for those. If you can give me a list of bacteria at any level you are interested in, I can create a plot for it.
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=11, fig.height=7}
+
+set.seed(1)
+n <- 230
+palette <- distinctColorPalette(n)
+
+Level <- "Genus"
+
+# Calculate relab for samples -----
+#(tax.level <- subset_taxa(physeq.prev, Family=="Enterobacteriaceae"))
+
+tax.level <- subset_taxa(physeq.prev, Genus %in% c("Citrobacter", "Enterobacter", "Escherichia", "Hafnia", "Klebsiella", "Serratia", "Yersinia"))
+tax.level <- tax_glom(tax.level, Level, NArm = F)
+tax.level.rel <- microbiome::transform(tax.level, "compositional")
+# Agglomerate at taxa level -----
+tax.level.rel <- aggregate_rare(tax.level.rel, level = Level, detection = 0.1/100, prevalence = 5/100)
+
+## rename samples
+taxa_names(tax.level.rel) <- make.unique(as.vector(as.data.frame(tax_table(tax.level.rel))[[Level]]))
+
+# Grab taxa info
+data <- t(as.data.frame(otu_table(tax.level.rel)))
+data <- rownames_to_column(as.data.frame(data), "Sample_ID")
+
+# Grab metadata info
+mapping_frame <- sample_data(tax.level.rel)
+mapping_frame <- as.data.frame(as.matrix(mapping_frame))
+
+# Combine and prep for plot
+final <- merge(data, mapping_frame, by="Sample_ID")
+final_tab <- reshape2::melt(final)
+
+# Make a quick section for boxplot plotting
+  p <- ggplot(data = final_tab, aes(x = fct_reorder(variable, value, .fun = median, .desc =TRUE), y=value, fill = variable)) 
+  
+  p$data$group <- factor(p$data$group,levels = c(
+                  "Drags_PBS",
+                   "Drags_BPW",
+                   "Booties_PBS",
+                   "Booties_BPW", 
+                   "Grabs_N/A"))
+  p + 
+    #geom_boxplot() + 
+      geom_violin() + 
+    scale_fill_brewer(palette = "Set2", drop=F) +
+    theme_bw() + 
+    #ggtitle(paste(microbe, Level, "Box Plot"), subtitle = sublabl) 
+    #facet_grid(get(group)~.) + 
+    xlab("Coliforms")+
+    ylab("Relative Abundance")+
+     guides(fill = guide_legend(title = "Genus"))+
+    facet_wrap(.~group,nrow = 1)+
+    theme(axis.text.x = element_text(angle = 45, hjust = 1, size=12), plot.margin = unit(c(0,0,0,1.25), "cm"),
+          plot.subtitle=element_text(size=9, hjust=0.5, face="italic", color="black"),
+          legend.text=element_text(size=12),
+          strip.text.x = element_text(size = 14),
+          legend.title = element_text(size = 14, face = "bold"),
+          axis.title = element_text(size = 14, face = "bold"))
+
+```
+

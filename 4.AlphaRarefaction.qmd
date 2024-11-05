@@ -43,4 +43,4 @@ ggplotly(p1)
 
 ```
 
-The curves are not flattening perfectly but it's still relatively well which means we have sufficient reads to show microbial diversity in these samples.
+The curves are not flattening despite large number of reads, but soil samples have very diverse microbial communities so it is hard to capture all diversity no matter how big the sample sequence count is.

@@ -1,13 +1,13 @@
 
 # Preface
 
-This workbook describes the analysis of comparing Juno versus X9 sequencing instruments. Code (not shown in the report) is initialized and loaded here. We don't include the code in the report but make this available as needed; please see the [Github repository](https://github.com/HPCBio/StandardBio_16S_Fluidigm_Comparison_July2024) for this project for the final version (requires permissions).
+This workbook describes the analysis of 16S microbiome data from Stasiewicz lab. Code (not shown in the report) is initialized and loaded here. We don't include the code in the report but make this available as needed; please see the [Github repository]({{< var Github_repository >}}) for this project for the final version (requires permissions).
 
-Data from the primary project folder should be downloaded from [here](https://uofi.app.box.com/folder/273290144952) (requires permissions). Note the following assumes all data are in the **data/** folder, and all paths in the code will very likely need to be modified to rerun these (this is partly due to how the code and relevant parts of the analysis are sourced).
+Data from the primary project folder should be downloaded from [here]({{< var Box >}}) (requires permissions). Note the following assumes all data are in the **data/** folder, and all paths in the code will very likely need to be modified to rerun these (this is partly due to how the code and relevant parts of the analysis are sourced).
 
 ## Project Structure
 
-This project contains a directory called **StandardBio_16S_Fluidigm_Comparison_July2024**, the qmd files are located directly under the project folder. The following directories are in the main project directory:
+This project contains a directory called **{{< var folder >}}**, the qmd files are located directly under the project folder. The following directories are in the main project directory:
 
 -   **src**: contains the *common_code.R* that is loaded for each qmd file
 
