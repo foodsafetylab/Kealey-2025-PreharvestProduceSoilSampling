@@ -1,0 +1,44 @@
+project:
+  type: book
+
+book:
+    title: 'Stasiewicx 16S Microbiome Study Oct 2024'
+    author:
+        - Negin Valizadegan
+        - Collectively written by HPCBio
+        - Roy J. Carver Biotechnology Center
+        - University of Illinois
+    date: today
+    date-format: MMM DD, YYYY
+    chapters:
+        - index.qmd
+        - 1.InitialSetup.qmd
+        - 2.RawComposition.qmd
+        - 3.Filtering.qmd
+        - 4.AlphaRarefaction.qmd
+        - 5.AlphaDiversity.qmd
+        - 6.PrevalenceFiltering.qmd
+        - 7.1.PrevFilteredAgglomComposition.qmd
+        - 7.2.PrevFilteredAgglomComposition.qmd
+        - 7.3.PrevFilteredAgglomComposition.qmd
+        - 8.BetaDiversity.qmd
+        - 9.TaxaPlots.qmd
+        - References.qmd
+        - SessionInfo.qmd
+
+
+      
+execute:
+  echo: false
+  message: false
+  warning: false
+
+toc: false
+
+number-sections: false
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo

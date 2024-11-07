@@ -1,0 +1,46 @@
+---
+title: "Alpha rarefaction"
+execute:
+  echo: false
+  message: false
+  warning: false
+---
+
+```{r, include=FALSE}
+# Load functions in "common_code.R"
+# at some point this should be moved into bookdown
+source("src/common_code.R", local = knitr::knit_global())
+```
+
+```{r}
+physeq.filtered <- readRDS('results/physeq.filtered.RDS')
+```
+
+Let's check whether we're adequately capturing diversity. This is a simple alpha rarefaction curve; here we want to see the number of taxa plateau as the counts increase.
+
+```{r, include=FALSE}
+p <- suppressMessages(ranacapa::ggrare(physeq.filtered, step = 500,
+            color = "group",
+           # label = "Label",
+            se = FALSE,
+            plot = FALSE,
+            ))
+```
+
+```{r}
+p <- p + ggtitle("Alpha Rarefaction")+
+   scale_color_manual(values = dittoSeq::dittoColors()[1:22])
+ggplotly(p)
+```
+
+
+Richness is not very different among different treatments, now look at each individual treatment.
+
+```{r}
+p1 <- p + facet_wrap(~group) + ggtitle("Alpha Rarefaction by Day")  # theme(legend.position = c(0.8, 0.2))
+
+ggplotly(p1)
+
+```
+
+The curves are not flattening despite large number of reads, but soil samples have very diverse microbial communities so it is hard to capture all diversity no matter how big the sample sequence count is.

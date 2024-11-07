@@ -1,0 +1,14 @@
+
+# R and package versions
+
+```{r, include=FALSE}
+# Load functions in "common_code.R"
+# at some point this should be moved into bookdown
+source("src/common_code.R", local = knitr::knit_global())
+```
+
+
+
+```{r}
+sessionInfo()
+```

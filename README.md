@@ -33,3 +33,13 @@ Include acknowledgements relevant to the project here.
 
 ## Funding
 Include the source of project funding here.
+=======
+This repository is a template that can be used for starting an basic targeted microbiome analysis;
+
+## List of Contributers:
+
+- Chris Fields
+- Jessica Holmes
+- Lindsay Clark
+- Negin Valizadegan
+- Yifei Kang

@@ -1,0 +1,187 @@
+---
+title: "Filtered Composition: SampleType x Wetting_Agent x Commodity_Type"
+execute:
+  echo: false
+  message: false
+  warning: false
+---
+
+# Composition plots (unfiltered data)
+
+```{r, include=FALSE}
+# Load functions in "common_code.R"
+# at some point this should be moved into bookdown
+source("src/common_code.R", local = knitr::knit_global())
+```
+
+```{r}
+physeq <- readRDS("results/phyloseq.prevfiltered.RDS")
+```
+
+Overall compositional summary (stacked bar plots) for all unfiltered samples grouped by sample type x wetting agent x commodity type. Data has been transformed to relative abundance (no prior added). The unclassified taxa at a specific rank plot are shown at the next classified rank. For example, if you see the word family after a taxa name for the Genus plot, it means the genus for that specific taxa was unclassified but we were able to identify it at the family level. Here, the first 20 taxa (if present) are shown in each plot and the rest are categorized into the "Other" category. Note that if all levels are unclassified for an ASV, then the ASV name is shown on the plot.
+
+
+```{r, results='asis', fig.keep='all', message = FALSE, warning = FALSE, echo = FALSE}
+# meta <- read.csv("data/metadata_qc.csv")
+# head(meta)
+
+#physeq <- subset_taxa(physeq, Species != 'Gallus_gallus_(chicken)')
+physeq <- prune_samples(sample_sums(physeq) > 0, physeq)
+
+#Get relative abundance
+physeq1 <- merge_samples(physeq, "Label")
+#physeq1 <- merge_samples(physeq, "Treatment")
+#physeq.prop <- transform_sample_counts(physeq1, function(x) x/sum(x) )
+#sample_data(physeq.prop)$SampleSums <- sample_sums(physeq1)
+
+# Prepare for plotting -----
+physeq.plot <- physeq1
+
+
+#Get relative abundance
+#physeq.prop <- transform_sample_counts(physeq, function(x) x/sum(x) )
+#sample_data(physeq.prop)$SampleSums <- sample_sums(physeq)
+#physeq.plot <- physeq.prop
+
+#Pull out top 20 ASVs
+#physeq.subset <- names(sort(taxa_sums(physeq), decreasing=TRUE))[1:20]
+#physeq.plot <- prune_taxa(physeq.subset, physeq.prop)
+
+#Pull out top 20 families
+#physeq.plot <- physeq
+#physeq.plot <- tax_glom(physeq.prop, taxrank = "Family")
+#physeq.plot <- tax_glom(physeq.plot, taxrank = "Family")#
+#tax.ordered <- names(sort(taxa_sums(physeq), TRUE)[1:20])
+#physeq.plot <- subset_taxa(physeq.prop, taxa_names(physeq) %in% tax.ordered)
+
+physeq.plot <- physeq.plot %>% tax_fix(unknowns = c("aerolata", "alkalitolerans", "ginsenosidimutans", "niabensis", "radiotolerans", "turicensis","Unclassified","Unknown Family","agariperforans", "agri", "ginsengisoli", "humi", "koreensis", "kribbensis", "luteus", "massiliensis", "populi", "soli", "terrae"))
+
+
+```
+
+```{r, results='asis', fig.keep='all', message = FALSE, warning = FALSE, echo = FALSE, fig.width=15, fig.height=15}
+# comp_barplot needs counts data; do not transform to relative abundance; it internally does that for you
+ranks <- c("Phylum","Class", "Order", "Family", "Genus", "Species")
+
+plots <- lapply(ranks, function (x) { 
+
+  #Plot relative abundance
+  p <- comp_barplot(physeq.plot, x, n_taxa = 20, 
+                    #label = "Group",
+                    #group_by = "Group",
+                   sample_order = c(
+                   "Drags_PBS_Beets",
+                   "Drags_PBS_Leafy Greens",
+                   "Drags_PBS_Peppers",
+                   "Drags_PBS_Apples",
+                   "Drags_PBS_Melons",
+                   
+                   "Drags_BPW_Beets",
+                   "Drags_BPW_Leafy Greens",
+                   "Drags_BPW_Peppers",
+                   "Drags_BPW_Apples",
+                   "Drags_BPW_Melons",
+                   
+                   "Booties_PBS_Beets",
+                   "Booties_PBS_Leafy Greens",
+                   "Booties_PBS_Peppers",
+                   "Booties_PBS_Apples",
+                   "Booties_PBS_Melons",
+                   
+                   "Booties_BPW_Beets",
+                   "Booties_BPW_Leafy Greens",
+                   "Booties_BPW_Peppers",
+                   "Booties_BPW_Apples",
+                   "Booties_BPW_Melons",
+                   
+                   "Grabs_N/A_Beets" ,
+                   "Grabs_N/A_Leafy Greens",
+                   "Grabs_N/A_Peppers",
+                   "Grabs_N/A_Apples",
+                   "Grabs_N/A_Melons"
+                   
+                    #,facet_by = "DonorID"
+                   ))
+# p$data$Group <- factor(p$data$Group,levels = c("Control_D0", "Control_D1_D9",
+#                                      "Control_D10_D16","Non-polar chlorophyll_D1_D9",
+#                                      "Non-polar chlorophyll_D10_D16",
+#                                      "Polar chlorophyll_D1_D9",
+#                                      "Polar chlorophyll_D10_D16"))
+ # p$data$SampleID <- factor(p$data$SampleID, levels = c("M1_D0","M2_D0","M3_D0", "M1_C7","M1_C8",
+ #                          "M1_C9","M2_C7","M2_C8","M2_C9","M3_C7",
+ #                          "M3_C8","M3_C9","M1_C15","M1_C16","M2_C14",
+ #                          "M2_C15", "M2_C16", "M3_C14", "M3_C15", 
+ #                          "M3_C16", "M1_NP7", "M1_NP8", "M1_NP9", 
+ #                          "M2_NP7", "M2_NP8","M2_NP9","M3_NP7","M3_NP8",
+ #                          "M3_NP9", "M1_NP14", "M1_NP15", "M1_NP16",
+ #                          "M2_NP14", "M2_NP15", "M2_NP16", "M3_NP14",
+ #                          "M3_NP15", "M3_NP16", "M1_P7","M1_P8","M1_P9",
+ #                          "M2_P7","M2_P8","M2_P9","M3_P7","M3_P8","M3_P9",
+ #                          "M1_P14","M1_P15","M1_P16","M2_P14","M2_P15","M2_P16",
+ #                          "M3_P14","M3_P15" ,"M3_P16")) 
+                                                                  
+  p1 <- p + theme(legend.key.size = unit(0.25, 'cm'), #change legend key size
+        legend.title = element_text(size=8), #change legend title font size
+        legend.text = element_text(size=7),
+        axis.title.x=element_blank(),
+        axis.text.x = element_text(size = 8, angle=45, 
+                                 #  vjust = 0.5, hjust=1,
+                                   face = "bold"),
+        axis.text.y = element_text(size = 8, angle=0, 
+                                 #  vjust = 0.5, hjust=1,
+                                   face = "bold")
+        #axis.ticks.x = element_blank()
+        ) +
+        ylab("Relative Abundance") +
+   scale_fill_manual(values = dittoSeq::dittoColors()[1:21])
+  #+ theme(plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), 
+                              #  "inches"))
+  
+ ggplotly(p1)
+})
+
+names(plots) <- ranks
+
+# Build list of outputs
+# See https://stackoverflow.com/questions/9469504/access-and-preserve-list-names-in-lapply-function for example
+# not sure if there is an easy way to make a function out of these.
+output <- list()
+for(rank in ranks){
+  # Header for iteration, note Rmd heading ranks and adjust accordingly
+  output[[length(output) + 1L]] <- paste0("## ", rank)
+
+  # Plot
+  output[[length(output) + 1L]] <- plots[[rank]]
+}
+
+# Render the outputs
+for(j in 1:length(output)){
+  x <- output[[j]]
+
+  if(inherits(x, "character")){
+    cat("\n")
+    cat(x)
+  } else if(inherits(x, "knitr_kable")){
+    cat("\n")
+    print(x)
+  }
+  else {
+    # print the html piece of the htmlwidgets
+    cat("\n")
+    cat(htmltools::renderTags(as_widget(x))$html)
+  }
+}
+```
+
+```{r echo=FALSE, messages=FALSE, warning=FALSE, fig.width=6, fig.height=12}
+# Attach the Dependencies since they do not get included with renderTags(...)$html
+deps <- lapply(
+  Filter(f = function(x){inherits(x,"htmlwidget")}, x = output),
+  function(hw){
+    htmltools::renderTags(hw)$dependencies
+  }
+)
+htmltools::attachDependencies(x = htmltools::tagList(), value = unlist(deps,recursive=FALSE))
+```
+
+

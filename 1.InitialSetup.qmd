@@ -1,0 +1,376 @@
+---
+title: "Data exploration"
+execute:
+  echo: false
+  message: false
+  warning: false
+bibliography: references.bib
+---
+
+# Data exploration
+
+```{r, include=FALSE}
+# Load functions in "common_code.R"
+# at some point this should be moved into bookdown
+source("src/common_code.R", local = knitr::knit_global())
+```
+
+```{r, echo=FALSE}
+library(knitr)
+knitr::opts_chunk$set(echo = FALSE, include = TRUE)
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+
+options(stringsAsFactors = FALSE)
+```
+
+## Project Description
+
+Researchers in this project performed a preliminary study to evaluate which wetting agent (PBS or BPW) is best for quantifying APC, total coliforms, and generic E.coli in commercial produce fields. They are also investigating on whether the drag and boot swabs (photo attached Figure0) collect more indicator organisms in the soil in comparison to soil grabs, where they take small scoops of soil with a disinfected shovel. So far, no biologically meaningful differences (<1 log CFU/g) was observed in total coliforms or aerobic plate counts between the two different wetting agents. 
+
+![Figure0. Investigating whether the drag and boot swabs collect more indicator organisms in the soil in comparison to soil grabs](drags_and_boots.jpg){width=100%}
+
+In this data analysis, a microbial community analysis is performed to see if there are any additional differences between the sampling sites and methods. V3V4 region of 16S ribosomal gene was amplified and sequenced using the Fluidigm platform. There is a total of 144 samples. The factors are described below:
+
+The two most important factors of interest are **Sample_Type** and **Wetting_Agent**.
+
+
+**Sample_Type:**
+
+-   Drags
+-   Booties
+-   Grabs
+
+**Wetting_Agent:**
+
+-   PBS
+-   BPW
+
+**Commodity_Type:**
+
+-   Beets
+-   Leafy Greens
+-   Peppers
+-   Apples
+-   Melons
+
+
+**Confounding factor**
+
+**Location**
+
+-   SSF
+-   SIL
+-   TX
+
+
+## Import and Preprocessing
+
+### Create a phyloseq object
+
+This only need to be done once, load file directly from next step once created.
+
+-   `seqtab`: "data/Phyloseq/seqtab_final.md5.merged.RDS"
+
+-   `taxtab`: "data/Phyloseq/tax_final.md5.merged.RDS"
+
+-   `tree`: "data/Plain/Trees/rooted.merged.newick"
+
+-   `refseq`: "data/Plain/Sequences/asvs.md5.nochim.merged.fna"
+
+-   `metadata`: created based on the file/information PI provided
+
+```{r}
+
+taxa <- readRDS(file = "data/Phyloseq/tax_final.md5.merged.RDS")
+
+asvs <- readRDS(file = "data/Phyloseq/seqtab_final.md5.merged.RDS")
+
+rownames(asvs) <-sub(".merged.filtered.fastq.gz", "", rownames(asvs)) # trim row names to avoid later issues with physeq object
+
+seqraw <- Biostrings::readDNAStringSet("data/Plain/Sequences/asvs.md5.nochim.merged.fna",
+
+                                         format = 'fasta')
+
+#Load tree
+
+tree.tmp <- read.tree("data/Plain/Trees/rooted.merged.newick")
+
+# Build phyloseq object
+
+physeq <- phyloseq(tax_table(taxa),otu_table(asvs, taxa_are_rows = FALSE),seqraw, tree.tmp)
+
+#Rename taxonomy rankings
+
+colnames(tax_table(physeq)) <- c("Domain", "Phylum", "Class", "Order", "Family", "Genus", "Species")
+
+```
+
+### Import and adjust the metadata
+
+We import the metadata created manually and convert variables to factors and make new variables combining our variables of interest. The first 15 lines of metadata is shown below:
+
+```{r, show_col_types = FALSE}
+
+# Load the metadata
+
+#tmp <- read_xlsx("data/metadata.xlsx", sheet = 1)
+
+tmp <- read.csv("data/metadata.csv")
+
+#colnames(tmp)[2] <- c("SampleID")
+
+#head(tmp)
+
+# Convert to factor -----
+
+tmp$Location <- factor(tmp$Location, levels = unique(tmp$Location))
+
+tmp$Commodity_Type <- factor(tmp$Commodity_Type, levels = unique(tmp$Commodity_Type))
+
+tmp$Sample_Type <- factor(tmp$Sample_Type, levels = unique(tmp$Sample_Type))
+
+tmp$Wetting_Agent <- factor(tmp$Wetting_Agent, levels = unique(tmp$Wetting_Agent))
+
+tmp$Sample_ID <- as.character(tmp$Sample_ID)
+
+tmp <- tmp[order(tmp$Wetting_Agent, tmp$Sample_Type, tmp$Commodity_Type), ]
+
+# Create a group -----
+
+tmp$group <- paste(tmp$Sample_Type,tmp$Wetting_Agent, sep = "_")
+
+tmp$group <- factor(tmp$group, levels = unique(tmp$group))
+
+#tmp$group2 <- gsub("NegativeControl_NC", "NegativeControl", tmp$group)
+
+# Create Label -----
+
+tmp$Label <- paste(tmp$group, tmp$Commodity_Type, sep = "_")
+
+tmp$Label <- factor(tmp$Label, levels = unique(tmp$Label))
+
+
+#ncol(tmp)
+
+#View(tmp)
+
+# Move column positions -----
+
+write.csv(tmp, "data/metadata_edited.csv", row.names = F)
+
+knitr::kable(head(tmp, n = 15), show_col_types = FALSE, row.names = F)
+
+```
+
+### DADA2 results
+
+We also read in QC to check the quality of data. DADA2 [@callahan2016dada2] implements a novel algorithm that models the errors introduced during amplicon sequencing, and uses that error model to infer the true sample composition. Excerpt from [here](https://bioconductor.org/packages/devel/bioc/vignettes/dada2/inst/doc/dada2-intro.html).
+
+<!-- Samples with `input:` \< 1000, `seqtab.merged.nochim` \< 1000 or `PctKept` \< 40 are highlighted in the table below -->
+
+```{r} 
+track <- read_delim("data/Plain/QC/all.readtracking.merged.txt",show_col_types = FALSE)
+track$Sequencing_ID <- gsub("V3_F357_N_V4_R805-", "", track$SampleID)
+track <- track[order(as.numeric(track$Sequencing_ID)),]
+tmp <- tmp[order(as.numeric(tmp$Sequencing_ID)),]
+track$Sample_ID <- tmp$Sample_ID
+track$PctKept <- round(track$seqtab.merged.nochim/track$input*100,2)
+```
+
+#### Top 20 samples
+
+```{r proces results}
+
+knitr::kable(track[c(1:20),c(10,9,3:8,11)])  %>%
+
+  kable_styling()
+
+#%>%
+
+ # column_spec(2, background = ifelse(track$input < 1000, "darkorange", "none")) %>%
+
+#  column_spec(7, background = ifelse(track$seqtab.merged.nochim < 1000, "salmon2", "none"))
+
+#%>%
+
+  #column_spec(8, background = ifelse(track$PctKept < 40, "brown2", "none"))
+
+```
+
+#### Samples that have < 1000 final reads
+
+```{r proces results2}
+
+df <- track[,-2]
+
+```
+
+There are no samples with < 1000 final reads. In fact, the lowest number of reads in any sample is `r min(df$seqtab.merged.nochim)`.
+
+```{r proces}
+
+df <- track[,-2]
+
+df <- df[which(track$seqtab.merged.nochim < 1000),]
+
+#nrow(df)
+
+knitr::kable(df)  %>% kable_styling() %>% column_spec(2, background = ifelse(track$input < 1000, "darkorange", "none")) %>% column_spec(7, background = ifelse(track$seqtab.merged.nochim < 1000, "salmon2", "none")) %>% column_spec(8, background = ifelse(track$PctKept < 40, "brown2", "none"))
+```
+
+#### DADA2 results plotted for each ID
+
+Now, we plot the QC results from DADA2 read fate at each step in stacked barplot both by percentage and number per sample.
+
+```{r results="asis", show_col_types = FALSE, fig.width=10}
+
+###### CREATE  PERCENTAGE PLOT  ######
+
+#Do star read fates
+
+ReadFate <- dplyr::select(track, input:seqtab.merged.nochim)
+
+ReadFate$Label <- factor(track$Sequencing_ID, levels = track$Sequencing_ID)
+
+rownames(ReadFate) <- track$Sequencing_ID # adjust rownames
+
+# Convert to long format
+
+df <- tidyr::pivot_longer(ReadFate,
+
+                           input:seqtab.merged.nochim,
+
+                           names_to = "Fate",
+
+                           values_to = "pct")
+
+# Convert Fate column to factor
+
+df$Fate <- factor(df$Fate, levels = unique(df$Fate),
+
+                   ordered = TRUE)
+
+# ##### Percentages of reads
+
+# x11(width = 12)
+
+p <- ggplot(df, aes(x = Label, y = pct, fill = forcats::fct_rev(Fate))) +
+
+  geom_bar(position="fill", stat="identity") +
+
+  scale_fill_manual("Fate",values = dittoSeq::dittoColors()[1:6]  )+
+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, face = "bold", size = 10)) +
+
+  theme(axis.text.y = element_text(angle = 0, hjust = 1, face = "bold", size = 10)) +
+
+   theme(axis.title.x = element_text(face = "bold", size = 14)) +
+
+  theme(axis.title.y = element_text(face = "bold", size = 14)) +
+
+  theme(legend.text=element_text(size=11))+
+
+  theme(legend.title=element_text(size=12))+
+
+  theme(legend.position="bottom")+
+
+  theme(plot.title =element_text(face = "bold", size = 14))+
+
+   ggtitle("Percentage of reads in DADA2 sample inference") +
+
+  ylab("Percent of reads") +
+
+  scale_y_continuous(labels = scales::percent)
+
+ggplotly(p)
+
+#ggsave("results/DADA2_StackedPct_bySample.jpeg")
+
+###### CREATE READ NUMBER PLOT  ######
+
+# # Numbers of reads
+
+p <- ggplot(df, aes(x = Label, y = pct / 1e6, fill = forcats::fct_rev(Fate))) +
+
+  geom_bar(position="stack", stat="identity") +
+
+theme(axis.text.x = element_text(angle = 45, hjust = 1, face = "bold", size = 10)) +
+
+  theme(axis.text.y = element_text(angle = 0, hjust = 1, face = "bold", size = 10)) +
+
+   theme(axis.title.x = element_text(face = "bold", size = 14)) +
+
+  theme(axis.title.y = element_text(face = "bold", size = 14)) +
+
+  theme(legend.text=element_text(size=11))+
+
+  theme(legend.title=element_text(size=12))+
+
+  theme(legend.position="bottom")+
+
+  theme(plot.title =element_text(face = "bold", size = 14))+
+
+  ggtitle("Number of reads in DADA2 sample inference") +
+
+  ylab("Millions of reads") +
+
+  scale_fill_manual("Fate",values = dittoSeq::dittoColors()[1:6]  )
+
+ggplotly(p)
+#ggsave("results/DADA2_StackedNum_bySample.jpeg")
+
+```
+
+### Combine metadata and QC info.
+
+```{r}
+
+# tmp$Sequencing_ID <- as.character(tmp$Sequencing_ID)
+# 
+# track$Sequencing_ID <- as.character(track$Sequencing_ID)
+# 
+# track <- track[match(track$Sequencing_ID, tmp$Sequencing_ID),]
+
+tmp2 <- sample_data(merge(tmp, track[,-9], by="Sample_ID"))
+
+sample_names(tmp2) <- tmp2$Sample_ID
+
+tmp2$Sample_ID <- as.character(tmp2$Sample_ID)
+
+sample_names(physeq) <- gsub("V3_F357_N_V4_R805-","",sample_names(physeq))
+
+rownames(otu_table(physeq)) <- rownames(tmp2)
+
+sample_data(physeq) <- tmp2
+
+```
+
+We then combine all metadata together (initital metadata + QC information) for analysis. Below you see a summary of the initial phyloseq object using QIIME2 taxonomy assignments. We have `r nrow(tax_table(physeq))` taxa across `r ncol(tax_table(physeq))` ranks and `r nrow(sample_data(physeq))` samples. Note that the Phyloseq package uses the term "OTU" to describe features, but since we used dada2 to create the feature table, we actually have ASVs (Amplicon Sequence Variants), which are essentially 100% OTUs. So anywhere you see the term OTU, remember that these are actually ASVs.
+
+```{r}
+
+print(physeq)
+
+```
+
+Combined metadata and QC is shown below:
+
+```{r}
+
+#sample_data(physeq) <- tmp2
+
+sample_data(physeq)[,c(3:7)] %>% as("data.frame") %>% head %>% knitr::kable()
+
+sample_data(physeq)[,c(9:ncol(sample_data(physeq)))] %>% as("data.frame") %>% head %>% knitr::kable()
+
+```
+
+```{r}
+
+## Save file
+
+saveRDS(physeq, 'results/physeq.raw.RDS')
+
+#tax_table(subset_taxa(physeq, Genus=="Lepidosauria"))
+
+```

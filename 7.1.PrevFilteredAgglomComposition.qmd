@@ -1,0 +1,150 @@
+---
+title: "Filtered Composition: SampleID"
+execute:
+  echo: false
+  message: false
+  warning: false
+---
+
+# Composition plots (unfiltered data)
+
+```{r, include=FALSE}
+# Load functions in "common_code.R"
+# at some point this should be moved into bookdown
+source("src/common_code.R", local = knitr::knit_global())
+```
+
+```{r}
+physeq <- readRDS("results/phyloseq.prevfiltered.RDS")
+```
+
+Overall compositional summary (stacked bar plots) for all unfiltered samples shown by sample ID first ordered by the wetting agent, then by the Sample type and third by the commodity. Data has been transformed to relative abundance (no prior added). The unclassified taxa at a specific rank plot are shown at the next classified rank. For example, if you see the word family after a taxa name for the Genus plot, it means the genus for that specific taxa was unclassified but we were able to identify it at the family level. Here, the first 20 taxa (if present) are shown in each plot and the rest are categorized into the "Other" category. Note that if all levels are unclassified for an ASV, then the ASV name is shown on the plot.
+
+
+```{r, results='asis', fig.keep='all', message = FALSE, warning = FALSE, echo = FALSE}
+# meta <- read.csv("data/metadata_qc.csv")
+# head(meta)
+
+#physeq <- subset_taxa(physeq, Species != 'Gallus_gallus_(chicken)')
+physeq <- prune_samples(sample_sums(physeq) > 0, physeq)
+
+#Get relative abundance
+#physeq1 <- merge_samples(physeq, "group")
+#physeq1 <- merge_samples(physeq, "Treatment")
+#physeq.prop <- transform_sample_counts(physeq1, function(x) x/sum(x) )
+#sample_data(physeq.prop)$SampleSums <- sample_sums(physeq1)
+
+# Reorder samples
+physeq.df <- as.data.frame(sample_data(physeq))
+physeq.df2 <- physeq.df[order(physeq.df$Wetting_Agent, physeq.df$Sample_Type, physeq.df$Commodity_Type), ]
+
+#View(sample_data(ps_reorder(physeq, rownames(physeq.df))))
+physeq <- ps_reorder(physeq, rownames(physeq.df2))
+#head(sample_data(physeq))
+
+#Get relative abundance
+#physeq.prop <- transform_sample_counts(physeq, function(x) x/sum(x) )
+#sample_data(physeq.prop)$SampleSums <- sample_sums(physeq)
+#physeq.plot <- physeq.prop
+
+#Pull out top 20 ASVs
+#physeq.subset <- names(sort(taxa_sums(physeq), decreasing=TRUE))[1:20]
+#physeq.plot <- prune_taxa(physeq.subset, physeq.prop)
+
+#Pull out top 20 families
+#physeq.plot <- physeq
+#physeq.plot <- tax_glom(physeq.prop, taxrank = "Family")
+#physeq.plot <- tax_glom(physeq.plot, taxrank = "Family")#
+#tax.ordered <- names(sort(taxa_sums(physeq), TRUE)[1:20])
+#physeq.plot <- subset_taxa(physeq.prop, taxa_names(physeq) %in% tax.ordered)
+
+# Prepare for plotting -----
+physeq.plot <- physeq
+
+physeq.plot <- physeq.plot %>% tax_fix(unknowns = c("aerolata", "alkalitolerans", "ginsenosidimutans", "niabensis", "radiotolerans", "turicensis","Unclassified","Unknown Family","agariperforans", "agri", "ginsengisoli", "humi", "koreensis", "kribbensis", "luteus", "massiliensis", "populi", "soli", "terrae"))
+
+
+```
+
+```{r, results='asis', fig.keep='all', message = FALSE, warning = FALSE, echo = FALSE, fig.width=15, fig.height=15}
+# comp_barplot needs counts data; do not transform to relative abundance; it internally does that for you
+ranks <- c("Phylum","Class", "Order", "Family", "Genus", "Species")
+
+plots <- lapply(ranks, function (x) { 
+
+  #Plot relative abundance
+  p <- comp_barplot(physeq.plot, x, n_taxa = 20, 
+                    #label = "Group",
+                    #group_by = "Group",
+                  sample_order = as.character(rownames(physeq.df2))
+                   )
+# p$data$Group <- factor(p$data$Group,levels = c("Control_D0", "Control_D1_D9",
+#                                      "Control_D10_D16","Non-polar chlorophyll_D1_D9",
+#                                      "Non-polar chlorophyll_D10_D16",
+#                                      "Polar chlorophyll_D1_D9",
+#                                      "Polar chlorophyll_D10_D16"))
+                                                                  
+  p1 <- p + theme(legend.key.size = unit(0.25, 'cm'), #change legend key size
+        legend.title = element_text(size=8), #change legend title font size
+        legend.text = element_text(size=7),
+        axis.title.x=element_blank(),
+        axis.text.x = element_text(size = 8, angle=45, 
+                                 #  vjust = 0.5, hjust=1,
+                                   face = "bold"),
+        axis.text.y = element_text(size = 8, angle=0, 
+                                 #  vjust = 0.5, hjust=1,
+                                   face = "bold")
+        #axis.ticks.x = element_blank()
+        ) +
+        ylab("Relative Abundance") +
+   scale_fill_manual(values = dittoSeq::dittoColors()[1:21])
+  #+ theme(plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), 
+                              #  "inches"))
+  
+ ggplotly(p1)
+})
+
+names(plots) <- ranks
+
+# Build list of outputs
+# See https://stackoverflow.com/questions/9469504/access-and-preserve-list-names-in-lapply-function for example
+# not sure if there is an easy way to make a function out of these.
+output <- list()
+for(rank in ranks){
+  # Header for iteration, note Rmd heading ranks and adjust accordingly
+  output[[length(output) + 1L]] <- paste0("## ", rank)
+
+  # Plot
+  output[[length(output) + 1L]] <- plots[[rank]]
+}
+
+# Render the outputs
+for(j in 1:length(output)){
+  x <- output[[j]]
+
+  if(inherits(x, "character")){
+    cat("\n")
+    cat(x)
+  } else if(inherits(x, "knitr_kable")){
+    cat("\n")
+    print(x)
+  }
+  else {
+    # print the html piece of the htmlwidgets
+    cat("\n")
+    cat(htmltools::renderTags(as_widget(x))$html)
+  }
+}
+```
+
+```{r echo=FALSE, messages=FALSE, warning=FALSE, fig.width=6, fig.height=12}
+# Attach the Dependencies since they do not get included with renderTags(...)$html
+deps <- lapply(
+  Filter(f = function(x){inherits(x,"htmlwidget")}, x = output),
+  function(hw){
+    htmltools::renderTags(hw)$dependencies
+  }
+)
+htmltools::attachDependencies(x = htmltools::tagList(), value = unlist(deps,recursive=FALSE))
+```
+
