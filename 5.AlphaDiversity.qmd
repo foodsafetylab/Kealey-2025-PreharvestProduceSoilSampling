@@ -106,58 +106,58 @@ None of the metrics meet all the criteria for using parametric tests, so we will
 
 ## Alpha diversity general plots
 
-### Sample_Type x Wetting_Agent
+<!-- ### Sample_Type x Wetting_Agent -->
 
-Look at significance of metrics across treatments at p < 0.05 (or your alpha value of interest):
+<!-- Look at significance of metrics across treatments at p < 0.05 (or your alpha value of interest): -->
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=11, fig.height=7}
+<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width=11, fig.height=7} -->
 
-# When there is more than two variables, ggpubr prints the pvalues on the plot but since the package is not mainatined anymore now with two variables, it won't work so in the next section, I am calculating p valus manually and adding to the plots.
-#physeq.filtered <- subset_samples(physeq.filtered, Sex == "Female")
-#erDF <- erDF[erDF$SampleID %in% rownames(sample_data(physeq.filtered)),]
+<!-- # When there is more than two variables, ggpubr prints the pvalues on the plot but since the package is not mainatined anymore now with two variables, it won't work so in the next section, I am calculating p valus manually and adding to the plots. -->
+<!-- #physeq.filtered <- subset_samples(physeq.filtered, Sex == "Female") -->
+<!-- #erDF <- erDF[erDF$SampleID %in% rownames(sample_data(physeq.filtered)),] -->
 
-my_comparisons <- list( c( "Drags_PBS","Drags_BPW"),
-                          c("Drags_PBS","Booties_PBS"),
-                        c("Drags_PBS","Booties_BPW"),
-                          c("Drags_PBS","Grabs_N/A"),
-                        c( "Drags_BPW","Booties_PBS"),
-                        c("Drags_BPW","Booties_BPW"),
-                          c("Drags_BPW","Grabs_N/A"),
-                         c( "Booties_PBS","Booties_BPW"),
-                        c("Booties_PBS","Grabs_N/A"),
-                          c("Booties_BPW","Grabs_N/A")
-)
+<!-- my_comparisons <- list( c( "Drags_PBS","Drags_BPW"), -->
+<!--                           c("Drags_PBS","Booties_PBS"), -->
+<!--                         c("Drags_PBS","Booties_BPW"), -->
+<!--                           c("Drags_PBS","Grabs_N/A"), -->
+<!--                         c( "Drags_BPW","Booties_PBS"), -->
+<!--                         c("Drags_BPW","Booties_BPW"), -->
+<!--                           c("Drags_BPW","Grabs_N/A"), -->
+<!--                          c( "Booties_PBS","Booties_BPW"), -->
+<!--                         c("Booties_PBS","Grabs_N/A"), -->
+<!--                           c("Booties_BPW","Grabs_N/A") -->
+<!-- ) -->
 
-# Observed & Simpson
-p2 <- plot_richness_estimates(physeq = physeq.filtered, 
-                             erDF = erDF[,c(2,3,5,6,8)],
-                             "group", 
-                             color = "group",
-                             #title="Alpha diversity of Treatment (Wilcoxon rank-sum test)"
-                             )+
-     theme(plot.title = element_text(face="bold", size=16),
-           axis.text.x = element_text(face="plain", size=10, angle= 90, vjust=0.4, hjust=1),
-           axis.title = element_text(face="plain", size=14,),
-           #axis.text.x = element_text(face="plain", size=11, vjust=1, hjust=1),
-           strip.text = element_text(size = 10, margin = margin()))+
-  ggtitle("Alpha Diversity of Treatment Groups", subtitle = "Wilcoxon rank-sum test")+
-   scale_color_manual(values = dittoSeq::dittoColors()[1:12])
+<!-- # Observed & Simpson -->
+<!-- p2 <- plot_richness_estimates(physeq = physeq.filtered,  -->
+<!--                              erDF = erDF[,c(2,3,5,6,8)], -->
+<!--                              "group",  -->
+<!--                              color = "group", -->
+<!--                              #title="Alpha diversity of Treatment (Wilcoxon rank-sum test)" -->
+<!--                              )+ -->
+<!--      theme(plot.title = element_text(face="bold", size=16), -->
+<!--            axis.text.x = element_text(face="plain", size=10, angle= 90, vjust=0.4, hjust=1), -->
+<!--            axis.title = element_text(face="plain", size=14,), -->
+<!--            #axis.text.x = element_text(face="plain", size=11, vjust=1, hjust=1), -->
+<!--            strip.text = element_text(size = 10, margin = margin()))+ -->
+<!--   ggtitle("Alpha Diversity of Treatment Groups", subtitle = "Wilcoxon rank-sum test")+ -->
+<!--    scale_color_manual(values = dittoSeq::dittoColors()[1:12]) -->
 
-p2$data$group <- factor(p2$data$group,levels = c(
-                  "Drags_PBS",
-                   "Drags_BPW",
-                   "Booties_PBS",
-                   "Booties_BPW", 
-                   "Grabs_N/A"))
+<!-- p2$data$group <- factor(p2$data$group,levels = c( -->
+<!--                   "Drags_PBS", -->
+<!--                    "Drags_BPW", -->
+<!--                    "Booties_PBS", -->
+<!--                    "Booties_BPW",  -->
+<!--                    "Grabs_N/A")) -->
 
-p2 + geom_boxplot(aes(x=group,
-                     y=value,
-                     color=NULL), alpha=0.1) +
-    stat_compare_means(comparisons = my_comparisons,  
-                       method = "wilcox.test", label = "p.format")+
-  ylab("Alpha Diversity")
+<!-- p2 + geom_boxplot(aes(x=group, -->
+<!--                      y=value, -->
+<!--                      color=NULL), alpha=0.1) + -->
+<!--     stat_compare_means(comparisons = my_comparisons,   -->
+<!--                        method = "wilcox.test", label = "p.format")+ -->
+<!--   ylab("Alpha Diversity") -->
 
-```
+<!-- ``` -->
 
 
 ### SampleType
@@ -289,49 +289,12 @@ p2 + geom_boxplot(aes(x=Commodity_Type,
 
 ## Mixed models 
 
-Now I will run a mixed model to test significance of our variables while considering for variations by location. I use the lme() function in R to run a Linear Mixed-Effects Model for **Sample_Type x Wetting_Agent** group by considering Location as a random factor in the model. For non-normal metrics of alpha diversity, I also separately used glm() function with Location as a random factor in the model with poisson distribution.
+Now I will run a mixed model to test significance of Shannon diversity while considering the confounding effect of location. I use the glm() function in R to run a Generalized Linear Mixed-Effects Model with poisson distribution for **Sample_Type** group by considering Location as a random factor in the model.
 
-### Shannon diversity
-
-### Linear regression
-
-
-- The **Sample_Type x Wetting_Agent** group is significant at p < 0.05.
-
+### Sample Type
 
 ```{r, warning=FALSE}
-shan.lm <-lme(fixed=Shannon~group, data=merged, random= ~1|Location)
-
-#shan.lm <-lme(fixed=Shannon~Sample_Type*Wetting_Agent, data=merged, random= ~1|Location)
-# Gives me error below:
-#Error in MEEM(object, conLin, control$niterEM) : 
-#Singularity in backsolve at level 0, block 1
-
-# X <- model.matrix(~Sample_Type*Wetting_Agent, data=merged)
-# caret::findLinearCombos(X)
-
-#Anova(lme(fixed=Shannon~group, data=merged, random= ~1|Location), type = "III")
-Anova(shan.lm,type = "III")
-#summary(shan) #model output, gives correlations between factors and maximum likelihood results
-
-```
-
-
-- Now let's use a post-hoc test (Tukey) to compare pairwise for factors with more than two levels.
-
-
-```{r, warning=FALSE}
-
-#shan <-lme(fixed=Shannon~group, data=merged, random= ~1|Location)
-summary(glht(shan.lm,linfct=mcp(group="Tukey"))) #pairwise contrasts for testing differences between factors with >2 levels
-```
-
-
-
-### Generalized Linear regression with poisson distribution
-
-```{r, warning=FALSE}
-shan.glm <- glmer(Shannon~group + (1|Location), family=poisson, data=merged)
+shan.glm <- glmer(Shannon~Sample_Type + (1|Location), family=poisson, data=merged)
 Anova(shan.glm, type = "III")
 ```
 
@@ -341,188 +304,82 @@ Anova(shan.glm, type = "III")
 ```{r, warning=FALSE}
 
 #shan <-lme(fixed=Shannon~group, data=merged, random= ~1|Location)
-summary(glht(shan.glm,linfct=mcp(group="Tukey"))) #pairwise contrasts for testing differences between factors with >2 levels
+summary(glht(shan.glm,linfct=mcp(Sample_Type="Tukey"))) #pairwise contrasts for testing differences between factors with >2 levels
 ```
 
-### Observed ASVs
 
-### Linear regression
+### Wetting_Agent (N/A group removed)
 
-- The **Sample_Type x Wetting_Agent** group is significant at p < 0.05.
-
+A mixed model cannot be used for the wetting agent after the grab is removed because it needs more than two levels. For this one you can just use the Kruskal-Wallis test from above (in the boxplot section).
 
 ```{r, warning=FALSE}
-obs.lm <-lme(fixed=Observed~group, data=merged, random= ~1|Location)
-Anova(obs.lm, type = "III")
-#summary(shan) #model output, gives correlations between factors and maximum likelihood results
+#merged_subset <- merged[merged$Wetting_Agent != "N/A",]
+# shan.glm <- glm(Shannon~Wetting_Agent + (1|Location), family=poisson, data=merged)
+# Anova(shan.glm, type = "III")
+# gives error:
+#Error in `contrasts<-`(`*tmp*`, value = contr.funs[1 + isOF[nn]]) : 
+  #contrasts can be applied only to factors with 2 or more levels
 ```
 
+<!-- - Now let's use a post-hoc test (Tukey) to compare pairwise for factors with more than two levels. -->
 
-- Now let's use a post-hoc test (Tukey) to compare pairwise for factors with more than two levels.
 
+<!-- ```{r, warning=FALSE} -->
+<!-- shan.lm <-lme(fixed=Shannon~Wetting_Agent, data=merged, random= ~1|Location) -->
 
-```{r, warning=FALSE}
-summary(glht(obs.lm,linfct=mcp(group="Tukey"))) #pairwise contrasts for testing differences between factors with >2 levels
-```
+<!-- #shan.lm <-lme(fixed=Shannon~Sample_Type*Wetting_Agent, data=merged, random= ~1|Location) -->
+<!-- # Gives me error below: -->
+<!-- #Error in MEEM(object, conLin, control$niterEM) :  -->
+<!-- #Singularity in backsolve at level 0, block 1 -->
 
+<!-- # X <- model.matrix(~Sample_Type*Wetting_Agent, data=merged) -->
+<!-- # caret::findLinearCombos(X) -->
 
-### Generalized Linear regression with poisson distribution
+<!-- #Anova(lme(fixed=Shannon~group, data=merged, random= ~1|Location), type = "III") -->
+<!-- Anova(shan.lm,type = "III") -->
+<!-- #summary(shan) #model output, gives correlations between factors and maximum likelihood results -->
 
-```{r, warning=FALSE}
-obs.glm <- glmer(Observed~group + (1|Location), family=poisson, data=merged)
-Anova(obs.glm, type = "III")
-```
+<!-- ``` -->
 
-- Now let's use a post-hoc test (Tukey) to compare pairwise for factors with more than two levels.
 
-```{r, warning=FALSE}
+<!-- - Now let's use a post-hoc test (Tukey) to compare pairwise for factors with more than two levels. -->
 
-#shan <-lme(fixed=Shannon~group, data=merged, random= ~1|Location)
-summary(glht(obs.glm,linfct=mcp(group="Tukey"))) #pairwise contrasts for testing differences between factors with >2 levels
-```
 
-### Chao1
+<!-- ```{r, warning=FALSE} -->
 
-### Linear regression
+<!-- #shan <-lme(fixed=Shannon~group, data=merged, random= ~1|Location) -->
+<!-- summary(glht(shan.lm,linfct=mcp(group="Tukey"))) #pairwise contrasts for testing differences between factors with >2 levels -->
+<!-- ``` -->
 
-```{r, warning=FALSE}
-chao.lm <-lme(fixed=Chao1~group, data=merged, random= ~1|Location)
 
-Anova(chao.lm, type = "III")
-#summary(shan) #model output, gives correlations between factors and maximum likelihood results
-```
+<!-- ## Scatterplots -->
 
-group is not significant at p < 0.05.
+<!-- Example scatterplot of BPW vs PBS for Chao1. Since sample size is different for each, I had to subset BPW to 58 (out of 59) to equal to the PBS group. Otherwise, R gives error for the scatterplot. It is not easy to draw the regression line for both. If you have a code you used in R, it would be great if you could share but still think for microbiome alpha diversity, better to look at the boxplots above. -->
 
+<!-- ```{r} -->
 
-- Now let's use a post-hoc test (Tukey) to compare pairwise for factors with more than two levels.
+<!-- ### scatterplot -->
 
-```{r, warning=FALSE}
+<!-- #### Observed ASVs -->
+<!-- #  -->
+<!-- # ggplot(merged, aes(x = Observed, y = Chao1)) + -->
+<!-- #   geom_point() -->
+<!-- #  -->
+<!-- # + -->
+<!-- #   geom_labelsmooth(aes(label = 'My Label'), fill = "white", -->
+<!-- #                 method = "lm", formula = y ~ x, -->
+<!-- #                 size = 6, linewidth = 2, boxlinewidth = 0.6) + -->
+<!-- #   theme_bw() + guides(color = 'none') # remove legend -->
 
-summary(glht(chao.lm,linfct=mcp(group="Tukey"))) #pairwise contrasts for testing differences between factors with >2
-```
+<!-- plot(merged[merged$Wetting_Agent=="BPW",]$Chao1[1:58], merged[merged$Wetting_Agent=="PBS",]$Chao1, -->
+<!--      main='Chao1',  -->
+<!--      xlab='PBS', ylab='BPW') -->
+<!-- # plot a regression line  -->
+<!-- # abline(lm(merged[merged$Wetting_Agent=="BPW",]$Chao1[1:58] ~ merged[merged$Wetting_Agent=="PBS",]$Chao1, data = merged), col = "blue") -->
 
-### Generalized Linear regression with poisson distribution
 
-```{r, warning=FALSE}
-obs.glm <- glmer(Chao1~group + (1|Location), family=poisson, data=merged)
-Anova(obs.glm, type = "III")
-```
+<!-- # ggplot(merged, aes(x=Wetting_Agent, y=Chao1)) + geom_point() + -->
+<!-- #             geom_smooth(method="lm", se=FALSE) -->
 
 
-- Now let's use a post-hoc test (Tukey) to compare pairwise for factors with more than two levels.
-
-```{r, warning=FALSE}
-
-summary(glht(obs.glm,linfct=mcp(group="Tukey"))) #pairwise contrasts for testing differences between factors with >2
-```
-
-
-### Simpson
-
-### Linear regression
-
-- Sample_Type and Wetting_Agent group is significant at p < 0.05.
-
-```{r, warning=FALSE}
-simpson.lm <-lme(fixed=Simpson~group, data=merged, random= ~1|Location)
-
-Anova(simpson.lm, type = "III")
-#summary(shan) #model output, gives correlations between factors and maximum likelihood results
-```
-
-- Now let's use a post-hoc test (Tukey) to compare pairwise for factors with more than two levels.
-
-
-```{r, warning=FALSE}
-
-summary(glht(simpson.lm,linfct=mcp(group="Tukey"))) #pairwise contrasts for testing differences between factors with >2 levels
-```
-
-
-### Generalized Linear regression with poisson distribution
-
-```{r, warning=FALSE}
-simpson.glm <- glmer(Simpson~group + (1|Location), family=poisson, data=merged)
-Anova(simpson.glm, type = "III")
-```
-
-- Now let's use a post-hoc test (Tukey) to compare pairwise for factors with more than two levels.
-
-
-```{r, warning=FALSE}
-
-summary(glht(simpson.glm,linfct=mcp(group="Tukey"))) #pairwise contrasts for testing differences between factors with >2 levels
-```
-
-
-### Faith's PD
-
-### Linear regression
-
-- Sample_Type and Wetting_Agent group is significant at p < 0.05.
-
-```{r, warning=FALSE}
-pd.lm <-lme(fixed=PD~group, data=merged, random= ~1|Location)
-
-Anova(pd.lm, type = "III")
-#summary(shan) #model output, gives correlations between factors and maximum likelihood results
-```
-
-
-- Now let's use a post-hoc test (Tukey) to compare pairwise for factors with more than two levels.
-
-
-```{r, warning=FALSE}
-
-summary(glht(pd.lm,linfct=mcp(group="Tukey"))) #pairwise contrasts for testing differences between factors with >2 levels
-```
-
-
-### Generalized Linear regression with poisson distribution
-
-```{r, warning=FALSE}
-pd.glm <- glmer(Simpson~group + (1|Location), family=poisson, data=merged)
-Anova(pd.glm, type = "III")
-```
-
-- Now let's use a post-hoc test (Tukey) to compare pairwise for factors with more than two levels.
-
-
-```{r, warning=FALSE}
-
-summary(glht(pd.glm,linfct=mcp(group="Tukey"))) #pairwise contrasts for testing differences between factors with >2 levels
-```
-
-
-## Scatterplots
-
-Example scatterplot of BPW vs PBS for Chao1. Since sample size is different for each, I had to subset BPW to 58 (out of 59) to equal to the PBS group. Otherwise, R gives error for the scatterplot. It is not easy to draw the regression line for both. If you have a code you used in R, it would be great if you could share but still think for microbiome alpha diversity, better to look at the boxplots above.
-
-```{r}
-
-### scatterplot
-
-#### Observed ASVs
-# 
-# ggplot(merged, aes(x = Observed, y = Chao1)) +
-#   geom_point()
-# 
-# +
-#   geom_labelsmooth(aes(label = 'My Label'), fill = "white",
-#                 method = "lm", formula = y ~ x,
-#                 size = 6, linewidth = 2, boxlinewidth = 0.6) +
-#   theme_bw() + guides(color = 'none') # remove legend
-
-plot(merged[merged$Wetting_Agent=="BPW",]$Chao1[1:58], merged[merged$Wetting_Agent=="PBS",]$Chao1,
-     main='Chao1', 
-     xlab='PBS', ylab='BPW')
-# plot a regression line 
-# abline(lm(merged[merged$Wetting_Agent=="BPW",]$Chao1[1:58] ~ merged[merged$Wetting_Agent=="PBS",]$Chao1, data = merged), col = "blue")
-
-
-# ggplot(merged, aes(x=Wetting_Agent, y=Chao1)) + geom_point() +
-#             geom_smooth(method="lm", se=FALSE)
-
-
-```
+<!-- ``` -->
