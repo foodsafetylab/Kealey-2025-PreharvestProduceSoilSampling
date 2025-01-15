@@ -1,0 +1,37 @@
+---
+title: "Contingency Table Obj 2"
+author: "Erin Kealey"
+date: "2025-01-13"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(stats)
+library(rstatix)
+```
+
+
+```{r Create Table 3}
+#numbers for this data frame can be found in Enrichment_Table3.csv 
+Overall.Table <- data.frame("gEC positive" = c(45, 42, 42, 44, 21), "gEC negative" = c(3, 6, 6, 4, 27),
+                 row.names = c("PBS Drag", "PBS Boot", "BPW Drag", "BPW Boot", "Soil"))
+
+
+Overall.Table
+
+```
+```{r Prep for Analysis}
+#Set up Fisher's exact test to comapre Booties & Drags combined vs. Soil Grabs
+final.contingency <- data.frame("gEC positive" = c(173, 21), "gEC negative" = c(19, 27),
+                 row.names = c("Swabs Total", "Soil Only"))
+
+#show table
+print(final.contingency)
+
+#fisher's exact test
+fisher.test(final.contingency)
+
+```
+

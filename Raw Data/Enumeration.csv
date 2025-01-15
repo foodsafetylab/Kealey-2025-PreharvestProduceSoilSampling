@@ -1,0 +1,721 @@
+Date,Sample ID,Buffer,Sample Type,Soil Weight(g),Test Type,Counts of Detected Samples,LOD,Commodity
+05_06_24,A1,PBS,Drag,12.41,Total Coliform,7.346326175,Above,Melons
+05_06_24,A2,PBS,Drag,6.22,Total Coliform,7.817966901,Above,Melons
+05_06_24,A3,PBS,Drag,8.44,Total Coliform,6.974745177,Above,Melons
+05_06_24,A4,PBS,Drag,14.31,Total Coliform,7.578438171,Above,Melons
+05_06_24,A5,PBS,Drag,9.38,Total Coliform,7.790315179,Above,Melons
+05_06_24,A6,PBS,Drag,9.93,Total Coliform,7.257308719,Above,Melons
+05_06_24,A7,PBS,Drag,6.94,Total Coliform,7.566761726,Above,Melons
+05_06_24,A8,PBS,Drag,5.49,Total Coliform,7.047008733,Above,Melons
+05_06_24,A9,PBS,Drag,10.02,Total Coliform,7.056326563,Above,Melons
+05_06_24,A10,PBS,Drag,10.06,Total Coliform,6.776420991,Above,Melons
+05_06_24,A11,BPW,Drag,12.63,Total Coliform,8.014273715,Above,Melons
+05_06_24,A12,BPW,Drag,11.18,Total Coliform,7.088886984,Above,Melons
+05_06_24,A13,BPW,Drag,8.39,Total Coliform,6.94437678,Above,Melons
+05_06_24,A14,BPW,Drag,15.72,Total Coliform,6.58176819,Above,Melons
+05_06_24,A15,BPW,Drag,11.88,Total Coliform,6.771124553,Above,Melons
+05_06_24,A16,BPW,Drag,6.65,Total Coliform,6.61147574,Above,Melons
+05_06_24,A17,BPW,Drag,5.93,Total Coliform,7.159261763,Above,Melons
+05_06_24,A18,BPW,Drag,6.05,Total Coliform,7.694750193,Above,Melons
+05_06_24,A19,BPW,Drag,11.94,Total Coliform,6.889728583,Above,Melons
+05_06_24,A20,BPW,Drag,11.46,Total Coliform,6.051357957,Above,Melons
+05_07_24,A21,PBS,Drag,8.19,Total Coliform,7.698179176,Above,Melons
+05_07_24,A22,PBS,Drag,13.38,Total Coliform,8.096000223,Above,Melons
+05_07_24,A23,PBS,Drag,8.21,Total Coliform,8.335400478,Above,Melons
+05_07_24,A24,PBS,Drag,16.05,Total Coliform,8.536121663,Above,Melons
+05_07_24,A25,PBS,Drag,9.01,Total Coliform,6.939186702,Above,Melons
+05_07_24,A26,PBS,Drag,8.97,Total Coliform,8.208126056,Above,Melons
+05_07_24,A27,PBS,Drag,12.21,Total Coliform,7.137278405,Above,Melons
+05_07_24,A28,PBS,Drag,11.39,Total Coliform,6.239608141,Above,Melons
+05_07_24,A29,PBS,Drag,6.39,Total Coliform,7.195722129,Above,Melons
+05_07_24,A30,PBS,Drag,10.4,Total Coliform,7.984354184,Above,Melons
+05_07_24,A31,BPW,Drag,11.25,Total Coliform,8.77003336,Above,Melons
+05_07_24,A32,BPW,Drag,12.89,Total Coliform,7.493170787,Above,Melons
+05_07_24,A33,BPW,Drag,10.01,Total Coliform,8.232706774,Above,Melons
+05_07_24,A34,BPW,Drag,13.63,Total Coliform,8.509502307,Above,Melons
+05_07_24,A35,BPW,Drag,13.38,Total Coliform,8.121306089,Above,Melons
+05_07_24,A36,BPW,Drag,12.25,Total Coliform,8.587710965,Above,Melons
+05_07_24,A37,BPW,Drag,20.44,Total Coliform,7.814844195,Above,Melons
+05_07_24,A38,BPW,Drag,18.34,Total Coliform,7.797374032,Above,Melons
+05_07_24,A39,BPW,Drag,7.96,Total Coliform,8.022745354,Above,Melons
+05_07_24,A40,BPW,Drag,8.97,Total Coliform,8.685247311,Above,Melons
+05_06_24,Z1,PBS,Bootie,30.85,Total Coliform,7.467642879,Above,Melons
+05_06_24,Z2,PBS,Bootie,37.8,Total Coliform,8.06497272,Above,Melons
+05_06_24,Z3,PBS,Bootie,20.76,Total Coliform,7.569986973,Above,Melons
+05_06_24,Z4,PBS,Bootie,37.94,Total Coliform,7.517377479,Above,Melons
+05_06_24,Z5,PBS,Bootie,25.46,Total Coliform,8.051641998,Above,Melons
+05_06_24,Z6,PBS,Bootie,12.09,Total Coliform,7.850474445,Above,Melons
+05_06_24,Z7,PBS,Bootie,10.24,Total Coliform,8.575764981,Above,Melons
+05_06_24,Z8,PBS,Bootie,16.08,Total Coliform,8.045147754,Above,Melons
+05_06_24,Z9,PBS,Bootie,30.39,Total Coliform,7.556010237,Above,Melons
+05_06_24,Z10,PBS,Bootie,21.33,Total Coliform,7.769794036,Above,Melons
+05_06_24,Z11,BPW,Bootie,60.25,Total Coliform,7.545722776,Above,Melons
+05_06_24,Z12,BPW,Bootie,52.33,Total Coliform,7.437380275,Above,Melons
+05_06_24,Z13,BPW,Bootie,33.5,Total Coliform,7.606156683,Above,Melons
+05_06_24,Z14,BPW,Bootie,39.98,Total Coliform,7.793212281,Above,Melons
+05_06_24,Z15,BPW,Bootie,24.93,Total Coliform,7.983083432,Above,Melons
+05_06_24,Z16,BPW,Bootie,14.39,Total Coliform,8.252817622,Above,Melons
+05_06_24,Z17,BPW,Bootie,8.11,Total Coliform,8.736043614,Above,Melons
+05_06_24,Z18,BPW,Bootie,19.92,Total Coliform,8.226553323,Above,Melons
+05_06_24,Z19,BPW,Bootie,23.24,Total Coliform,7.852620651,Above,Melons
+05_06_24,Z20,BPW,Bootie,12.92,Total Coliform,7.872217631,Above,Melons
+05_07_24,Z21,PBS,Bootie,38.33,Total Coliform,6.953634018,Above,Melons
+05_07_24,Z22,PBS,Bootie,56.72,Total Coliform,8.037937588,Above,Melons
+05_07_24,Z23,PBS,Bootie,23.16,Total Coliform,7.63307405,Above,Melons
+05_07_24,Z24,PBS,Bootie,48.5,Total Coliform,6.799056186,Above,Melons
+05_07_24,Z25,PBS,Bootie,22.31,Total Coliform,6.424512644,Above,Melons
+05_07_24,Z26,PBS,Bootie,38.15,Total Coliform,6.628545597,Above,Melons
+05_07_24,Z27,PBS,Bootie,23.18,Total Coliform,6.57846022,Above,Melons
+05_07_24,Z28,PBS,Bootie,30.81,Total Coliform,6.628288423,Above,Melons
+05_07_24,Z29,PBS,Bootie,11.97,Total Coliform,6.88140468,Above,Melons
+05_07_24,Z30,PBS,Bootie,29.15,Total Coliform,6.693883748,Above,Melons
+05_07_24,Z31,BPW,Bootie,23.33,Total Coliform,5.196336951,Above,Melons
+05_07_24,Z32,BPW,Bootie,51.97,Total Coliform,7.222138628,Above,Melons
+05_07_24,Z33,BPW,Bootie,18.42,Total Coliform,6.444954707,Above,Melons
+05_07_24,Z34,BPW,Bootie,50.11,Total Coliform,6.30915323,Above,Melons
+05_07_24,Z35,BPW,Bootie,23.17,Total Coliform,6.669668737,Above,Melons
+05_07_24,Z36,BPW,Bootie,33.66,Total Coliform,7.359191576,Above,Melons
+05_07_24,Z37,BPW,Bootie,38.12,Total Coliform,6.491026395,Above,Melons
+05_07_24,Z38,BPW,Bootie,33.27,Total Coliform,6.332934215,Above,Melons
+05_07_24,Z39,BPW,Bootie,13.5,Total Coliform,6.119597988,Above,Melons
+05_07_24,Z40,BPW,Bootie,33.94,Total Coliform,5.694287123,Above,Melons
+05_06_24,S1,Soil Only,Grabs,24.61,Total Coliform,2.066169118,Above,Melons
+05_06_24,S2,Soil Only,Grabs,25.26,Total Coliform,2.275162658,Above,Melons
+05_06_24,S3,Soil Only,Grabs,25.41,Total Coliform,1.772508749,Above,Melons
+05_06_24,S4,Soil Only,Grabs,26.62,Total Coliform,1.79123761,Above,Melons
+05_06_24,S5,Soil Only,Grabs,25.56,Total Coliform,2.182652151,Above,Melons
+05_06_24,S6,Soil Only,Grabs,25.16,Total Coliform,2.437117607,Above,Melons
+05_06_24,S7,Soil Only,Grabs,25.53,Total Coliform,2.123060478,Above,Melons
+05_06_24,S8,Soil Only,Grabs,25.26,Total Coliform,3.799866172,Above,Melons
+05_06_24,S9,Soil Only,Grabs,25.36,Total Coliform,1.84013777,Above,Melons
+05_06_24,S10,Soil Only,Grabs,25.75,Total Coliform,3.494910734,Above,Melons
+05_07_24,S11,Soil Only,Grabs,25.38,Total Coliform,2.861053982,Above,Melons
+05_07_24,S12,Soil Only,Grabs,24.68,Total Coliform,1.782632884,Above,Melons
+05_07_24,S13,Soil Only,Grabs,25.09,Total Coliform,2.299781923,Above,Melons
+05_07_24,S14,Soil Only,Grabs,25.03,Total Coliform,1.874644641,Above,Melons
+05_07_24,S15,Soil Only,Grabs,25.78,Total Coliform,1.290388669,Above,Melons
+05_07_24,S16,Soil Only,Grabs,25.63,Total Coliform,1.836472789,Above,Melons
+05_07_24,S17,Soil Only,Grabs,25.9,Total Coliform,3.560627564,Above,Melons
+05_07_24,S18,Soil Only,Grabs,24.8,Total Coliform,1.74315559,Above,Melons
+05_07_24,S19,Soil Only,Grabs,25.1,Total Coliform,1.396553593,Above,Melons
+05_07_24,S20,Soil Only,Grabs,24.04,Total Coliform,1.85875533,Above,Melons
+05_06_24,A1,PBS,Drag,12.41,Aerobic Plate Count,8.739126544,Above,Melons
+05_06_24,A2,PBS,Drag,6.22,Aerobic Plate Count,8.469940343,Above,Melons
+05_06_24,A3,PBS,Drag,8.44,Aerobic Plate Count,7.989985143,Above,Melons
+05_06_24,A4,PBS,Drag,14.31,Aerobic Plate Count,8.143209078,Above,Melons
+05_06_24,A5,PBS,Drag,9.38,Aerobic Plate Count,8.129317409,Above,Melons
+05_06_24,A6,PBS,Drag,9.93,Aerobic Plate Count,7.780187464,Above,Melons
+05_06_24,A7,PBS,Drag,6.94,Aerobic Plate Count,8.321431881,Above,Melons
+05_06_24,A8,PBS,Drag,5.49,Aerobic Plate Count,8.098161255,Above,Melons
+05_06_24,A9,PBS,Drag,10.02,Aerobic Plate Count,7.706991888,Above,Melons
+05_06_24,A10,PBS,Drag,10.06,Aerobic Plate Count,7.651482255,Above,Melons
+05_06_24,A11,BPW,Drag,12.63,Aerobic Plate Count,8.238288526,Above,Melons
+05_06_24,A12,BPW,Drag,11.18,Aerobic Plate Count,7.675883229,Above,Melons
+05_06_24,A13,BPW,Drag,8.39,Aerobic Plate Count,7.269766121,Above,Melons
+05_06_24,A14,BPW,Drag,15.72,Aerobic Plate Count,7.397851594,Above,Melons
+05_06_24,A15,BPW,Drag,11.88,Aerobic Plate Count,7.081914386,Above,Melons
+05_06_24,A16,BPW,Drag,6.65,Aerobic Plate Count,7.094237262,Above,Melons
+05_06_24,A17,BPW,Drag,5.93,Aerobic Plate Count,7.640747823,Above,Melons
+05_06_24,A18,BPW,Drag,6.05,Aerobic Plate Count,8.287264867,Above,Melons
+05_06_24,A19,BPW,Drag,11.94,Aerobic Plate Count,7.573458621,Above,Melons
+05_06_24,A20,BPW,Drag,11.46,Aerobic Plate Count,8.970053018,Above,Melons
+05_07_24,A21,PBS,Drag,8.19,Aerobic Plate Count,8.105012898,Above,Melons
+05_07_24,A22,PBS,Drag,13.38,Aerobic Plate Count,8.758758055,Above,Melons
+05_07_24,A23,PBS,Drag,8.21,Aerobic Plate Count,8.933999938,Above,Melons
+05_07_24,A24,PBS,Drag,16.05,Aerobic Plate Count,7.869944172,Above,Melons
+05_07_24,A25,PBS,Drag,9.01,Aerobic Plate Count,7.109882929,Above,Melons
+05_07_24,A26,PBS,Drag,8.97,Aerobic Plate Count,7.152608729,Above,Melons
+05_07_24,A27,PBS,Drag,12.21,Aerobic Plate Count,6.965343105,Above,Melons
+05_07_24,A28,PBS,Drag,11.39,Aerobic Plate Count,6.519448838,Above,Melons
+05_07_24,A29,PBS,Drag,6.39,Aerobic Plate Count,7.695119778,Above,Melons
+05_07_24,A30,PBS,Drag,10.4,Aerobic Plate Count,8.164810249,Above,Melons
+05_07_24,A31,BPW,Drag,11.25,Aerobic Plate Count,8.920818754,Above,Melons
+05_07_24,A32,BPW,Drag,12.89,Aerobic Plate Count,7.768538792,Above,Melons
+05_07_24,A33,BPW,Drag,10.01,Aerobic Plate Count,8.652923177,Above,Melons
+05_07_24,A34,BPW,Drag,13.63,Aerobic Plate Count,9.054988843,Above,Melons
+05_07_24,A35,BPW,Drag,13.38,Aerobic Plate Count,9.040482895,Above,Melons
+05_07_24,A36,BPW,Drag,12.25,Aerobic Plate Count,9.000177227,Above,Melons
+05_07_24,A37,BPW,Drag,20.44,Aerobic Plate Count,8.575083856,Above,Melons
+05_07_24,A38,BPW,Drag,18.34,Aerobic Plate Count,7.642472072,Above,Melons
+05_07_24,A39,BPW,Drag,7.96,Aerobic Plate Count,8.269899969,Above,Melons
+05_07_24,A40,BPW,Drag,8.97,Aerobic Plate Count,9.152608729,Above,Melons
+05_06_24,Z1,PBS,Bootie,30.85,Aerobic Plate Count,8.532368208,Above,Melons
+05_06_24,Z2,PBS,Bootie,37.8,Aerobic Plate Count,8.843123971,Above,Melons
+05_06_24,Z3,PBS,Bootie,20.76,Aerobic Plate Count,8.811314076,Above,Melons
+05_06_24,Z4,PBS,Bootie,37.94,Aerobic Plate Count,8.444270381,Above,Melons
+05_06_24,Z5,PBS,Bootie,25.46,Aerobic Plate Count,9.227733257,Above,Melons
+05_06_24,Z6,PBS,Bootie,12.09,Aerobic Plate Count,8.530139295,Above,Melons
+05_06_24,Z7,PBS,Bootie,10.24,Aerobic Plate Count,9.231983004,Above,Melons
+05_06_24,Z8,PBS,Bootie,16.08,Aerobic Plate Count,8.700143821,Above,Melons
+05_06_24,Z9,PBS,Bootie,30.39,Aerobic Plate Count,8.400194934,Above,Melons
+05_06_24,Z10,PBS,Bootie,21.33,Aerobic Plate Count,8.350356171,Above,Melons
+05_06_24,Z11,BPW,Bootie,60.25,Aerobic Plate Count,8.642632789,Above,Melons
+05_06_24,Z12,BPW,Bootie,52.33,Aerobic Plate Count,8.972493477,Above,Melons
+05_06_24,Z13,BPW,Bootie,33.5,Aerobic Plate Count,8.99870166,Above,Melons
+05_06_24,Z14,BPW,Bootie,39.98,Aerobic Plate Count,8.674522494,Above,Melons
+05_06_24,Z15,BPW,Bootie,24.93,Aerobic Plate Count,8.507317232,Above,Melons
+05_06_24,Z16,BPW,Bootie,14.39,Aerobic Plate Count,9.155907609,Above,Melons
+05_06_24,Z17,BPW,Bootie,8.11,Aerobic Plate Count,9.554200026,Above,Melons
+05_06_24,Z18,BPW,Bootie,19.92,Aerobic Plate Count,9.24428209,Above,Melons
+05_06_24,Z19,BPW,Bootie,23.24,Aerobic Plate Count,8.283842047,Above,Melons
+05_06_24,Z20,BPW,Bootie,12.92,Aerobic Plate Count,9.102499548,Above,Melons
+05_07_24,Z21,PBS,Bootie,38.33,Aerobic Plate Count,7.617841916,Above,Melons
+05_07_24,Z22,PBS,Bootie,56.72,Aerobic Plate Count,8.751630849,Above,Melons
+05_07_24,Z23,PBS,Bootie,23.16,Aerobic Plate Count,8.079318738,Above,Melons
+05_07_24,Z24,PBS,Bootie,48.5,Aerobic Plate Count,7.140203405,Above,Melons
+05_07_24,Z25,PBS,Bootie,22.31,Aerobic Plate Count,7.741147713,Above,Melons
+05_07_24,Z26,PBS,Bootie,38.15,Aerobic Plate Count,6.840849029,Above,Melons
+05_07_24,Z27,PBS,Bootie,23.18,Aerobic Plate Count,7.298619523,Above,Melons
+05_07_24,Z28,PBS,Bootie,30.81,Aerobic Plate Count,7.53934734,Above,Melons
+05_07_24,Z29,PBS,Bootie,11.97,Aerobic Plate Count,8.015117341,Above,Melons
+05_07_24,Z30,PBS,Bootie,29.15,Aerobic Plate Count,7.105910218,Above,Melons
+05_07_24,Z31,BPW,Bootie,23.33,Aerobic Plate Count,6.497366946,Above,Melons
+05_07_24,Z32,BPW,Bootie,51.97,Aerobic Plate Count,7.82419862,Above,Melons
+05_07_24,Z33,BPW,Bootie,18.42,Aerobic Plate Count,6.950104686,Above,Melons
+05_07_24,Z34,BPW,Bootie,50.11,Aerobic Plate Count,8.078704309,Above,Melons
+05_07_24,Z35,BPW,Bootie,23.17,Aerobic Plate Count,7.277558272,Above,Melons
+05_07_24,Z36,BPW,Bootie,33.66,Aerobic Plate Count,8.77561499,Above,Melons
+05_07_24,Z37,BPW,Bootie,38.12,Aerobic Plate Count,8.795285361,Above,Melons
+05_07_24,Z38,BPW,Bootie,33.27,Aerobic Plate Count,6.720655059,Above,Melons
+05_07_24,Z39,BPW,Bootie,13.5,Aerobic Plate Count,6.751621203,Above,Melons
+05_07_24,Z40,BPW,Bootie,33.94,Aerobic Plate Count,6.092227131,Above,Melons
+05_06_24,S1,Soil Only,Grabs,24.61,Aerobic Plate Count,6.658683792,Above,Melons
+05_06_24,S2,Soil Only,Grabs,25.26,Aerobic Plate Count,6.172500316,Above,Melons
+05_06_24,S3,Soil Only,Grabs,25.41,Aerobic Plate Count,6.538425543,Above,Melons
+05_06_24,S4,Soil Only,Grabs,26.62,Aerobic Plate Count,6.279354249,Above,Melons
+05_06_24,S5,Soil Only,Grabs,25.56,Aerobic Plate Count,6.770471704,Above,Melons
+05_06_24,S6,Soil Only,Grabs,25.16,Aerobic Plate Count,6.696754918,Above,Melons
+05_06_24,S7,Soil Only,Grabs,25.53,Aerobic Plate Count,6.645939223,Above,Melons
+05_06_24,S8,Soil Only,Grabs,25.26,Aerobic Plate Count,6.297439052,Above,Melons
+05_06_24,S9,Soil Only,Grabs,25.36,Aerobic Plate Count,5.694009734,Above,Melons
+05_06_24,S10,Soil Only,Grabs,25.75,Aerobic Plate Count,6.64297327,Above,Melons
+05_07_24,S11,Soil Only,Grabs,25.38,Aerobic Plate Count,6.471887898,Above,Melons
+05_07_24,S12,Soil Only,Grabs,24.68,Aerobic Plate Count,5.703451638,Above,Melons
+05_07_24,S13,Soil Only,Grabs,25.09,Aerobic Plate Count,6.174843186,Above,Melons
+05_07_24,S14,Soil Only,Grabs,25.03,Aerobic Plate Count,6.601643369,Above,Melons
+05_07_24,S15,Soil Only,Grabs,25.78,Aerobic Plate Count,6.642571187,Above,Melons
+05_07_24,S16,Soil Only,Grabs,25.63,Aerobic Plate Count,6.389314758,Above,Melons
+05_07_24,S17,Soil Only,Grabs,25.9,Aerobic Plate Count,6.686725966,Above,Melons
+05_07_24,S18,Soil Only,Grabs,24.8,Aerobic Plate Count,6.701762905,Above,Melons
+05_07_24,S19,Soil Only,Grabs,25.1,Aerobic Plate Count,6.174704843,Above,Melons
+05_07_24,S20,Soil Only,Grabs,24.04,Aerobic Plate Count,6.314687286,Above,Melons
+05_06_24,A1,PBS,Drag,12.47,Generic E.coli,0.208453625,Below,Melons
+05_06_24,A2,PBS,Drag,6.04,Generic E.coli,0.312421151,Below,Melons
+05_06_24,A3,PBS,Drag,8.44,Generic E.coli,0.263793573,Below,Melons
+05_06_24,A4,PBS,Drag,14.31,Generic E.coli,0.189890542,Below,Melons
+05_06_24,A5,PBS,Drag,9.36,Generic E.coli,0.247924477,Below,Melons
+05_06_24,A6,PBS,Drag,9.83,Generic E.coli,0.239578734,Below,Melons
+05_06_24,A7,PBS,Drag,6.91,Generic E.coli,0.29451906,Below,Melons
+05_06_24,A8,PBS,Drag,5.55,Generic E.coli,0.333398746,Below,Melons
+05_06_24,A9,PBS,Drag,10.03,Generic E.coli,0.238271483,Below,Melons
+05_06_24,A10,PBS,Drag,10.07,Generic E.coli,0.237695498,Below,Melons
+05_06_24,A11,BPW,Drag,12.6,Generic E.coli,0.206106862,Below,Melons
+05_06_24,A12,BPW,Drag,11.1,Generic E.coli,0.222717154,Below,Melons
+05_06_24,A13,BPW,Drag,8.38,Generic E.coli,0.264701716,Below,Melons
+05_06_24,A14,BPW,Drag,15.86,Generic E.coli,0.178229454,Below,Melons
+05_06_24,A15,BPW,Drag,11.92,Generic E.coli,0.214350936,Below,Melons
+05_06_24,A16,BPW,Drag,6.68,Generic E.coli,0.301437784,Below,Melons
+05_06_24,A17,BPW,Drag,5.97,Generic E.coli,2.640747823,Above,Melons
+05_06_24,A18,BPW,Drag,6.09,Generic E.coli,0.317026176,Below,Melons
+05_06_24,A19,BPW,Drag,11.98,Generic E.coli,0.213665293,Below,Melons
+05_06_24,A20,BPW,Drag,11.46,Generic E.coli,3.438574101,Above,Melons
+05_07_24,A21,PBS,Drag,8.18,Generic E.coli,0.268405587,Below,Melons
+05_07_24,A22,PBS,Drag,13.51,Generic E.coli,0.198515109,Below,Melons
+05_07_24,A23,PBS,Drag,8.15,Generic E.coli,0.268029965,Below,Melons
+05_07_24,A24,PBS,Drag,16.02,Generic E.coli,0.175715116,Below,Melons
+05_07_24,A25,PBS,Drag,8.91,Generic E.coli,0.253911469,Below,Melons
+05_07_24,A26,PBS,Drag,8.93,Generic E.coli,0.254578026,Below,Melons
+05_07_24,A27,PBS,Drag,12.12,Generic E.coli,0.21063753,Below,Melons
+05_07_24,A28,PBS,Drag,11.28,Generic E.coli,0.220133796,Below,Melons
+05_07_24,A29,PBS,Drag,6.3,Generic E.coli,0.307969266,Below,Melons
+05_07_24,A30,PBS,Drag,10.25,Generic E.coli,0.232920122,Below,Melons
+05_07_24,A31,BPW,Drag,11.23,Generic E.coli,0.22184875,Below,Melons
+05_07_24,A32,BPW,Drag,12.86,Generic E.coli,5.520754308,Above,Melons
+05_07_24,A33,BPW,Drag,10.06,Generic E.coli,0.238415959,Below,Melons
+05_07_24,A34,BPW,Drag,13.58,Generic E.coli,0.196115506,Below,Melons
+05_07_24,A35,BPW,Drag,13.37,Generic E.coli,0.198515109,Below,Melons
+05_07_24,A36,BPW,Drag,12.15,Generic E.coli,0.210196815,Below,Melons
+05_07_24,A37,BPW,Drag,21.37,Generic E.coli,0.148165128,Below,Melons
+05_07_24,A38,BPW,Drag,18.21,Generic E.coli,0.160126389,Below,Melons
+05_07_24,A39,BPW,Drag,7.93,Generic E.coli,0.27281205,Below,Melons
+05_07_24,A40,BPW,Drag,8.97,Generic E.coli,0.254578026,Below,Melons
+05_06_24,Z1,PBS,Bootie,30.98,Generic E.coli,0.209212428,Below,Melons
+05_06_24,Z2,PBS,Bootie,37.8,Generic E.coli,0.183001358,Below,Melons
+05_06_24,Z3,PBS,Bootie,21.06,Generic E.coli,0.266280238,Below,Melons
+05_06_24,Z4,PBS,Bootie,38.42,Generic E.coli,0.182544567,Below,Melons
+05_06_24,Z5,PBS,Bootie,25.88,Generic E.coli,0.235929201,Below,Melons
+05_06_24,Z6,PBS,Bootie,12.26,Generic E.coli,0.355297679,Below,Melons
+05_06_24,Z7,PBS,Bootie,10.62,Generic E.coli,0.384792503,Below,Melons
+05_06_24,Z8,PBS,Bootie,16.77,Generic E.coli,0.306891995,Below,Melons
+05_06_24,Z9,PBS,Bootie,30.56,Generic E.coli,0.211235664,Below,Melons
+05_06_24,Z10,PBS,Bootie,21.94,Generic E.coli,0.262140684,Below,Melons
+05_06_24,Z11,BPW,Bootie,60.74,Generic E.coli,0.131210773,Below,Melons
+05_06_24,Z12,BPW,Bootie,52.56,Generic E.coli,0.14562612,Below,Melons
+05_06_24,Z13,BPW,Bootie,34.18,Generic E.coli,0.198320834,Below,Melons
+05_06_24,Z14,BPW,Bootie,40.41,Generic E.coli,0.1761516,Below,Melons
+05_06_24,Z15,BPW,Bootie,25.89,Generic E.coli,0.238966727,Below,Melons
+05_06_24,Z16,BPW,Bootie,14.39,Generic E.coli,0.325378816,Below,Melons
+05_06_24,Z17,BPW,Bootie,8.1,Generic E.coli,0.427615011,Below,Melons
+05_06_24,Z18,BPW,Bootie,20.37,Generic E.coli,0.272656043,Below,Melons
+05_06_24,Z19,BPW,Bootie,23.52,Generic E.coli,0.249256106,Below,Melons
+05_06_24,Z20,BPW,Bootie,13.49,Generic E.coli,0.3437631,Below,Melons
+05_07_24,Z21,PBS,Bootie,37.85,Generic E.coli,2.441750657,Above,Melons
+05_07_24,Z22,PBS,Bootie,57.14,Generic E.coli,0.137254797,Below,Melons
+05_07_24,Z23,PBS,Bootie,23.77,Generic E.coli,0.249767571,Below,Melons
+05_07_24,Z24,PBS,Bootie,48.38,Generic E.coli,0.153847246,Below,Melons
+05_07_24,Z25,PBS,Bootie,22.42,Generic E.coli,0.255349396,Below,Melons
+05_07_24,Z26,PBS,Bootie,38.12,Generic E.coli,0.181863887,Below,Melons
+05_07_24,Z27,PBS,Bootie,23.81,Generic E.coli,0.249639487,Below,Melons
+05_07_24,Z28,PBS,Bootie,31.16,Generic E.coli,0.209386704,Below,Melons
+05_07_24,Z29,PBS,Bootie,12.14,Generic E.coli,2.25815539,Above,Melons
+05_07_24,Z30,PBS,Bootie,28.93,Generic E.coli,0.21690618,Below,Melons
+05_07_24,Z31,BPW,Bootie,23.71,Generic E.coli,1.400456933,Above,Melons
+05_07_24,Z32,BPW,Bootie,52.35,Generic E.coli,1.195809689,Above,Melons
+05_07_24,Z33,BPW,Bootie,19.05,Generic E.coli,0.284946722,Below,Melons
+05_07_24,Z34,BPW,Bootie,50.53,Generic E.coli,1.300553059,Above,Melons
+05_07_24,Z35,BPW,Bootie,23.84,Generic E.coli,0.249703511,Below,Melons
+05_07_24,Z36,BPW,Bootie,33.76,Generic E.coli,0.197701874,Below,Melons
+05_07_24,Z37,BPW,Bootie,38.71,Generic E.coli,0.181960798,Below,Melons
+05_07_24,Z38,BPW,Bootie,34.09,Generic E.coli,1.602555746,Above,Melons
+05_07_24,Z39,BPW,Bootie,13.47,Generic E.coli,0.336219978,Below,Melons
+05_07_24,Z40,BPW,Bootie,34.31,Generic E.coli,1.296347114,Above,Melons
+05_06_24,S1,Soil Only,Grabs,24.61,Generic E.coli,0.704441282,Below,Melons
+05_06_24,S2,Soil Only,Grabs,25.26,Generic E.coli,0.347689531,Below,Melons
+05_06_24,S3,Soil Only,Grabs,25.41,Generic E.coli,0.693327503,Below,Melons
+05_06_24,S4,Soil Only,Grabs,26.62,Generic E.coli,0.338647129,Below,Melons
+05_06_24,S5,Soil Only,Grabs,25.56,Generic E.coli,0.345645229,Below,Melons
+05_06_24,S6,Soil Only,Grabs,25.16,Generic E.coli,0.348377459,Below,Melons
+05_06_24,S7,Soil Only,Grabs,25.53,Generic E.coli,0.345848357,Below,Melons
+05_06_24,S8,Soil Only,Grabs,25.26,Generic E.coli,0.347689531,Below,Melons
+05_06_24,S9,Soil Only,Grabs,25.36,Generic E.coli,0.694009734,Below,Melons
+05_06_24,S10,Soil Only,Grabs,25.75,Generic E.coli,0.34436538,Below,Melons
+05_07_24,S11,Soil Only,Grabs,25.38,Generic E.coli,0.346868324,Below,Melons
+05_07_24,S12,Soil Only,Grabs,24.68,Generic E.coli,0.351725819,Below,Melons
+05_07_24,S13,Soil Only,Grabs,25.09,Generic E.coli,0.348860966,Below,Melons
+05_07_24,S14,Soil Only,Grabs,25.03,Generic E.coli,0.349276691,Below,Melons
+05_07_24,S15,Soil Only,Grabs,25.78,Generic E.coli,0.344164339,Below,Melons
+05_07_24,S16,Soil Only,Grabs,25.63,Generic E.coli,0.345172377,Below,Melons
+05_07_24,S17,Soil Only,Grabs,25.9,Generic E.coli,0.343362983,Below,Melons
+05_07_24,S18,Soil Only,Grabs,24.8,Generic E.coli,0.350881452,Below,Melons
+05_07_24,S19,Soil Only,Grabs,25.1,Generic E.coli,0.348791794,Below,Melons
+05_07_24,S20,Soil Only,Grabs,24.04,Generic E.coli,0.356313647,Below,Melons
+06_17_24,A41,PBS,Drag,12.75,Total Coliform,5.574053975,Above,Beets
+06_17_24,A42,PBS,Drag,11.23,Total Coliform,5.276701141,Above,Beets
+06_17_24,A43,PBS,Drag,14.48,Total Coliform,5.627218698,Above,Beets
+06_17_24,A44,PBS,Drag,10.32,Total Coliform,5.777679667,Above,Leafy Greens
+06_17_24,A45,PBS,Drag,9.39,Total Coliform,5.370595257,Above,Leafy Greens
+06_17_24,A46,PBS,Drag,8.93,Total Coliform,6.141940744,Above,Leafy Greens
+06_17_24,A47,PBS,Drag,8.95,Total Coliform,3.776997261,Above,Peppers
+06_17_24,A48,PBS,Drag,8.61,Total Coliform,3.888870627,Above,Peppers
+06_17_24,A49,PBS,Drag,9.37,Total Coliform,4.295504905,Above,Peppers
+06_17_24,A50,BPW,Drag,11.46,Total Coliform,6.219611039,Above,Beets
+06_17_24,A51,BPW,Drag,9.92,Total Coliform,6.360263509,Above,Beets
+06_17_24,A52,BPW,Drag,14.01,Total Coliform,6.26022976,Above,Beets
+06_17_24,A53,BPW,Drag,8.33,Total Coliform,6.379174232,Above,Leafy Greens
+06_17_24,A54,BPW,Drag,9.89,Total Coliform,6.305106086,Above,Leafy Greens
+06_17_24,A55,BPW,Drag,8.37,Total Coliform,6.450257204,Above,Leafy Greens
+06_17_24,A56,BPW,Drag,8.3,Total Coliform,4.822742955,Above,Peppers
+06_17_24,A57,BPW,Drag,7.29,Total Coliform,4.594465306,Above,Peppers
+06_17_24,A58,BPW,Drag,9.34,Total Coliform,4.530536989,Above,Peppers
+07_01_24,A59,PBS,Drag,8.2,Total Coliform,4.862771117,Above,Beets
+07_01_24,A60,PBS,Drag,13.14,Total Coliform,5.406078513,Above,Beets
+07_01_24,A61,PBS,Drag,10.4,Total Coliform,4.76030647,Above,Beets
+07_01_24,A62,PBS,Drag,8.3,Total Coliform,6.155957634,Above,Leafy Greens
+07_01_24,A63,PBS,Drag,5.7,Total Coliform,5.939615577,Above,Leafy Greens
+07_01_24,A64,PBS,Drag,6.98,Total Coliform,6.65906853,Above,Leafy Greens
+07_01_24,A65,PBS,Drag,7.53,Total Coliform,6.054372929,Above,Peppers
+07_01_24,A66,PBS,Drag,6.52,Total Coliform,5.854838592,Above,Peppers
+07_01_24,A67,PBS,Drag,9.45,Total Coliform,5.156411322,Above,Peppers
+07_01_24,A68,BPW,Drag,10.64,Total Coliform,5.599226219,Above,Beets
+07_01_24,A69,BPW,Drag,9.01,Total Coliform,5.932704574,Above,Beets
+07_01_24,A70,BPW,Drag,6.76,Total Coliform,5.597539413,Above,Beets
+07_01_24,A71,BPW,Drag,7.58,Total Coliform,6.883144351,Above,Leafy Greens
+07_01_24,A72,BPW,Drag,6.96,Total Coliform,6.021079939,Above,Leafy Greens
+07_01_24,A73,BPW,Drag,6.38,Total Coliform,6.479776973,Above,Leafy Greens
+07_01_24,A74,BPW,Drag,7.63,Total Coliform,5.035977602,Above,Peppers
+07_01_24,A75,BPW,Drag,6.73,Total Coliform,5.712927247,Above,Peppers
+07_01_24,A76,BPW,Drag,8.76,Total Coliform,5.516284776,Above,Peppers
+06_17_24,A41,PBS,Drag,12.75,Aerobic Plate Count,7.108671124,Above,Beets
+06_17_24,A42,PBS,Drag,11.23,Aerobic Plate Count,6.786614909,Above,Beets
+06_17_24,A43,PBS,Drag,14.48,Aerobic Plate Count,6.808162459,Above,Beets
+06_17_24,A44,PBS,Drag,10.32,Aerobic Plate Count,7.4680495,Above,Leafy Greens
+06_17_24,A45,PBS,Drag,9.39,Aerobic Plate Count,7.875745236,Above,Leafy Greens
+06_17_24,A46,PBS,Drag,8.93,Aerobic Plate Count,7.413586962,Above,Leafy Greens
+06_17_24,A47,PBS,Drag,8.95,Aerobic Plate Count,6.941189297,Above,Peppers
+06_17_24,A48,PBS,Drag,8.61,Aerobic Plate Count,6.776787211,Above,Peppers
+06_17_24,A49,PBS,Drag,9.37,Aerobic Plate Count,7.06436608,Above,Peppers
+06_17_24,A50,BPW,Drag,11.46,Aerobic Plate Count,7.325064826,Above,Beets
+06_17_24,A51,BPW,Drag,9.92,Aerobic Plate Count,7.699558005,Above,Beets
+06_17_24,A52,BPW,Drag,14.01,Aerobic Plate Count,7.177560186,Above,Beets
+06_17_24,A53,BPW,Drag,8.33,Aerobic Plate Count,7.592299413,Above,Leafy Greens
+06_17_24,A54,BPW,Drag,9.89,Aerobic Plate Count,7.325427663,Above,Leafy Greens
+06_17_24,A55,BPW,Drag,8.37,Aerobic Plate Count,7.507857483,Above,Leafy Greens
+06_17_24,A56,BPW,Drag,8.3,Aerobic Plate Count,6.763157265,Above,Peppers
+06_17_24,A57,BPW,Drag,7.29,Aerobic Plate Count,6.803724929,Above,Peppers
+06_17_24,A58,BPW,Drag,9.34,Aerobic Plate Count,6.928476997,Above,Peppers
+07_01_24,A59,PBS,Drag,8.2,Aerobic Plate Count,6.480917928,Above,Beets
+07_01_24,A60,PBS,Drag,13.14,Aerobic Plate Count,6.473639146,Above,Beets
+07_01_24,A61,PBS,Drag,10.4,Aerobic Plate Count,6.45706632,Above,Beets
+07_01_24,A62,PBS,Drag,8.3,Aerobic Plate Count,6.912919585,Above,Leafy Greens
+07_01_24,A63,PBS,Drag,5.7,Aerobic Plate Count,7.116456266,Above,Leafy Greens
+07_01_24,A64,PBS,Drag,6.98,Aerobic Plate Count,7.426035613,Above,Leafy Greens
+07_01_24,A65,PBS,Drag,7.53,Aerobic Plate Count,6.943222477,Above,Peppers
+07_01_24,A66,PBS,Drag,6.52,Aerobic Plate Count,7.086447179,Above,Peppers
+07_01_24,A67,PBS,Drag,9.45,Aerobic Plate Count,7.025132408,Above,Peppers
+07_01_24,A68,BPW,Drag,10.64,Aerobic Plate Count,6.821074969,Above,Beets
+07_01_24,A69,BPW,Drag,9.01,Aerobic Plate Count,7.076024662,Above,Beets
+07_01_24,A70,BPW,Drag,6.76,Aerobic Plate Count,6.923875274,Above,Beets
+07_01_24,A71,BPW,Drag,7.58,Aerobic Plate Count,7.339076307,Above,Leafy Greens
+07_01_24,A72,BPW,Drag,6.96,Aerobic Plate Count,6.328473338,Above,Leafy Greens
+07_01_24,A73,BPW,Drag,6.38,Aerobic Plate Count,6.172756613,Above,Leafy Greens
+07_01_24,A74,BPW,Drag,7.63,Aerobic Plate Count,7.064006325,Above,Peppers
+07_01_24,A75,BPW,Drag,6.73,Aerobic Plate Count,6.870825501,Above,Peppers
+07_01_24,A76,BPW,Drag,8.76,Aerobic Plate Count,7.32246475,Above,Peppers
+06_17_24,A41,PBS,Drag,12.75,Generic E.coli,0.20485056,Below,Beets
+06_17_24,A42,PBS,Drag,11.23,Generic E.coli,0.222096114,Below,Beets
+06_17_24,A43,PBS,Drag,14.48,Generic E.coli,0.188399348,Below,Beets
+06_17_24,A44,PBS,Drag,10.32,Generic E.coli,0.23402475,Below,Leafy Greens
+06_17_24,A45,PBS,Drag,9.39,Generic E.coli,0.247766997,Below,Leafy Greens
+06_17_24,A46,PBS,Drag,8.93,Generic E.coli,0.255248487,Below,Leafy Greens
+06_17_24,A47,PBS,Drag,8.95,Generic E.coli,0.254912766,Below,Peppers
+06_17_24,A48,PBS,Drag,8.61,Generic E.coli,0.260757353,Below,Peppers
+06_17_24,A49,PBS,Drag,9.37,Generic E.coli,0.248082178,Below,Peppers
+06_17_24,A50,BPW,Drag,11.46,Generic E.coli,0.21928705,Below,Beets
+06_17_24,A51,BPW,Drag,9.92,Generic E.coli,0.239724959,Below,Beets
+06_17_24,A52,BPW,Drag,14.01,Generic E.coli,0.192584248,Below,Beets
+06_17_24,A53,BPW,Drag,8.33,Generic E.coli,0.265800787,Below,Leafy Greens
+06_17_24,A54,BPW,Drag,9.89,Generic E.coli,0.240164812,Below,Leafy Greens
+06_17_24,A55,BPW,Drag,8.37,Generic E.coli,0.265066939,Below,Leafy Greens
+06_17_24,A56,BPW,Drag,8.3,Generic E.coli,0.266354172,Below,Peppers
+06_17_24,A57,BPW,Drag,7.29,Generic E.coli,0.286638004,Below,Peppers
+06_17_24,A58,BPW,Drag,9.34,Generic E.coli,1.974234488,Above,Peppers
+07_01_24,A59,PBS,Drag,8.2,Generic E.coli,0.268217628,Below,Beets
+07_01_24,A60,PBS,Drag,13.14,Generic E.coli,2.547885175,Above,Beets
+07_01_24,A61,PBS,Drag,10.4,Generic E.coli,0.232920122,Below,Beets
+07_01_24,A62,PBS,Drag,8.3,Generic E.coli,1.708799602,Above,Leafy Greens
+07_01_24,A63,PBS,Drag,5.7,Generic E.coli,2.085422032,Above,Leafy Greens
+07_01_24,A64,PBS,Drag,6.98,Generic E.coli,2.166970119,Above,Leafy Greens
+07_01_24,A65,PBS,Drag,7.53,Generic E.coli,1.165071227,Above,Peppers
+07_01_24,A66,PBS,Drag,6.52,Generic E.coli,0.304662962,Below,Peppers
+07_01_24,A67,PBS,Drag,9.45,Generic E.coli,0.246826745,Below,Peppers
+07_01_24,A68,BPW,Drag,10.64,Generic E.coli,0.229673567,Below,Beets
+07_01_24,A69,BPW,Drag,9.01,Generic E.coli,0.253911469,Below,Beets
+07_01_24,A70,BPW,Drag,6.76,Generic E.coli,0.298769707,Below,Beets
+07_01_24,A71,BPW,Drag,7.58,Generic E.coli,0.280462528,Below,Leafy Greens
+07_01_24,A72,BPW,Drag,6.96,Generic E.coli,1.949838484,Above,Leafy Greens
+07_01_24,A73,BPW,Drag,6.38,Generic E.coli,0.308227056,Below,Leafy Greens
+07_01_24,A74,BPW,Drag,7.63,Generic E.coli,0.279428173,Below,Peppers
+07_01_24,A75,BPW,Drag,6.73,Generic E.coli,0.299491947,Below,Peppers
+07_01_24,A76,BPW,Drag,8.76,Generic E.coli,0.258142388,Below,Peppers
+06_17_24,Z41,PBS,Bootie,36.97,Total Coliform,6.320910026,Above,Beets
+06_17_24,Z42,PBS,Bootie,47.91,Total Coliform,5.963613393,Above,Beets
+06_17_24,Z43,PBS,Bootie,58.69,Total Coliform,6.589844774,Above,Beets
+06_17_24,Z44,PBS,Bootie,28.82,Total Coliform,6.445542626,Above,Leafy Greens
+06_17_24,Z45,PBS,Bootie,41.29,Total Coliform,5.967827615,Above,Leafy Greens
+06_17_24,Z46,PBS,Bootie,30.12,Total Coliform,6.598072242,Above,Leafy Greens
+06_17_24,Z47,PBS,Bootie,5.03,Total Coliform,5.025803262,Above,Peppers
+06_17_24,Z48,PBS,Bootie,6.64,Total Coliform,4.135075148,Above,Peppers
+06_17_24,Z49,PBS,Bootie,4.4,Total Coliform,4.011224316,Above,Peppers
+06_17_24,Z50,BPW,Bootie,44.79,Total Coliform,6.164430552,Above,Beets
+06_17_24,Z51,BPW,Bootie,64.18,Total Coliform,6.45970534,Above,Beets
+06_17_24,Z52,BPW,Bootie,33.09,Total Coliform,6.57303826,Above,Beets
+06_17_24,Z53,BPW,Bootie,28.76,Total Coliform,6.984059489,Above,Leafy Greens
+06_17_24,Z54,BPW,Bootie,38.93,Total Coliform,6.277841981,Above,Leafy Greens
+06_17_24,Z55,BPW,Bootie,26.08,Total Coliform,6.752764647,Above,Leafy Greens
+06_17_24,Z56,BPW,Bootie,5.38,Total Coliform,4.783422687,Above,Peppers
+06_17_24,Z57,BPW,Bootie,7.01,Total Coliform,4.951625708,Above,Peppers
+06_17_24,Z58,BPW,Bootie,2.44,Total Coliform,4.502534572,Above,Peppers
+07_01_24,Z59,PBS,Bootie,16.51,Total Coliform,5.784116822,Above,Beets
+07_01_24,Z60,PBS,Bootie,12.09,Total Coliform,5.613685346,Above,Beets
+07_01_24,Z61,PBS,Bootie,12.89,Total Coliform,5.80227203,Above,Beets
+07_01_24,Z62,PBS,Bootie,14.97,Total Coliform,6.801843922,Above,Leafy Greens
+07_01_24,Z63,PBS,Bootie,12.67,Total Coliform,6.401853256,Above,Leafy Greens
+07_01_24,Z64,PBS,Bootie,18.5,Total Coliform,6.793828125,Above,Leafy Greens
+07_01_24,Z65,PBS,Bootie,9.61,Total Coliform,6.532958424,Above,Peppers
+07_01_24,Z66,PBS,Bootie,5.84,Total Coliform,6.173657161,Above,Peppers
+07_01_24,Z67,PBS,Bootie,8.32,Total Coliform,5.709017049,Above,Peppers
+07_01_24,Z68,BPW,Bootie,13.63,Total Coliform,5.917139334,Above,Beets
+07_01_24,Z69,BPW,Bootie,11.95,Total Coliform,6.208827999,Above,Beets
+07_01_24,Z70,BPW,Bootie,12.69,Total Coliform,5.65277804,Above,Beets
+07_01_24,Z71,BPW,Bootie,17.76,Total Coliform,6.843981526,Above,Leafy Greens
+07_01_24,Z72,BPW,Bootie,12.72,Total Coliform,6.326387394,Above,Leafy Greens
+07_01_24,Z73,BPW,Bootie,13.38,Total Coliform,6.954249722,Above,Leafy Greens
+07_01_24,Z74,BPW,Bootie,6.3,Total Coliform,6.584636301,Above,Peppers
+07_01_24,Z75,BPW,Bootie,6.23,Total Coliform,6.143000758,Above,Peppers
+07_01_24,Z76,BPW,Bootie,7.41,Total Coliform,5.989539884,Above,Peppers
+06_17_24,Z41,PBS,Bootie,36.97,Aerobic Plate Count,7.848641274,Above,Beets
+06_17_24,Z42,PBS,Bootie,47.91,Aerobic Plate Count,7.142909792,Above,Beets
+06_17_24,Z43,PBS,Bootie,58.69,Aerobic Plate Count,7.176110498,Above,Beets
+06_17_24,Z44,PBS,Bootie,28.82,Aerobic Plate Count,6.79867029,Above,Leafy Greens
+06_17_24,Z45,PBS,Bootie,41.29,Aerobic Plate Count,7.170653127,Above,Leafy Greens
+06_17_24,Z46,PBS,Bootie,30.12,Aerobic Plate Count,8.173074,Above,Leafy Greens
+06_17_24,Z47,PBS,Bootie,5.03,Aerobic Plate Count,5.942121515,Above,Peppers
+06_17_24,Z48,PBS,Bootie,6.64,Aerobic Plate Count,5.97234785,Above,Peppers
+06_17_24,Z49,PBS,Bootie,4.4,Aerobic Plate Count,6.393176219,Above,Peppers
+06_17_24,Z50,BPW,Bootie,44.79,Aerobic Plate Count,6.844095401,Above,Beets
+06_17_24,Z51,BPW,Bootie,64.18,Aerobic Plate Count,7.142284929,Above,Beets
+06_17_24,Z52,BPW,Bootie,33.09,Aerobic Plate Count,7.780063234,Above,Beets
+06_17_24,Z53,BPW,Bootie,28.76,Aerobic Plate Count,7.329611428,Above,Leafy Greens
+06_17_24,Z54,BPW,Bootie,38.93,Aerobic Plate Count,7.011976402,Above,Leafy Greens
+06_17_24,Z55,BPW,Bootie,26.08,Aerobic Plate Count,7.533148779,Above,Leafy Greens
+06_17_24,Z56,BPW,Bootie,5.38,Aerobic Plate Count,6.44393444,Above,Peppers
+06_17_24,Z57,BPW,Bootie,7.01,Aerobic Plate Count,6.609203027,Above,Peppers
+06_17_24,Z58,BPW,Bootie,2.44,Aerobic Plate Count,6.332272857,Above,Peppers
+07_01_24,Z59,PBS,Bootie,16.51,Aerobic Plate Count,7.161442375,Above,Beets
+07_01_24,Z60,PBS,Bootie,12.09,Aerobic Plate Count,6.886686618,Above,Beets
+07_01_24,Z61,PBS,Bootie,12.89,Aerobic Plate Count,6.967082278,Above,Beets
+07_01_24,Z62,PBS,Bootie,14.97,Aerobic Plate Count,7.415642317,Above,Leafy Greens
+07_01_24,Z63,PBS,Bootie,12.67,Aerobic Plate Count,7.199433058,Above,Leafy Greens
+07_01_24,Z64,PBS,Bootie,18.5,Aerobic Plate Count,7.466145934,Above,Leafy Greens
+07_01_24,Z65,PBS,Bootie,9.61,Aerobic Plate Count,7.09362573,Above,Peppers
+07_01_24,Z66,PBS,Bootie,5.84,Aerobic Plate Count,6.342260399,Above,Peppers
+07_01_24,Z67,PBS,Bootie,8.32,Aerobic Plate Count,6.593882216,Above,Peppers
+07_01_24,Z68,BPW,Bootie,13.63,Aerobic Plate Count,6.947919668,Above,Beets
+07_01_24,Z69,BPW,Bootie,11.95,Aerobic Plate Count,7.076401241,Above,Beets
+07_01_24,Z70,BPW,Bootie,12.69,Aerobic Plate Count,6.57455024,Above,Beets
+07_01_24,Z71,BPW,Bootie,17.76,Aerobic Plate Count,7.420379527,Above,Leafy Greens
+07_01_24,Z72,BPW,Bootie,12.72,Aerobic Plate Count,7.198068917,Above,Leafy Greens
+07_01_24,Z73,BPW,Bootie,13.38,Aerobic Plate Count,7.657767354,Above,Leafy Greens
+07_01_24,Z74,BPW,Bootie,6.3,Aerobic Plate Count,6.951167845,Above,Peppers
+07_01_24,Z75,BPW,Bootie,6.23,Aerobic Plate Count,6.578729327,Above,Peppers
+07_01_24,Z76,BPW,Bootie,7.41,Aerobic Plate Count,6.949867179,Above,Peppers
+06_17_24,Z41,PBS,Bootie,36.97,Generic E.coli,0.18576001,Below,Beets
+06_17_24,Z42,PBS,Bootie,47.91,Generic E.coli,0.15520044,Below,Beets
+06_17_24,Z43,PBS,Bootie,58.69,Generic E.coli,0.13381274,Below,Beets
+06_17_24,Z44,PBS,Bootie,28.82,Generic E.coli,0.218471227,Below,Leafy Greens
+06_17_24,Z45,PBS,Bootie,41.29,Generic E.coli,0.172289162,Below,Leafy Greens
+06_17_24,Z46,PBS,Bootie,30.12,Generic E.coli,0.212442987,Below,Leafy Greens
+06_17_24,Z47,PBS,Bootie,5.03,Generic E.coli,0.519515764,Below,Peppers
+06_17_24,Z48,PBS,Bootie,6.64,Generic E.coli,0.465477583,Below,Peppers
+06_17_24,Z49,PBS,Bootie,4.4,Generic E.coli,0.546073112,Below,Peppers
+06_17_24,Z50,BPW,Bootie,44.79,Generic E.coli,0.16279073,Below,Beets
+06_17_24,Z51,BPW,Bootie,64.18,Generic E.coli,0.125095163,Below,Beets
+06_17_24,Z52,BPW,Bootie,33.09,Generic E.coli,0.199925996,Below,Beets
+06_17_24,Z53,BPW,Bootie,28.76,Generic E.coli,0.218758413,Below,Leafy Greens
+06_17_24,Z54,BPW,Bootie,38.93,Generic E.coli,0.179381944,Below,Leafy Greens
+06_17_24,Z55,BPW,Bootie,26.08,Generic E.coli,0.232481458,Below,Leafy Greens
+06_17_24,Z56,BPW,Bootie,5.38,Generic E.coli,0.506285338,Below,Peppers
+06_17_24,Z57,BPW,Bootie,7.01,Generic E.coli,0.455116512,Below,Peppers
+06_17_24,Z58,BPW,Bootie,2.44,Generic E.coli,0.666136428,Below,Peppers
+07_01_24,Z59,PBS,Bootie,16.51,Generic E.coli,2.617977099,Above,Beets
+07_01_24,Z60,PBS,Bootie,12.09,Generic E.coli,1.011625355,Above,Beets
+07_01_24,Z61,PBS,Bootie,12.89,Generic E.coli,0.344164339,Below,Beets
+07_01_24,Z62,PBS,Bootie,14.97,Generic E.coli,0.318745533,Below,Leafy Greens
+07_01_24,Z63,PBS,Bootie,12.67,Generic E.coli,1.995313075,Above,Leafy Greens
+07_01_24,Z64,PBS,Bootie,18.5,Generic E.coli,0.284259422,Below,Leafy Greens
+07_01_24,Z65,PBS,Bootie,9.61,Generic E.coli,0.396297867,Below,Peppers
+07_01_24,Z66,PBS,Bootie,5.84,Generic E.coli,0.980532563,Below,Peppers
+07_01_24,Z67,PBS,Bootie,8.32,Generic E.coli,0.422847095,Below,Peppers
+07_01_24,Z68,BPW,Bootie,13.63,Generic E.coli,0.334583034,Below,Beets
+07_01_24,Z69,BPW,Bootie,11.95,Generic E.coli,0.357336703,Below,Beets
+07_01_24,Z70,BPW,Bootie,12.69,Generic E.coli,2.698058022,Above,Beets
+07_01_24,Z71,BPW,Bootie,17.76,Generic E.coli,1.660711682,Above,Leafy Greens
+07_01_24,Z72,BPW,Bootie,12.72,Generic E.coli,1.471070189,Above,Leafy Greens
+07_01_24,Z73,BPW,Bootie,13.38,Generic E.coli,1.879616104,Above,Leafy Greens
+07_01_24,Z74,BPW,Bootie,6.3,Generic E.coli,0.475583923,Below,Peppers
+07_01_24,Z75,BPW,Bootie,6.23,Generic E.coli,0.477740018,Below,Peppers
+07_01_24,Z76,BPW,Bootie,7.41,Generic E.coli,0.444584669,Below,Peppers
+06_17_24,S21,Soil Only,Grabs,24.97,Total Coliform,3.975849032,Above,Beets
+06_17_24,S22,Soil Only,Grabs,25.08,Total Coliform,4.360618172,Above,Beets
+06_17_24,S23,Soil Only,Grabs,25.16,Total Coliform,2.738147603,Above,Beets
+06_17_24,S24,Soil Only,Grabs,24.94,Total Coliform,3.699805052,Above,Leafy Greens
+06_17_24,S25,Soil Only,Grabs,25.15,Total Coliform,3.956964253,Above,Leafy Greens
+06_17_24,S26,Soil Only,Grabs,25.14,Total Coliform,4.174152132,Above,Leafy Greens
+06_17_24,S27,Soil Only,Grabs,25.07,Total Coliform,3.106238781,Above,Peppers
+06_17_24,S28,Soil Only,Grabs,25.01,Total Coliform,3.585321789,Above,Peppers
+06_17_24,S29,Soil Only,Grabs,25.02,Total Coliform,2.975153993,Above,Peppers
+07_01_24,S30,Soil Only,Grabs,25.25,Total Coliform,3.487908042,Above,Beets
+07_01_24,S31,Soil Only,Grabs,25.23,Total Coliform,2.767673137,Above,Beets
+07_01_24,S32,Soil Only,Grabs,25,Total Coliform,4.204119983,Above,Beets
+07_01_24,S33,Soil Only,Grabs,25.07,Total Coliform,2.719188115,Above,Leafy Greens
+07_01_24,S34,Soil Only,Grabs,25.13,Total Coliform,2.797539501,Above,Leafy Greens
+07_01_24,S35,Soil Only,Grabs,24.95,Total Coliform,5.398635715,Above,Leafy Greens
+07_01_24,S36,Soil Only,Grabs,25.48,Total Coliform,4.705212311,Above,Peppers
+07_01_24,S37,Soil Only,Grabs,25.02,Total Coliform,3.289756796,Above,Peppers
+07_01_24,S38,Soil Only,Grabs,25.15,Total Coliform,4.027306638,Above,Peppers
+06_17_24,S21,Soil Only,Grabs,24.97,Aerobic Plate Count,6.623666514,Above,Beets
+06_17_24,S22,Soil Only,Grabs,25.08,Aerobic Plate Count,6.600950327,Above,Beets
+06_17_24,S23,Soil Only,Grabs,25.16,Aerobic Plate Count,6.761212907,Above,Beets
+06_17_24,S24,Soil Only,Grabs,24.94,Aerobic Plate Count,6.760502893,Above,Leafy Greens
+06_17_24,S25,Soil Only,Grabs,25.15,Aerobic Plate Count,6.68811894,Above,Leafy Greens
+06_17_24,S26,Soil Only,Grabs,25.14,Aerobic Plate Count,6.783390708,Above,Leafy Greens
+06_17_24,S27,Soil Only,Grabs,25.07,Aerobic Plate Count,6.50417879,Above,Peppers
+06_17_24,S28,Soil Only,Grabs,25.01,Aerobic Plate Count,6.40640124,Above,Peppers
+06_17_24,S29,Soil Only,Grabs,25.02,Aerobic Plate Count,6.32194148,Above,Peppers
+07_01_24,S30,Soil Only,Grabs,25.25,Aerobic Plate Count,6.385712432,Above,Beets
+07_01_24,S31,Soil Only,Grabs,25.23,Aerobic Plate Count,6.239859174,Above,Beets
+07_01_24,S32,Soil Only,Grabs,25,Aerobic Plate Count,6.447158031,Above,Beets
+07_01_24,S33,Soil Only,Grabs,25.07,Aerobic Plate Count,6.341451492,Above,Leafy Greens
+07_01_24,S34,Soil Only,Grabs,25.13,Aerobic Plate Count,6.18853065,Above,Leafy Greens
+07_01_24,S35,Soil Only,Grabs,24.95,Aerobic Plate Count,6.42394158,Above,Leafy Greens
+07_01_24,S36,Soil Only,Grabs,25.48,Aerobic Plate Count,6.236443131,Above,Peppers
+07_01_24,S37,Soil Only,Grabs,25.02,Aerobic Plate Count,6.370790047,Above,Peppers
+07_01_24,S38,Soil Only,Grabs,25.15,Aerobic Plate Count,6.437255554,Above,Peppers
+06_17_24,S21,Soil Only,Grabs,24.97,Generic E.coli,0.349693614,Below,Beets
+06_17_24,S22,Soil Only,Grabs,25.08,Generic E.coli,0.34893017,Below,Beets
+06_17_24,S23,Soil Only,Grabs,25.16,Generic E.coli,0.348377459,Below,Beets
+06_17_24,S24,Soil Only,Grabs,24.94,Generic E.coli,0.349902526,Below,Leafy Greens
+06_17_24,S25,Soil Only,Grabs,25.15,Generic E.coli,0.348446432,Below,Leafy Greens
+06_17_24,S26,Soil Only,Grabs,25.14,Generic E.coli,0.697030877,Below,Leafy Greens
+06_17_24,S27,Soil Only,Grabs,25.07,Generic E.coli,0.348999408,Below,Peppers
+06_17_24,S28,Soil Only,Grabs,25.01,Generic E.coli,0.349415532,Below,Peppers
+06_17_24,S29,Soil Only,Grabs,25.02,Generic E.coli,0.349346095,Below,Peppers
+07_01_24,S30,Soil Only,Grabs,25.25,Generic E.coli,0.347758176,Below,Beets
+07_01_24,S31,Soil Only,Grabs,25.23,Generic E.coli,0.347895565,Below,Beets
+07_01_24,S32,Soil Only,Grabs,25,Generic E.coli,0.349485002,Below,Beets
+07_01_24,S33,Soil Only,Grabs,25.07,Generic E.coli,0.348999408,Below,Leafy Greens
+07_01_24,S34,Soil Only,Grabs,25.13,Generic E.coli,0.348584478,Below,Leafy Greens
+07_01_24,S35,Soil Only,Grabs,24.95,Generic E.coli,0.349832855,Below,Leafy Greens
+07_01_24,S36,Soil Only,Grabs,25.48,Generic E.coli,0.346187543,Below,Peppers
+07_01_24,S37,Soil Only,Grabs,25.02,Generic E.coli,0.349346095,Below,Peppers
+07_01_24,S38,Soil Only,Grabs,25.15,Generic E.coli,0.348446432,Below,Peppers
+08_13_24,A77,PBS,Drag,9.02,Total Coliform,6.849913551,Above,Apples
+08_13_24,A78,PBS,Drag,8.14,Total Coliform,6.91891093,Above,Apples
+08_13_24,A79,PBS,Drag,7.01,Total Coliform,7.01717033,Above,Apples
+08_13_24,A80,PBS,Drag,6.01,Total Coliform,6.750209232,Above,Apples
+08_13_24,A81,PBS,Drag,6.46,Total Coliform,6.891110923,Above,Apples
+08_13_24,A82,BPW,Drag,8.07,Total Coliform,7.132433485,Above,Apples
+08_13_24,A83,BPW,Drag,8.04,Total Coliform,7.155305817,Above,Apples
+08_13_24,A84,BPW,Drag,8.48,Total Coliform,7.017505827,Above,Apples
+08_13_24,A85,BPW,Drag,6.03,Total Coliform,7.06652062,Above,Apples
+08_13_24,A86,BPW,Drag,5.69,Total Coliform,6.976871133,Above,Apples
+08_20_24,A87,PBS,Drag,8.32,Total Coliform,5.60385193,Above,Apples
+08_20_24,A88,PBS,Drag,9.22,Total Coliform,5.154161804,Above,Apples
+08_20_24,A89,PBS,Drag,8.28,Total Coliform,5.186661582,Above,Apples
+08_20_24,A90,PBS,Drag,7.63,Total Coliform,5.344186182,Above,Apples
+08_20_24,A91,PBS,Drag,7.65,Total Coliform,5.756690787,Above,Apples
+08_20_24,A92,BPW,Drag,9.71,Total Coliform,5.305227357,Above,Apples
+08_20_24,A93,BPW,Drag,8.46,Total Coliform,6.016823012,Above,Apples
+08_20_24,A94,BPW,Drag,8.65,Total Coliform,5.647213317,Above,Apples
+08_20_24,A95,BPW,Drag,8.74,Total Coliform,5.69306659,Above,Apples
+08_20_24,A96,BPW,Drag,7.94,Total Coliform,5.747803024,Above,Apples
+08_13_24,A77,PBS,Drag,9.02,Aerobic Plate Count,7.586672117,Above,Apples
+08_13_24,A78,PBS,Drag,8.14,Aerobic Plate Count,7.652643041,Above,Apples
+08_13_24,A79,PBS,Drag,7.01,Aerobic Plate Count,7.966017808,Above,Apples
+08_13_24,A80,PBS,Drag,6.01,Aerobic Plate Count,7.59050839,Above,Apples
+08_13_24,A81,PBS,Drag,6.46,Aerobic Plate Count,7.653750007,Above,Apples
+08_13_24,A82,BPW,Drag,8.07,Aerobic Plate Count,7.883791559,Above,Apples
+08_13_24,A83,BPW,Drag,8.04,Aerobic Plate Count,8.241491965,Above,Apples
+08_13_24,A84,BPW,Drag,8.48,Aerobic Plate Count,7.605325379,Above,Apples
+08_13_24,A85,BPW,Drag,6.03,Aerobic Plate Count,7.714338102,Above,Apples
+08_13_24,A86,BPW,Drag,5.69,Aerobic Plate Count,7.909924343,Above,Apples
+08_20_24,A87,PBS,Drag,8.32,Aerobic Plate Count,6.963333687,Above,Apples
+08_20_24,A88,PBS,Drag,9.22,Aerobic Plate Count,7.144401967,Above,Apples
+08_20_24,A89,PBS,Drag,8.28,Aerobic Plate Count,6.9806071,Above,Apples
+08_20_24,A90,PBS,Drag,7.63,Aerobic Plate Count,6.901279028,Above,Apples
+08_20_24,A91,PBS,Drag,7.65,Aerobic Plate Count,7.137817297,Above,Apples
+08_20_24,A92,BPW,Drag,9.71,Aerobic Plate Count,6.962804677,Above,Apples
+08_20_24,A93,BPW,Drag,8.46,Aerobic Plate Count,7.242867876,Above,Apples
+08_20_24,A94,BPW,Drag,8.65,Aerobic Plate Count,6.935081867,Above,Apples
+08_20_24,A95,BPW,Drag,8.74,Aerobic Plate Count,7.272850187,Above,Apples
+08_20_24,A96,BPW,Drag,7.94,Aerobic Plate Count,6.660349252,Above,Apples
+08_13_24,A77,PBS,Drag,9.02,Generic E.coli,0.253745435,Below,Apples
+08_13_24,A78,PBS,Drag,8.14,Generic E.coli,0.269349844,Below,Apples
+08_13_24,A79,PBS,Drag,7.01,Generic E.coli,0.292903283,Below,Apples
+08_13_24,A80,PBS,Drag,6.01,Generic E.coli,0.31813294,Below,Apples
+08_13_24,A81,PBS,Drag,6.46,Generic E.coli,0.306178661,Below,Apples
+08_13_24,A82,BPW,Drag,8.07,Generic E.coli,0.270684439,Below,Apples
+08_13_24,A83,BPW,Drag,8.04,Generic E.coli,0.27126098,Below,Apples
+08_13_24,A84,BPW,Drag,8.48,Generic E.coli,4.480386642,Above,Apples
+08_13_24,A85,BPW,Drag,6.03,Generic E.coli,0.317578428,Below,Apples
+08_13_24,A86,BPW,Drag,5.69,Generic E.coli,0.327325919,Below,Apples
+08_20_24,A87,PBS,Drag,8.32,Generic E.coli,0.265984961,Below,Apples
+08_20_24,A88,PBS,Drag,9.22,Generic E.coli,0.250474645,Below,Apples
+08_20_24,A89,PBS,Drag,8.28,Generic E.coli,0.266724534,Below,Apples
+08_20_24,A90,PBS,Drag,7.63,Generic E.coli,0.279428173,Below,Apples
+08_20_24,A91,PBS,Drag,7.65,Generic E.coli,2.5580337,Above,Apples
+08_20_24,A92,BPW,Drag,9.71,Generic E.coli,0.242841711,Below,Apples
+08_20_24,A93,BPW,Drag,8.46,Generic E.coli,0.263432266,Below,Apples
+08_20_24,A94,BPW,Drag,8.65,Generic E.coli,0.260054259,Below,Apples
+08_20_24,A95,BPW,Drag,8.74,Generic E.coli,0.258487666,Below,Apples
+08_20_24,A96,BPW,Drag,7.94,Generic E.coli,0.27320295,Below,Apples
+08_13_24,Z77,PBS,Bootie,11.33,Total Coliform,7.590775551,Above,Apples
+08_13_24,Z78,PBS,Bootie,15.17,Total Coliform,7.286274654,Above,Apples
+08_13_24,Z79,PBS,Bootie,12.27,Total Coliform,7.196795997,Above,Apples
+08_13_24,Z80,PBS,Bootie,13.19,Total Coliform,7.018860053,Above,Apples
+08_13_24,Z81,PBS,Bootie,16.81,Total Coliform,7.143341803,Above,Apples
+08_13_24,Z82,BPW,Bootie,10.53,Total Coliform,7.44078354,Above,Apples
+08_13_24,Z83,BPW,Bootie,13.97,Total Coliform,7.123177943,Above,Apples
+08_13_24,Z84,BPW,Bootie,12.93,Total Coliform,7.164380462,Above,Apples
+08_13_24,Z85,BPW,Bootie,12.49,Total Coliform,7.176369341,Above,Apples
+08_13_24,Z86,BPW,Bootie,13.6,Total Coliform,7.293167498,Above,Apples
+08_20_24,Z87,PBS,Bootie,8.22,Total Coliform,6.809241776,Above,Apples
+08_20_24,Z88,PBS,Bootie,12.84,Total Coliform,6.489011702,Above,Apples
+08_20_24,Z89,PBS,Bootie,8.37,Total Coliform,6.669539038,Above,Apples
+08_20_24,Z90,PBS,Bootie,8.04,Total Coliform,6.629323367,Above,Apples
+08_20_24,Z91,PBS,Bootie,12.34,Total Coliform,6.402421643,Above,Apples
+08_20_24,Z92,BPW,Bootie,7.17,Total Coliform,6.55486155,Above,Apples
+08_20_24,Z93,BPW,Bootie,14.09,Total Coliform,6.365449455,Above,Apples
+08_20_24,Z94,BPW,Bootie,9.26,Total Coliform,7.082612465,Above,Apples
+08_20_24,Z95,BPW,Bootie,11.92,Total Coliform,6.471429548,Above,Apples
+08_20_24,Z96,BPW,Bootie,12.02,Total Coliform,6.960600561,Above,Apples
+08_13_24,Z77,PBS,Bootie,11.33,Aerobic Plate Count,8.313226651,Above,Apples
+08_13_24,Z78,PBS,Bootie,15.17,Aerobic Plate Count,8.340632316,Above,Apples
+08_13_24,Z79,PBS,Bootie,12.27,Aerobic Plate Count,8.136798067,Above,Apples
+08_13_24,Z80,PBS,Bootie,13.19,Aerobic Plate Count,7.981433555,Above,Apples
+08_13_24,Z81,PBS,Bootie,16.81,Aerobic Plate Count,8.155576259,Above,Apples
+08_13_24,Z82,BPW,Bootie,10.53,Aerobic Plate Count,8.121270139,Above,Apples
+08_13_24,Z83,BPW,Bootie,13.97,Aerobic Plate Count,8.217082445,Above,Apples
+08_13_24,Z84,BPW,Bootie,12.93,Aerobic Plate Count,7.823979774,Above,Apples
+08_13_24,Z85,BPW,Bootie,12.49,Aerobic Plate Count,7.658289479,Above,Apples
+08_13_24,Z86,BPW,Bootie,13.6,Aerobic Plate Count,8.175068186,Above,Apples
+08_20_24,Z87,PBS,Bootie,8.22,Aerobic Plate Count,7.996328419,Above,Apples
+08_20_24,Z88,PBS,Bootie,12.84,Aerobic Plate Count,8.032093833,Above,Apples
+08_20_24,Z89,PBS,Bootie,8.37,Aerobic Plate Count,7.957407588,Above,Apples
+08_20_24,Z90,PBS,Bootie,8.04,Aerobic Plate Count,8.238682597,Above,Apples
+08_20_24,Z91,PBS,Bootie,12.34,Aerobic Plate Count,8.234930555,Above,Apples
+08_20_24,Z92,BPW,Bootie,7.17,Aerobic Plate Count,7.788139762,Above,Apples
+08_20_24,Z93,BPW,Bootie,14.09,Aerobic Plate Count,7.913151784,Above,Apples
+08_20_24,Z94,BPW,Bootie,9.26,Aerobic Plate Count,8.084904261,Above,Apples
+08_20_24,Z95,BPW,Bootie,11.92,Aerobic Plate Count,8.259622737,Above,Apples
+08_20_24,Z96,BPW,Bootie,12.02,Aerobic Plate Count,7.943076216,Above,Apples
+08_13_24,Z77,PBS,Bootie,11.33,Generic E.coli,3.692484447,Above,Apples
+08_13_24,Z78,PBS,Bootie,15.17,Generic E.coli,0.31653107,Below,Apples
+08_13_24,Z79,PBS,Bootie,12.27,Generic E.coli,0.352717151,Below,Apples
+08_13_24,Z80,PBS,Bootie,13.19,Generic E.coli,0.34020178,Below,Apples
+08_13_24,Z81,PBS,Bootie,16.81,Generic E.coli,3.076395013,Above,Apples
+08_13_24,Z82,BPW,Bootie,10.53,Generic E.coli,3.139753544,Above,Apples
+08_13_24,Z83,BPW,Bootie,13.97,Generic E.coli,0.330389972,Below,Apples
+08_13_24,Z84,BPW,Bootie,12.93,Generic E.coli,0.343629603,Below,Apples
+08_13_24,Z85,BPW,Bootie,12.49,Generic E.coli,0.349624043,Below,Apples
+08_13_24,Z86,BPW,Bootie,13.6,Generic E.coli,0.334959104,Below,Apples
+08_20_24,Z87,PBS,Bootie,8.22,Generic E.coli,0.425100192,Below,Apples
+08_20_24,Z88,PBS,Bootie,12.84,Generic E.coli,0.344835576,Below,Apples
+08_20_24,Z89,PBS,Bootie,8.37,Generic E.coli,0.421732118,Below,Apples
+08_20_24,Z90,PBS,Bootie,8.04,Generic E.coli,0.429235678,Below,Apples
+08_20_24,Z91,PBS,Bootie,12.34,Generic E.coli,0.351725819,Below,Apples
+08_20_24,Z92,BPW,Bootie,7.17,Generic E.coli,0.450824518,Below,Apples
+08_20_24,Z93,BPW,Bootie,14.09,Generic E.coli,1.657879278,Above,Apples
+08_20_24,Z94,BPW,Bootie,9.26,Generic E.coli,0.40307533,Below,Apples
+08_20_24,Z95,BPW,Bootie,11.92,Generic E.coli,0.357777346,Below,Apples
+08_20_24,Z96,BPW,Bootie,12.02,Generic E.coli,2.826570647,Above,Apples
+08_13_24,S39,Soil Only,Grabs,25.03,Total Coliform,3.342006058,Above,Apples
+08_13_24,S40,Soil Only,Grabs,25.2,Total Coliform,4.778989158,Above,Apples
+08_13_24,S41,Soil Only,Grabs,25.1,Total Coliform,3.112556936,Above,Apples
+08_13_24,S42,Soil Only,Grabs,25.32,Total Coliform,3.586651288,Above,Apples
+08_13_24,S43,Soil Only,Grabs,25.26,Total Coliform,3.172500316,Above,Apples
+08_20_24,S44,Soil Only,Grabs,25.31,Total Coliform,3.997889642,Above,Apples
+08_20_24,S45,Soil Only,Grabs,25.24,Total Coliform,4.113955,Above,Apples
+08_20_24,S46,Soil Only,Grabs,25.28,Total Coliform,3.269135943,Above,Apples
+08_20_24,S47,Soil Only,Grabs,25.19,Total Coliform,3.509254829,Above,Apples
+08_20_24,S48,Soil Only,Grabs,25.01,Total Coliform,3.550089412,Above,Apples
+08_13_24,S39,Soil Only,Grabs,25.03,Aerobic Plate Count,6.040976062,Above,Apples
+08_13_24,S40,Soil Only,Grabs,25.2,Aerobic Plate Count,6.35896162,Above,Apples
+08_13_24,S41,Soil Only,Grabs,25.1,Aerobic Plate Count,6.216097528,Above,Apples
+08_13_24,S42,Soil Only,Grabs,25.32,Aerobic Plate Count,6.185918379,Above,Apples
+08_13_24,S43,Soil Only,Grabs,25.26,Aerobic Plate Count,6.09331907,Above,Apples
+08_20_24,S44,Soil Only,Grabs,25.31,Aerobic Plate Count,6.213207525,Above,Apples
+08_20_24,S45,Soil Only,Grabs,25.24,Aerobic Plate Count,6.508567065,Above,Apples
+08_20_24,S46,Soil Only,Grabs,25.28,Aerobic Plate Count,6.348317189,Above,Apples
+08_20_24,S47,Soil Only,Grabs,25.19,Aerobic Plate Count,6.076552714,Above,Apples
+08_20_24,S48,Soil Only,Grabs,25.01,Aerobic Plate Count,6.352043577,Above,Apples
+08_13_24,S39,Soil Only,Grabs,25.03,Generic E.coli,0.349276691,Below,Apples
+08_13_24,S40,Soil Only,Grabs,25.2,Generic E.coli,0.348101894,Below,Apples
+08_13_24,S41,Soil Only,Grabs,25.1,Generic E.coli,0.348791794,Below,Apples
+08_13_24,S42,Soil Only,Grabs,25.32,Generic E.coli,0.347278342,Below,Apples
+08_13_24,S43,Soil Only,Grabs,25.26,Generic E.coli,0.347689531,Below,Apples
+08_20_24,S44,Soil Only,Grabs,25.31,Generic E.coli,1.296753576,Above,Apples
+08_20_24,S45,Soil Only,Grabs,25.24,Generic E.coli,0.347826854,Below,Apples
+08_20_24,S46,Soil Only,Grabs,25.28,Generic E.coli,0.347552338,Below,Apples
+08_20_24,S47,Soil Only,Grabs,25.19,Generic E.coli,0.348170736,Below,Apples
+08_20_24,S48,Soil Only,Grabs,25.01,Generic E.coli,0.349415532,Below,Apples
