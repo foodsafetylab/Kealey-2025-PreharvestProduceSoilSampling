@@ -23,15 +23,16 @@ Overall.Table
 
 ```
 ```{r Prep for Analysis}
-#Set up Fisher's exact test to comapre Booties & Drags combined vs. Soil Grabs
+#Set up Chi-Square to compare Booties & Drags combined vs. Soil Grabs
 final.contingency <- data.frame("gEC positive" = c(173, 21), "gEC negative" = c(19, 27),
                  row.names = c("Swabs Total", "Soil Only"))
 
 #show table
 print(final.contingency)
 
-#fisher's exact test
-fisher.test(final.contingency)
+#Chi-Square test
+chisq.test(final.contingency, correct = FALSE)
 
 ```
+
 
